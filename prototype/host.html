@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Become a ride host</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+</head>
+<body>
+<div class="proto-tag">Prototype v1</div>
+<nav class="top">
+  <a class="logo" href="../ajr-homepage.html"><img src="../Assets/logo_v2.png" alt="AJR"></a>
+  <div class="links"><a href="../ajr-homepage.html">Home</a><a href="city.html">Rides</a><a href="leaderboard.html">Leaderboard</a><a href="downloads.html">Downloads</a><a href="register.html" class="btn btn-sindoor btn-sm">Register</a></div>
+</nav>
+
+<div class="wrap" style="max-width:680px;">
+  <div class="page-head">
+    <p class="kicker">Lead your city</p>
+    <h1>Become a ride host</h1>
+    <p>Hosts run the city ride, set the fundraising target, and lead the tribute. Application → approval → orientation → certification.</p>
+  </div>
+
+  <div class="steps"><div class="step-dot on" data-d="1"></div><div class="step-dot" data-d="2"></div><div class="step-dot" data-d="3"></div><div class="step-dot" data-d="4"></div></div>
+
+  <div class="card">
+    <div class="step on" id="s1">
+      <h3>Your city</h3>
+      <label>Which city do you want to host?</label>
+      <select><option>Kochi (has a host — you can still apply)</option><option>Palakkad</option><option>Thrissur</option><option>Coimbatore</option><option>Madurai</option></select>
+      <p class="hint">Tier 1 and Tier 2 cities listed. Existing host doesn't block your application.</p>
+      <label>Full address</label><input placeholder="House, street, area">
+      <div class="grid g3">
+        <div><label>Pincode</label><input placeholder="682001"></div>
+        <div><label>State</label><select><option>Kerala</option></select></div>
+        <div><label>City</label><input value="Kochi"></div>
+      </div>
+      <button class="btn btn-sindoor" style="margin-top:20px;" onclick="go(2)">Continue</button>
+    </div>
+
+    <div class="step" id="s2">
+      <h3>Application — 10 questions</h3>
+      <p class="hint" style="margin-bottom:6px;">Written, long-format. Reviewed by AJR super admin.</p>
+      <label>Q1. Why do you want to host the Amar Jawan Ride in your city?</label>
+      <textarea rows="3" placeholder="Write from the heart — this is read personally."></textarea>
+      <label>Q2. Describe your riding and community experience.</label>
+      <textarea rows="3"></textarea>
+      <label>Q3–Q10</label>
+      <div class="card" style="padding:14px;background:var(--sand-deep);font-size:13px;">Route planning · police permissions experience · volunteer team · sponsor contacts · fundraising ideas · safety record · time commitment · references</div>
+      <button class="btn btn-sindoor" style="margin-top:20px;" onclick="go(3)">Submit application</button>
+    </div>
+
+    <div class="step" id="s3">
+      <div class="success">
+        <div class="big">Under review</div>
+        <p style="margin:12px 0;">Your application is with the AJR team. If approved, you'll receive an email with a <b>Calendly link</b> to schedule your interview.</p>
+        <p class="hint">For this prototype, let's say you were approved.</p>
+        <button class="btn btn-sindoor" onclick="go(4)">Continue as approved host</button>
+      </div>
+    </div>
+
+    <div class="step" id="s4">
+      <h3>Orientation &amp; certification</h3>
+      <table style="margin-top:12px;">
+        <tr><td><b>1. T&amp;C + host agreement</b></td><td style="text-align:right;"><span class="pill pill-open">Done</span></td></tr>
+        <tr><td><b>2. Orientation videos (4)</b></td><td style="text-align:right;"><span class="pill pill-open">Done</span></td></tr>
+        <tr><td><b>3. Certification quiz</b> <span class="hint">(fail = rewatch videos)</span></td><td style="text-align:right;"><span class="pill pill-almost">Pass — 9/10</span></td></tr>
+        <tr><td><b>4. Add event management team</b></td><td style="text-align:right;"><button class="btn btn-peacock btn-sm" onclick="alert('Team member invited (prototype)')">Invite member</button></td></tr>
+      </table>
+      <div class="card dark" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div><h3 style="font-size:19px;">Ride Admin unlocked</h3><p class="muted" style="font-size:13px;">Venue, date/time, city target, start/end ride.</p></div>
+        <a class="btn btn-sindoor" href="admin.html#ride">Open Ride Admin</a>
+      </div>
+    </div>
+  </div>
+  <div style="height:60px;"></div>
+</div>
+
+<script>
+function go(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+n).classList.add('on');
+  document.querySelectorAll('.step-dot').forEach(d=>d.classList.toggle('on',+d.dataset.d<=n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

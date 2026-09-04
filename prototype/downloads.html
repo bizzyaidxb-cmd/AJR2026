@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Downloads &amp; media kit</title>
+<meta name="description" content="Official Amar Jawan Riders graphics, social stories, posters and logos. Free for riders, clubs, donors and press.">
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<style>
+.dl-filters .chip').forEach(c=>c.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.querySelectorAll('.dl-card').forEach(card=>{
+    if(cat === 'all' || card.dataset.cat === cat){
+      card.style.display = 'flex';
+    }
+.dl-hero{background:var(--midnight);color:var(--sand);padding:52px 24px 44px;position:relative;overflow:hidden;}
+.dl-hero::before{content:"";position:absolute;inset:0;background:url("../Assets/pattern_tile.png") repeat;background-size:380px;opacity:.06;}
+.dl-hero .inner{position:relative;max-width:1080px;margin:0 auto;}
+.dl-hero h1{font-size:clamp(30px,4vw,44px);color:var(--sand);}
+.dl-hero p{color:#8FB0AC;margin-top:10px;max-width:620px;line-height:1.65;}
+.brand-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:16px;}
+.brand-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;text-align:center;}
+.brand-card .sw{height:64px;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;}
+.brand-card b{font-size:14px;display:block;}
+.brand-card .hint{margin-top:2px;}
+</style>
+</head>
+<body>
+<div class="proto-tag">Prototype v2 — Public downloads</div>
+
+<nav class="top">
+  <a class="logo" href="../ajr-homepage.html"><img src="../Assets/logo_v2.png" alt="AJR"></a>
+  <div class="links">
+    <a href="../ajr-homepage.html">Home</a>
+    <a href="city.html">Rides</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="downloads.html" class="active">Downloads</a>
+    <a href="donate.html" class="btn btn-peacock btn-sm">Donate</a>
+    <a href="register.html" class="btn btn-sindoor btn-sm">Register</a>
+  </div>
+</nav>
+
+<div class="dl-hero">
+  <div class="inner">
+    <p class="kicker" style="color:var(--gold);">Open to everyone</p>
+    <h1>Downloads &amp; media kit</h1>
+    <p>Every graphic here is official AJR branding — free for riders, clubs, donors, hosts and press. No login needed. Use them to spread the ride and raise for the families of our martyred heroes.</p>
+    <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;">
+      <button class="btn btn-sindoor" onclick="alert('ajr-media-kit.zip — all assets (prototype)')">Download everything (.zip)</button>
+      <a class="btn btn-sand-outline" href="register.html">Register to get personalised versions</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:60px;">
+  <div class="card" style="margin-top:26px;">
+    <h2 style="font-size:24px;color:var(--peacock);">Brand assets</h2>
+    <p class="hint" style="margin-top:4px;">Logos and colours. Please don't stretch, recolour or crop the logo.</p>
+    <div class="brand-row">
+      <div class="brand-card">
+        <div class="sw" style="background:var(--sand);border:1px solid var(--line);"><img src="../Assets/logo_v2.png" alt="" style="height:52px;"></div>
+        <b>Primary logo</b><p class="hint">SVG · PNG</p>
+        <button class="btn btn-peacock btn-sm" style="margin-top:10px;" onclick="alert('ajr-logo.svg (prototype)')">Download</button>
+      </div>
+      <div class="brand-card">
+        <div class="sw" style="background:var(--midnight);"><img src="../Assets/logo_v2_mono.png" alt="" style="height:52px;"></div>
+        <b>Logo — light/mono</b><p class="hint">For dark backgrounds</p>
+        <button class="btn btn-peacock btn-sm" style="margin-top:10px;" onclick="alert('ajr-logo-white.svg (prototype)')">Download</button>
+      </div>
+      <div class="brand-card">
+        <div class="sw" style="background:var(--sand);border:1px solid var(--line);"><img src="../Assets/asset%20set%202%20/Emblem_seal_for_motorcycle_fundr%E2%80%A6_202608071746%201.png" alt="" style="height:58px;"></div>
+        <b>Fundraiser seal</b><p class="hint">India's largest motorcycle fundraiser</p>
+        <button class="btn btn-peacock btn-sm" style="margin-top:10px;" onclick="alert('ajr-seal.png (prototype)')">Download</button>
+      </div>
+      <div class="brand-card">
+        <div class="sw" style="background:linear-gradient(90deg,#B33114 0 25%,#124D52 25% 50%,#B38B4B 50% 75%,#0C2B2E 75% 100%);"></div>
+        <b>Colour + type guide</b><p class="hint">Sindoor · Peacock · Gold · Midnight</p>
+        <button class="btn btn-peacock btn-sm" style="margin-top:10px;" onclick="alert('ajr-brand-guide.pdf (prototype)')">Download</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:26px;">
+
+      <div class="card" style="margin-top:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h2 style="font-size:24px;color:var(--peacock);">Media &amp; Downloads</h2>
+            <p class="hint" style="margin-top:4px;">Download official AJR graphics, social stories, posters, and QR codes to share on Instagram, WhatsApp, and email.</p>
+          </div>
+          <span class="pill pill-gold" style="font-size:12px;">9 Templates</span>
+        </div>
+
+        <div class="dl-filters" style="display:flex;gap:8px;margin:20px 0 16px;flex-wrap:wrap;">
+          <button class="chip sel" onclick="filterDl('all', this)" style="padding:8px 16px;font-size:13px;">All</button>
+          <button class="chip" onclick="filterDl('story', this)" style="padding:8px 16px;font-size:13px;">Story</button>
+          <button class="chip" onclick="filterDl('ig45', this)" style="padding:8px 16px;font-size:13px;">Instagram 4:5</button>
+          <button class="chip" onclick="filterDl('square', this)" style="padding:8px 16px;font-size:13px;">Square</button>
+          <button class="chip" onclick="filterDl('email', this)" style="padding:8px 16px;font-size:13px;">Email Signature</button>
+          <button class="chip" onclick="filterDl('a4', this)" style="padding:8px 16px;font-size:13px;">A4 Poster</button>
+        </div>
+
+        <div class="grid g3" id="dlGrid" style="margin-top:16px;">
+          <!-- 1. Support Me (Story) -->
+          <div class="dl-card card" data-cat="story" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:9/16;background:linear-gradient(180deg, #0C2B2E 0%, #174246 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--gold);font-size:13px;letter-spacing:.1em;">SUPPORT ME</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--midnight);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--midnight);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:11px;font-weight:600;color:var(--gold);">YOUR NAME</div>
+                  <div style="font-size:9px;opacity:.85;">YOUR CITY · AJR 2027</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>STORY</span><span>1080 × 1920</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Support Me (Story)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Support Me (Story)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Support Me (Story)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Support Me (Instagram 4x5) -->
+          <div class="dl-card card" data-cat="ig45" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:4/5;background:linear-gradient(180deg, #0C2B2E 0%, #174246 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--gold);font-size:13px;letter-spacing:.1em;">SUPPORT ME</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--midnight);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--midnight);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:11px;font-weight:600;color:var(--gold);">YOUR NAME</div>
+                  <div style="font-size:9px;opacity:.85;">YOUR CITY · AJR 2027</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>INSTAGRAM 4:5</span><span>1080 × 1350</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Support Me (Instagram 4x5)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Support Me (Instagram 4x5)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Support Me (Instagram 4x5)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Support Me (Square) -->
+          <div class="dl-card card" data-cat="square" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:290px;aspect-ratio:1/1;background:linear-gradient(180deg, #0C2B2E 0%, #174246 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--gold);font-size:13px;letter-spacing:.1em;">SUPPORT ME</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--midnight);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--midnight);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:11px;font-weight:600;color:var(--gold);">YOUR NAME</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>SQUARE</span><span>1080 × 1080</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Support Me (Square)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Support Me (Square)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Support Me (Square)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Email Signature -->
+          <div class="dl-card card" data-cat="email" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="width:90%;height:110px;background:linear-gradient(90deg, #0C2B2E 0%, #174246 100%);border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);">
+                <div style="color:var(--sand);">
+                  <div style="font-size:14px;font-weight:700;color:var(--gold);">YOUR NAME</div>
+                  <div style="font-size:11px;opacity:.9;">Rider #482 · AJR 2027</div>
+                  <div style="font-size:10px;color:#8FB0AC;margin-top:4px;">ajr.in/arjun-nair</div>
+                </div>
+                <div style="width:52px;height:52px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;">
+                  <div style="border:1.5px dashed var(--midnight);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--midnight);">QR</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>EMAIL SIGNATURE</span><span>650 × 140</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Email Signature</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Email Signature')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Email Signature')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. DGR 2026 Story (Full) -->
+          <div class="dl-card card" data-cat="story" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:9/16;background:linear-gradient(180deg, #B33114 0%, #0C2B2E 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--sand);font-size:13px;letter-spacing:.08em;">DGR 2026 STORY</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--sindoor);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--sindoor);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:10px;font-weight:600;color:var(--gold);">WE RIDE. THEY LIVE FOREVER.</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>STORY</span><span>1080 × 1920</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">DGR 2026 Story (Full)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('DGR 2026 Story (Full)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('DGR 2026 Story (Full)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Square QR Code (Full) -->
+          <div class="dl-card card" data-cat="square" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:290px;aspect-ratio:1/1;background:#FFFDF8;border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:2px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--peacock);font-size:12px;letter-spacing:.08em;">SCAN TO DONATE</div>
+                <div style="width:64px;height:64px;background:var(--midnight);border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;">
+                  <div style="border:1.5px dashed var(--gold);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--gold);">QR</div>
+                </div>
+                <div style="font-size:11px;font-weight:600;color:var(--sindoor);">AMAR JAWAN RIDERS</div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>SQUARE</span><span>1080 × 1080</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Square QR Code (Full)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Square QR Code (Full)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Square QR Code (Full)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Square QR Code -->
+          <div class="dl-card card" data-cat="square" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:290px;aspect-ratio:1/1;background:var(--sand-deep);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1px solid var(--line);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-size:11px;font-weight:600;color:var(--peacock);">RIDER QR CODE</div>
+                <div style="width:60px;height:60px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,.15);">
+                  <div style="border:1.5px dashed var(--peacock);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--peacock);">QR</div>
+                </div>
+                <div style="font-size:10px;color:var(--umber);">ajr.in/arjun-nair</div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>SQUARE</span><span>1080 × 1080</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Square QR Code</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Square QR Code')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Square QR Code')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. QR Code Poster -->
+          <div class="dl-card card" data-cat="a4" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:1/1.41;background:#FFFDF8;border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:2px solid var(--sindoor);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--sindoor);font-size:12px;">OFFICIAL RIDER POSTER</div>
+                <div style="width:64px;height:64px;background:var(--midnight);border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;">
+                  <div style="border:1.5px dashed var(--gold);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--gold);">QR</div>
+                </div>
+                <div style="font-size:9px;color:#4A443C;">PRINTABLE A4 POSTER</div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>A4</span><span>1240 × 1754</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">QR Code Poster</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('QR Code Poster')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('QR Code Poster')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9. DGR 2026 Story -->
+          <div class="dl-card card" data-cat="story" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:9/16;background:linear-gradient(180deg, #174246 0%, #0C2B2E 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--gold);font-size:13px;letter-spacing:.08em;">DGR 2026</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--peacock);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--peacock);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:10px;font-weight:600;color:var(--gold);">SUPPORT MY RIDE</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>STORY</span><span>1080 × 1920</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">DGR 2026 Story</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('DGR 2026 Story')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('DGR 2026 Story')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 4: My Donations -->
+  </div>
+
+  <div class="card dark" style="margin-top:26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <div>
+      <h3>Want these with your name and QR on them?</h3>
+      <p class="muted" style="font-size:14px;margin-top:6px;max-width:520px;">Register as a rider and every template above auto-fills with your name, city and personal donation QR code — ready to post.</p>
+    </div>
+    <a class="btn btn-sindoor" href="register.html">Register to ride</a>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h3>Press &amp; media</h3>
+    <p class="hint" style="margin-top:6px;">Journalists and partners: for high-resolution imagery, ride-day footage, spokesperson quotes or event permissions, write to <b>press@ajr.in</b>. Please credit "Amar Jawan Riders" and do not alter the logo.</p>
+  </div>
+</div>
+
+<div class="footer"><span>© 2027 Amar Jawan Riders</span><span><a href="../ajr-homepage.html">Home</a> · <a href="register.html">Register</a> · <a href="donate.html">Donate</a></span></div>
+
+<script>
+function filterDl(cat, btn){
+  document.querySelectorAll('.dl-filters .chip').forEach(c=>c.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.querySelectorAll('.dl-card').forEach(card=>{
+    if(cat === 'all' || card.dataset.cat === cat){
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+<div class="role-switch"><b>View</b><a href="rider-solo.html">Solo</a><a href="rider-nocity.html">Solo · no city</a><a href="rider-member.html">Club member</a><a href="rider-admin.html">Club admin</a><a href="rider-public.html">Public rider</a><a href="rider-public-club.html">Public rider (club)</a><a href="club.html">Public club</a><a href="club-admin.html">Club captain</a><a href="city.html">City page</a><a href="downloads.html" class="on">Downloads</a></div>
+</body>
+</html>

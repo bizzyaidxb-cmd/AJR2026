@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Admin portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<style>
+body{background:#0F3237;}
+.admin-shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh;}
+.side{background:var(--midnight);padding:24px 0;}
+.side .logo{padding:0 20px 20px;}
+.side .logo img{height:56px;}
+.side a{display:block;padding:11px 22px;color:#8FB0AC;text-decoration:none;font-size:14px;font-weight:500;}
+.side a.on,.side a:hover{color:var(--sand);background:#11393f;border-left:3px solid var(--gold);}
+.main{padding:28px 32px;background:var(--sand);border-radius:16px 0 0 0;}
+</style>
+</head>
+<body>
+<div class="proto-tag">Prototype v1 — Super admin</div>
+<div class="admin-shell">
+  <aside class="side">
+    <div class="logo"><img src="../Assets/logo_v2_mono.png" alt="AJR"></div>
+    <a class="on" href="#">Dashboard</a>
+    <a href="#queues">Approval queues</a>
+    <a href="#finance">Finance</a>
+    <a href="#ride">Rides &amp; cities</a>
+    <a href="#comms">Communications</a>
+    <a href="#content">Content</a>
+    <a href="../ajr-homepage.html" style="margin-top:24px;color:#5f7f7b;">← Back to site</a>
+  </aside>
+
+  <main class="main">
+    <h1 style="font-size:30px;">Namaste, Super Admin</h1>
+    <p style="color:#4A443C;margin:6px 0 24px;">Wednesday · 168 days to Kerala ride day</p>
+
+    <div class="grid g3">
+      <div class="card" style="text-align:center;"><div class="amount">₹18.4L</div><p class="hint">raised all-time</p></div>
+      <div class="card" style="text-align:center;"><div class="amount">1,204</div><p class="hint">riders registered</p></div>
+      <div class="card" style="text-align:center;"><div class="amount">7 <small style="font-size:14px;color:var(--sindoor);">pending</small></div><p class="hint">approvals waiting</p></div>
+    </div>
+
+    <div class="card" style="margin-top:20px;" id="queues">
+      <h3>Approval queues</h3>
+      <table style="margin-top:10px;">
+        <tr><th>Item</th><th>Type</th><th>Flag</th><th style="text-align:right;">Action</th></tr>
+        <tr><td><b>Malabar Kings MC</b> · new club, Kozhikode</td><td>Club</td><td><span class="pill pill-almost">Similar: "Malabar King Riders"</span></td>
+          <td style="text-align:right;"><button class="btn btn-sindoor btn-sm" onclick="row(this,'Approved')">Approve</button> <button class="btn btn-peacock btn-sm" onclick="row(this,'Rejected')">Reject</button></td></tr>
+        <tr><td><b>Sneha Pillai</b> · host application, Thrissur</td><td>Host</td><td><span class="pill pill-open">q1–q10 complete</span></td>
+          <td style="text-align:right;"><button class="btn btn-peacock btn-sm" onclick="alert('Answers open in review panel (prototype)')">Review answers</button> <button class="btn btn-sindoor btn-sm" onclick="row(this,'Approved — Calendly sent')">Approve</button></td></tr>
+        <tr><td><b>Arjun Nair</b> · emergency city change, Kochi → Palakkad</td><td>Rider</td><td><span class="pill pill-gold">Outside 60-day window</span></td>
+          <td style="text-align:right;"><button class="btn btn-sindoor btn-sm" onclick="row(this,'Changed')">Allow</button></td></tr>
+      </table>
+    </div>
+
+    <div class="grid g2" style="margin-top:20px;">
+      <div class="card" id="finance">
+        <h3>Finance</h3>
+        <table style="margin-top:10px;">
+          <tr><td>Kochi</td><td><div class="progress" style="width:120px;"><span style="width:68%;"></span></div></td><td style="text-align:right;"><b>₹3.4L / 5L</b></td></tr>
+          <tr><td>Delhi NCR</td><td><div class="progress" style="width:120px;"><span style="width:88%;"></span></div></td><td style="text-align:right;"><b>₹8.8L / 10L</b></td></tr>
+          <tr><td>Chandigarh</td><td><div class="progress" style="width:120px;"><span style="width:61%;"></span></div></td><td style="text-align:right;"><b>₹3.05L / 5L</b></td></tr>
+        </table>
+        <div style="margin-top:14px;">
+          <button class="btn btn-peacock btn-sm" onclick="alert('donations.xlsx exported (prototype)')">Export to Excel</button>
+          <button class="btn btn-peacock btn-sm" onclick="alert('Razorpay reconciliation view (prototype)')">Reconcile Razorpay</button>
+        </div>
+        <p class="hint" style="margin-top:10px;">Foundation has read-only access to this view.</p>
+      </div>
+
+      <div class="card" id="ride">
+        <h3>Ride admin — Kochi <span class="pill pill-open">Host view</span></h3>
+        <label>Venue</label><input value="Marine Drive parking, Kochi">
+        <div class="grid g2">
+          <div><label>Date (Kerala)</label><input value="26 Jan 2027" disabled><p class="hint">Set per state</p></div>
+          <div><label>Flag-off</label><input value="07:15"></div>
+        </div>
+        <label>City fundraising target</label><input value="₹5,00,000">
+        <div style="margin-top:14px;">
+          <button class="btn btn-sindoor btn-sm" onclick="this.textContent=this.textContent==='Start ride'?'End ride':'Start ride'">Start ride</button>
+          <button class="btn btn-peacock btn-sm" onclick="alert('Event team: 4 members (prototype)')">Event team</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;" id="comms">
+      <h3>Communications</h3>
+      <div class="grid g3" style="margin-top:12px;">
+        <div><label>Audience</label><select><option>All riders</option><option>Kochi riders</option><option>Club admins</option><option>Hosts</option></select></div>
+        <div><label>Channels</label><select multiple size="3"><option selected>WhatsApp</option><option selected>Email</option><option>SMS</option></select></div>
+        <div><label>Template</label><select><option>Ride-day reminder</option><option>Approval notice</option><option>Fundraising milestone</option></select></div>
+      </div>
+      <button class="btn btn-sindoor btn-sm" style="margin-top:14px;" onclick="alert('Broadcast queued to 186 riders (prototype)')">Send broadcast</button>
+    </div>
+    <div style="height:40px;"></div>
+  </main>
+</div>
+<script>
+function row(btn,txt){ const td=btn.parentElement; td.innerHTML='<span class="pill pill-open">'+txt+'</span>'; }
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Spice Coast Riders</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<style>
+.update-card{background:#FFFDF8;border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-top:12px;}
+.update-card h4{font-size:15px;color:var(--peacock);margin-bottom:3px;}
+.update-card p{font-size:13px;color:#4A443C;line-height:1.55;}
+.update-card .when{font-size:11px;color:#9a8f7d;letter-spacing:.06em;text-transform:uppercase;margin-top:8px;}
+.mrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+.mrow:last-child{border-bottom:0;}
+.mrow .rank{width:34px;}
+</style>
+</head>
+<body>
+<div class="proto-tag">Prototype v2 — Public club page</div>
+
+<nav class="top">
+  <a class="logo" href="../ajr-homepage.html"><img src="../Assets/logo_v2.png" alt="AJR"></a>
+  <div class="links">
+    <a href="../ajr-homepage.html">Home</a>
+    <a href="city.html">Rides</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="downloads.html">Downloads</a><a href="donate.html" class="btn btn-peacock btn-sm">Donate</a>
+    <a href="rider-solo.html" class="avatar" style="width:36px;height:36px;font-size:13px;text-decoration:none;">AN</a>
+  </div>
+</nav>
+
+<div style="height:220px;overflow:hidden;background:var(--midnight);">
+  <img src="../Assets/Gen%20Content/Riders_laughing_at_chai_stall_202607141220_3.jpeg" alt="Club banner" style="width:100%;height:100%;object-fit:cover;">
+</div>
+
+<div class="wrap" style="margin-bottom:60px;">
+  <div class="page-head" style="display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap;margin-top:-44px;position:relative;z-index:2;">
+    <span class="avatar" style="width:88px;height:88px;font-size:26px;background:var(--sindoor);border:4px solid var(--sand);box-shadow:0 4px 12px rgba(0,0,0,.2);">SCR</span>
+    <div style="flex:1;min-width:240px;">
+      <h1 style="font-size:32px;">Spice Coast Riders</h1>
+      <p style="margin-top:4px;">Kochi, Kerala · est. 2019 · 42 members · <span class="pill pill-open">AJR approved</span></p>
+      <p class="hint" style="margin-top:2px;">Led by <b>Rahul Menon</b> · ajr.in/club/spice-coast-riders</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a class="btn btn-sindoor" href="donate.html">Donate to club</a>
+      <button class="btn btn-peacock" id="joinBtn" onclick="joinClub(this)">Request to join</button>
+      <button class="btn btn-peacock" onclick="alert('Club link copied (prototype)')">Share</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;background:#FFFDF8;border:1.5px solid var(--gold);">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+      <div>
+        <span class="pill pill-gold" style="font-size:11px;">Team fundraising campaign</span>
+        <h2 style="font-size:32px;color:var(--peacock);margin-top:6px;">₹1,20,400 <small style="font-size:16px;color:#8a7f6c;font-family:'Work Sans',sans-serif;">raised</small></h2>
+        <p class="hint" style="margin-top:2px;">Target <b>₹1,50,000</b> · 38 donors · #3 club in India · #1 in Kochi</p>
+      </div>
+      <div style="text-align:right;">
+        <div class="amount" style="font-size:24px;">80%</div>
+        <p class="hint">of goal</p>
+      </div>
+    </div>
+    <div class="progress" style="margin-top:14px;height:12px;"><span style="width:80%;"></span></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:20px;">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3>Top fundraisers</h3><a href="leaderboard.html" style="font-size:13px;">Full leaderboard</a>
+      </div>
+      <div class="mrow"><span class="rank">1</span><span class="avatar" style="width:38px;height:38px;font-size:13px;">RM</span><div style="flex:1;"><b>Rahul Menon</b> <span class="pill pill-gold" style="padding:2px 8px;">Captain</span></div><b>₹38,000</b></div>
+      <div class="mrow"><span class="rank">2</span><span class="avatar" style="width:38px;height:38px;font-size:13px;background:var(--gold);">DS</span><div style="flex:1;"><b>Divya Suresh</b> <span class="pill pill-open" style="padding:2px 8px;">Co-admin</span></div><b>₹24,500</b></div>
+      <div class="mrow"><span class="rank">3</span><span class="avatar" style="width:38px;height:38px;font-size:13px;background:var(--peacock);">JK</span><div style="flex:1;"><b>Jerin K</b></div><b>₹18,900</b></div>
+      <div class="mrow"><span class="rank">4</span><span class="avatar" style="width:38px;height:38px;font-size:13px;background:var(--midnight);">+39</span><div style="flex:1;"><span class="hint">39 more members</span></div><b>₹39,000</b></div>
+    </div>
+
+    <div class="card">
+      <h3>Club updates</h3>
+      <div class="update-card">
+        <h4>Practice ride this Sunday</h4>
+        <p>Meet 06:00 at Marine Drive. We'll run the full Republic Day route so everyone knows the turns. Helmets and PUC checked at start.</p>
+        <div class="when">Posted by Rahul Menon · 3 days ago</div>
+      </div>
+      <div class="update-card">
+        <h4>We crossed ₹1 lakh 🎉</h4>
+        <p>42 riders, 38 donors, one promise. Next stop: ₹1.5L before ride day. Share your pages.</p>
+        <div class="when">Posted by Rahul Menon · 1 week ago</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h3>Riding for</h3>
+    <p style="font-size:14px;line-height:1.7;color:#4A443C;margin-top:8px;">Spice Coast Riders rides the Kochi leg of the Amar Jawan Ride every Republic Day. Every rupee our members raise goes to the Veer Naari Shakti Resettlement Foundation, supporting the families of India's martyred soldiers.</p>
+    <p class="hint" style="margin-top:10px;">Kerala ride day: <b>26 January 2027</b> · <a href="city.html">see the Kochi ride details</a></p>
+  </div>
+
+  <div class="card dark" style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+    <div><h3>Ride with Spice Coast Riders</h3><p class="muted" style="font-size:14px;margin-top:4px;">One club at a time. Your raised total counts for the club too.</p></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-sindoor" onclick="joinClub(this)">Request to join</button>
+      <a class="btn btn-sand-outline" href="create-club.html">Create your own club</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer"><span>© 2027 Amar Jawan Riders</span><span><a href="club-admin.html">Captain view of this club →</a></span></div>
+
+<script>
+function joinClub(btn){
+  document.querySelectorAll('#joinBtn, .btn-sindoor').forEach(()=>{});
+  btn.outerHTML='<span class="pill" style="background:#E4EEE9;color:var(--peacock);padding:10px 18px;">Request sent — awaiting club admin</span>';
+}
+</script>
+<div class="role-switch"><b>View</b><a href="rider-solo.html">Solo</a><a href="rider-nocity.html">Solo · no city</a><a href="rider-member.html">Club member</a><a href="rider-admin.html">Club admin</a><a href="rider-public.html">Public rider</a><a href="rider-public-club.html">Public rider (club)</a><a href="club.html" class="on">Public club</a><a href="club-admin.html">Club captain</a><a href="city.html">City page</a><a href="downloads.html">Downloads</a></div>
+</body>
+</html>

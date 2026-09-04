@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Create a club</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<style>
+.upload{border:2px dashed #D8C9AC;border-radius:8px;padding:22px;text-align:center;cursor:pointer;background:#fff;transition:border-color .2s;}
+.upload:hover{border-color:var(--gold);}
+.upload b{font-size:14px;color:var(--peacock);}
+.upload p{font-size:12px;color:#9a8f7d;margin-top:4px;}
+.upload.done{border-style:solid;border-color:var(--peacock);background:#F0F5F3;}
+.admin-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);}
+.invite-box{display:flex;gap:8px;margin-top:8px;}
+.invite-box input{flex:1;background:var(--sand-deep);font-size:13px;}
+</style>
+</head>
+<body>
+<div class="proto-tag">Prototype v1</div>
+
+<div class="split">
+  <aside class="split-visual">
+    <img class="bg" src="../Assets/Gen%20Content/Riders_laughing_at_chai_stall_202607141220_4.jpeg" alt="">
+    <div class="veil"></div>
+    <div class="v-top"><a href="../ajr-homepage.html"><img src="../Assets/logo_v2_mono.png" alt="AJR"></a></div>
+    <div class="v-bottom">
+      <h2>Ride together.<br>Rise together.</h2>
+      <p>Clubs carry their city's name onto the leaderboard</p>
+    </div>
+  </aside>
+
+  <main class="split-form">
+  <a class="back" href="register.html">← Back to registration</a>
+  <div class="page-head" style="padding:22px 0 8px;">
+    <p class="kicker">New club</p>
+    <h1>Create your club</h1>
+    <p>Goes to AJR approval — usually within 48 hours.</p>
+  </div>
+
+  <div class="steps"><div class="step-dot on" data-d="1"></div><div class="step-dot" data-d="2"></div><div class="step-dot" data-d="3"></div><div class="step-dot" data-d="4"></div></div>
+
+  <div class="card">
+    <div class="step on" id="s1">
+      <h3>Club identity</h3>
+      <label>Club name</label><input id="cname" placeholder="Malabar Kings MC" oninput="dup(this)">
+      <p class="hint" id="dupHint">Checked against existing clubs to prevent duplicates.</p>
+      <div class="grid g2">
+        <div><label>Year of formation</label><select><option>2026</option><option>2025</option><option>2020</option><option>2015</option><option>Before 2010</option></select></div>
+        <div><label>Home city</label><select><option>Kochi</option><option>Palakkad</option><option>Mumbai</option><option>Delhi NCR</option></select></div>
+      </div>
+      <label>Initial Team Target Goal (₹) <span style="color:var(--sindoor);">* (Min ₹1,000)</span></label>
+      <input type="number" id="teamGoalInput" value="50000" min="1000" placeholder="50000">
+      <p class="hint">Initial fundraising target for your team (Minimum ₹1,000 INR).</p>
+      <button class="btn btn-sindoor" style="margin-top:20px;" onclick="go(2)">Continue</button>
+    </div>
+
+    <div class="step" id="s2">
+      <h3>Branding <span class="opt" style="font-size:13px;font-weight:400;color:#9a8f7d;">(Optional — can add later)</span></h3>
+      <p class="hint" style="margin-bottom:14px;">Upload your official club logo and header banner, or skip this step to add images later from your club management page.</p>
+      <label>Club logo</label>
+      <div class="upload" onclick="this.classList.add('done');this.innerHTML='<b>malabar-kings-logo.png</b><p>1:1 · 800x800 · uploaded</p>'">
+        <b>Upload logo</b><p>Square, min 400x400, PNG/JPG</p>
+      </div>
+      <label>Club banner</label>
+      <div class="upload" onclick="this.classList.add('done');this.innerHTML='<b>malabar-kings-banner.jpg</b><p>16:5 · 2400x750 · uploaded</p>'">
+        <b>Upload banner</b><p>Wide, min 1600x500 — tops your club page</p>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:20px;align-items:center;flex-wrap:wrap;">
+        <button class="btn btn-sindoor" onclick="go(3)">Continue with images</button>
+        <button class="btn btn-peacock" onclick="go(3)">Skip for now (add later)</button>
+      </div>
+    </div>
+
+    <div class="step" id="s3">
+      <h3>Admins</h3>
+      <div class="admin-row">
+        <span class="avatar">AN</span>
+        <div style="flex:1;"><b>Arjun Nair</b> <span class="pill pill-gold">Primary admin</span><p class="hint">You — the club creator is primary admin by default.</p></div>
+      </div>
+      <div class="admin-row" id="coRow" style="display:none;">
+        <span class="avatar" style="background:var(--gold);">DS</span>
+        <div style="flex:1;"><b>divya@email.com</b> <span class="pill pill-open">Co-admin invited</span></div>
+      </div>
+      <label>Add co-admin by email <span class="opt">(optional)</span></label>
+      <div class="invite-box">
+        <input type="email" placeholder="divya@email.com">
+        <button class="btn btn-peacock btn-sm" onclick="document.getElementById('coRow').style.display='flex'">Add</button>
+      </div>
+      <button class="btn btn-sindoor" style="margin-top:20px;" onclick="go(4)">Create club</button>
+    </div>
+
+    <div class="step" id="s4">
+      <div class="success">
+        <div class="big">Malabar Kings MC</div>
+        <p style="margin:12px 0 4px;"><span class="pill pill-almost">Pending AJR approval</span></p>
+        <p class="hint">You'll be notified on WhatsApp + email once approved. Meanwhile, start inviting riders:</p>
+        <label style="text-align:left;">Your club invitation link</label>
+        <div class="invite-box">
+          <input readonly value="ajr.in/join/malabar-kings-mc?ref=arjun@email.com">
+          <button class="btn btn-peacock btn-sm" onclick="this.textContent='Copied!'">Copy</button>
+        </div>
+        <p class="hint" style="text-align:left;margin-top:6px;">Invitees get a pre-filled registration with your club attached — they only add their own details.</p>
+        <div style="margin-top:24px;">
+          <a class="btn btn-sindoor" href="club.html">Preview club page</a>
+          <a class="btn btn-peacock" href="rider-admin.html">My profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="hint" style="margin-top:16px;">Approval includes a name-similarity duplicate check by AJR super admin.</p>
+  </main>
+</div>
+
+<script>
+function go(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+n).classList.add('on');
+  document.querySelectorAll('.step-dot').forEach(d=>d.classList.toggle('on',+d.dataset.d<=n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function dup(el){
+  const h=document.getElementById('dupHint');
+  if(el.value.toLowerCase().includes('malabar king')){h.innerHTML='<span style="color:var(--sindoor);font-weight:600;">Similar club exists: "Malabar King Riders" (Kozhikode) — approval may ask you to confirm.</span>';}
+  else{h.textContent='Checked against existing clubs to prevent duplicates.';}
+}
+</script>
+</body>
+</html>

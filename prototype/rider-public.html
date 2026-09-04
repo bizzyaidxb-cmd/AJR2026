@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arjun Nair — Amar Jawan Riders</title>
+<meta name="description" content="I ride for the families of the brave. Back my Republic Day ride for the Veer Naari Shakti Foundation.">
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<style>
+.pub-cover{height:250px;overflow:hidden;background:var(--midnight);position:relative;}
+.pub-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,43,46,0) 55%,rgba(12,43,46,.35) 100%);}
+.pub-cover img{width:100%;height:100%;object-fit:cover;object-position:center 62%;}
+.pub-head{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;padding-top:16px;padding-bottom:8px;position:relative;z-index:2;}
+.pub-head .pub-ava{margin-top:-62px;flex-shrink:0;}
+.pub-head .pub-id{flex:1;min-width:240px;padding-top:4px;}
+.pub-head .avatar{width:104px;height:104px;font-size:32px;background:var(--sindoor);border:4px solid var(--sand);box-shadow:0 4px 14px rgba(0,0,0,.2);}
+.pub-head h1{font-size:34px;line-height:1.1;}
+.goal-num{font-family:'Special Gothic Condensed One',sans-serif;font-size:40px;}
+.ach{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;margin-top:14px;}
+.ach-item{border:1px solid var(--line);border-radius:8px;padding:12px;text-align:center;background:#FFFDF8;font-size:12px;font-weight:600;opacity:.4;}
+.ach-item .ico{width:36px;height:36px;border-radius:50%;background:var(--sand-deep);margin:0 auto 7px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#B5A98F;}
+.ach-item.done{border-color:var(--gold);background:#FFF9EE;opacity:1;}
+.ach-item.done .ico{background:var(--gold);color:var(--sand);}
+.drow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+.drow:last-child{border-bottom:0;}
+.sticky-cta{position:sticky;top:80px;}
+@media(max-width:880px){.sticky-cta{position:static;}}
+</style>
+</head>
+<body>
+<div class="proto-tag">Prototype v2 — Public rider profile (solo)</div>
+
+<nav class="top">
+  <a class="logo" href="../ajr-homepage.html"><img src="../Assets/logo_v2.png" alt="AJR"></a>
+  <div class="links">
+    <a href="../ajr-homepage.html">Home</a>
+    <a href="city.html">Rides</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="downloads.html">Downloads</a><a href="donate.html" class="btn btn-peacock btn-sm">Donate</a>
+    <a href="register.html" class="btn btn-sindoor btn-sm">Register</a>
+  </div>
+</nav>
+
+<div class="pub-cover">
+  <img src="../Assets/asset%20set%202%20/Motorcycle_convoy_on_highway_2K_202608071746.jpeg" alt="">
+</div>
+
+<div class="wrap" style="margin-bottom:60px;">
+  <div class="pub-head">
+    <div class="pub-ava"><span class="avatar">AN</span></div>
+    <div class="pub-id">
+      <h1>Arjun Nair <span class="badge-lvl" style="vertical-align:middle;">Flame Bearer</span></h1>
+      <p style="margin-top:6px;">Kochi, Kerala · Royal Enfield Classic 350 · <span class="pill pill-gold">Solo rider</span></p>
+      <p class="hint" style="margin-top:3px;">Riding AJR since 2027 · ajr.in/arjun-nair</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a class="btn btn-sindoor" href="donate.html">Back Arjun's ride</a>
+      <button class="btn btn-peacock" onclick="alert('Share link copied (prototype)')">Share</button>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:24px;align-items:start;">
+    <div>
+      <div class="card" style="background:#FFFDF8;border:1.5px solid var(--gold);">
+        <span class="pill pill-gold" style="font-size:11px;">Fundraising for Republic Day 2027</span>
+        <div style="display:flex;align-items:baseline;gap:10px;margin-top:10px;flex-wrap:wrap;">
+          <span class="goal-num">₹8,400</span>
+          <span style="color:#8a7f6c;">raised of <b>₹25,000</b> goal</span>
+        </div>
+        <div class="progress" style="margin-top:12px;height:12px;"><span style="width:34%;"></span></div>
+        <p class="hint" style="margin-top:8px;">34% there · 12 supporters · #4 in Kochi</p>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <h3>Why I ride</h3>
+        <p style="font-size:15px;line-height:1.75;color:#4A443C;margin-top:8px;">My grandfather served 24 years in the Madras Regiment. Every Republic Day I ride so that the families of the men who didn't come home know that we remember — and so that the Veer Naari Shakti Foundation can keep standing behind them.</p>
+        <p style="font-size:15px;line-height:1.75;color:#4A443C;margin-top:10px;">Every rupee you give here goes to those families. Not to me, not to the ride. To them.</p>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <h3>Badges earned</h3>
+        <div class="ach">
+          <div class="ach-item done"><div class="ico">✓</div>First Salute</div>
+          <div class="ach-item done"><div class="ico">✓</div>Shared Page</div>
+          <div class="ach-item done"><div class="ico">✓</div>Rider Card</div>
+          <div class="ach-item"><div class="ico">•</div>₹10,000 Raised</div>
+          <div class="ach-item"><div class="ico">•</div>One Lakh Club</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <h3>Supporters <span class="pill pill-gold" style="font-size:11px;">12</span></h3>
+        <div class="drow"><span class="avatar" style="width:38px;height:38px;font-size:13px;background:var(--peacock);">PM</span><div style="flex:1;"><b>Priya Menon</b><p class="hint">"For your grandfather. Ride safe."</p></div><b>₹2,100</b></div>
+        <div class="drow"><span class="avatar" style="width:38px;height:38px;font-size:13px;background:var(--midnight);">?</span><div style="flex:1;"><b>Anonymous</b><p class="hint">Jai Hind 🇮🇳</p></div><b>₹5,000</b></div>
+        <div class="drow"><span class="avatar" style="width:38px;height:38px;font-size:13px;background:var(--gold);">A</span><div style="flex:1;"><b>Amma ❤</b></div><b>₹1,300</b></div>
+      </div>
+    </div>
+
+    <div class="sticky-cta">
+      <div class="card dark">
+        <h3>Back this ride</h3>
+        <p class="muted" style="font-size:14px;line-height:1.6;margin:10px 0 16px;">100% of your donation reaches the Veer Naari Shakti Resettlement Foundation, supporting the widows and children of India's martyred soldiers.</p>
+        <div class="grid g3" style="gap:8px;">
+          <a class="btn btn-sand-outline btn-sm" href="donate.html">₹500</a>
+          <a class="btn btn-sand-outline btn-sm" href="donate.html">₹2,100</a>
+          <a class="btn btn-sand-outline btn-sm" href="donate.html">₹5,100</a>
+        </div>
+        <a class="btn btn-sindoor" style="margin-top:12px;width:100%;text-align:center;" href="donate.html">Donate to Arjun</a>
+        <p class="muted" style="font-size:11px;margin-top:10px;">Razorpay secured · UPI, cards, netbanking · you can stay anonymous</p>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3 style="font-size:18px;">Arjun's ride</h3>
+        <table style="margin-top:8px;font-size:14px;">
+          <tr><td class="hint">City</td><td style="text-align:right;"><b>Kochi</b></td></tr>
+          <tr><td class="hint">Ride day</td><td style="text-align:right;"><b>26 Jan 2027</b></td></tr>
+          <tr><td class="hint">State</td><td style="text-align:right;">Kerala</td></tr>
+          <tr><td class="hint">Club</td><td style="text-align:right;">Riding solo</td></tr>
+        </table>
+        <a class="btn btn-peacock btn-sm" style="margin-top:12px;" href="city.html">See the Kochi ride</a>
+      </div>
+
+      <div class="card" style="margin-top:16px;text-align:center;">
+        <img src="../Assets/asset%20set%202%20/Emblem_seal_for_motorcycle_fundr%E2%80%A6_202608071746%201.png" alt="India's Largest Motorcycle Fundraiser" style="width:76px;height:76px;">
+        <p class="hint" style="margin-top:8px;">Part of India's largest motorcycle fundraiser</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer"><span>© 2027 Amar Jawan Riders</span><span><a href="register.html">Ride with us →</a></span></div>
+<div class="role-switch"><b>View</b><a href="rider-solo.html">Solo</a><a href="rider-nocity.html">Solo · no city</a><a href="rider-member.html">Club member</a><a href="rider-admin.html">Club admin</a><a href="rider-public.html" class="on">Public rider</a><a href="rider-public-club.html">Public rider (club)</a><a href="club.html">Public club</a><a href="club-admin.html">Club captain</a><a href="city.html">City page</a><a href="downloads.html">Downloads</a></div>
+</body>
+</html>

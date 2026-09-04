@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Leaderboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+</head>
+<body>
+<div class="proto-tag">Prototype v1</div>
+<nav class="top">
+  <a class="logo" href="../ajr-homepage.html"><img src="../Assets/logo_v2.png" alt="AJR"></a>
+  <div class="links"><a href="../ajr-homepage.html">Home</a><a href="city.html">Rides</a><a href="leaderboard.html" class="active">Leaderboard</a><a href="downloads.html">Downloads</a><a href="donate.html" class="btn btn-peacock btn-sm">Donate</a><a href="register.html" class="btn btn-sindoor btn-sm">Register</a></div>
+</nav>
+
+<div class="wrap">
+  <div class="page-head" style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+    <img src="../Assets/asset%20set%202%20/Medal_icon_with_eternal_flame_202608071745%201.png" alt="" style="width:92px;height:92px;filter:drop-shadow(0 3px 8px rgba(36,31,26,.15));">
+    <div>
+      <p class="kicker">All-time by default</p>
+      <h1>Leaderboard</h1>
+      <p>Riding is free. This board is not — it's earned in rupees raised for the families.</p>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+    <span style="font-size:13px;font-weight:600;color:var(--peacock);">Rides:</span>
+    <button class="pill pill-gold" style="border:0;cursor:pointer;" onclick="this.classList.toggle('pill-full')">✓ AJR 2027 — Republic Day</button>
+    <button class="pill pill-gold" style="border:0;cursor:pointer;" onclick="this.classList.toggle('pill-full')">✓ AJR 2027 — Kargil Diwas</button>
+    <span class="hint">All rides selected — click to exclude</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on" onclick="tab(this,'all')">All</button>
+    <button class="tab" onclick="tab(this,'clubs')">Top clubs</button>
+    <button class="tab" onclick="tab(this,'riders')">Top individuals</button>
+    <button class="tab" onclick="tab(this,'cities')">Top cities</button>
+  </div>
+
+  <div class="card" id="pane-all">
+    <table>
+      <tr><th></th><th>Name</th><th>Type</th><th>City</th><th style="text-align:right;">Raised</th></tr>
+      <tr><td class="rank">1</td><td><b>Highway Lions MC</b></td><td><span class="pill pill-open">Club</span></td><td>Delhi NCR</td><td style="text-align:right;"><b>₹4,80,500</b></td></tr>
+      <tr><td class="rank">2</td><td><b>Vikram Singh</b> <span class="badge-lvl">₹1L Club</span></td><td><span class="pill pill-gold">Solo</span></td><td>Chandigarh</td><td style="text-align:right;"><b>₹1,62,000</b></td></tr>
+      <tr><td class="rank">3</td><td><b>Spice Coast Riders</b></td><td><span class="pill pill-open">Club</span></td><td>Kochi</td><td style="text-align:right;"><b>₹1,20,400</b></td></tr>
+      <tr class="me"><td class="rank">4</td><td><b>Arjun Nair</b> <span class="hint">(you)</span></td><td><span class="pill pill-gold">Solo</span></td><td>Kochi</td><td style="text-align:right;"><b>₹84,100</b></td></tr>
+      <tr><td class="rank">5</td><td><b>Anonymous</b></td><td><span class="pill pill-full">Donor</span></td><td>Mumbai</td><td style="text-align:right;"><b>₹51,000</b></td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="pane-clubs" style="display:none;">
+    <table>
+      <tr><th></th><th>Club</th><th>Members</th><th>City</th><th style="text-align:right;">Raised</th></tr>
+      <tr><td class="rank">1</td><td><b>Highway Lions MC</b> <button class="btn btn-peacock btn-sm" onclick="this.closest('tr').nextElementSibling.style.display=this.closest('tr').nextElementSibling.style.display==='none'?'table-row':'none'">Top donors</button></td><td>68</td><td>Delhi NCR</td><td style="text-align:right;"><b>₹4,80,500</b></td></tr>
+      <tr style="display:none;background:#FBF6EA;"><td></td><td colspan="4" style="font-size:13px;">1. R. Malhotra — ₹1,10,000 · 2. Anonymous — ₹75,000 · 3. K. Bedi — ₹60,500</td></tr>
+      <tr><td class="rank">2</td><td><b>Spice Coast Riders</b></td><td>42</td><td>Kochi</td><td style="text-align:right;"><b>₹1,20,400</b></td></tr>
+      <tr><td class="rank">3</td><td><b>Deccan Thunder</b></td><td>35</td><td>Hyderabad</td><td style="text-align:right;"><b>₹98,000</b></td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="pane-riders" style="display:none;">
+    <table>
+      <tr><th></th><th>Rider</th><th>Level</th><th>City</th><th style="text-align:right;">Raised</th></tr>
+      <tr><td class="rank">1</td><td><b>Vikram Singh</b></td><td><span class="badge-lvl">₹1L Club</span></td><td>Chandigarh</td><td style="text-align:right;"><b>₹1,62,000</b></td></tr>
+      <tr class="me"><td class="rank">2</td><td><b>Arjun Nair</b> <span class="hint">(you)</span></td><td><span class="badge-lvl">Flame Bearer</span></td><td>Kochi</td><td style="text-align:right;"><b>₹84,100</b></td></tr>
+      <tr><td class="rank">3</td><td><b>Farhan Ali</b></td><td><span class="badge-lvl">Flame Bearer</span></td><td>Mumbai</td><td style="text-align:right;"><b>₹66,300</b></td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="pane-cities" style="display:none;">
+    <table>
+      <tr><th></th><th>City</th><th>Riders</th><th>Target</th><th style="text-align:right;">Raised</th></tr>
+      <tr><td class="rank">1</td><td><b>Delhi NCR</b></td><td>412</td><td><div class="progress" style="width:140px;"><span style="width:88%;"></span></div></td><td style="text-align:right;"><b>₹8,80,000</b></td></tr>
+      <tr><td class="rank">2</td><td><b>Kochi</b></td><td>186</td><td><div class="progress" style="width:140px;"><span style="width:68%;"></span></div></td><td style="text-align:right;"><b>₹3,40,000</b></td></tr>
+      <tr><td class="rank">3</td><td><b>Chandigarh</b></td><td>150</td><td><div class="progress" style="width:140px;"><span style="width:61%;"></span></div></td><td style="text-align:right;"><b>₹3,05,000</b></td></tr>
+    </table>
+  </div>
+  <div style="height:60px;"></div>
+</div>
+
+<script>
+function tab(btn,id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  ['all','clubs','riders','cities'].forEach(p=>document.getElementById('pane-'+p).style.display=p===id?'block':'none');
+}
+</script>
+</body>
+</html>

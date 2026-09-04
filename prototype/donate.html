@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Donate</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+</head>
+<body>
+<div class="proto-tag">Prototype v1</div>
+
+<div class="split">
+  <aside class="split-visual">
+    <video autoplay muted loop playsinline poster="../Assets/Gen%20Content/Eternal_flame_on_plinth_202607141220.jpeg">
+      <source src="../Assets/Gen%20Content/Animate_red_flame_flicker_1080p_202607141253.mp4" type="video/mp4">
+    </video>
+    <div class="veil"></div>
+    <div class="v-top"><a href="../ajr-homepage.html"><img src="../Assets/logo_v2_mono.png" alt="AJR"></a></div>
+    <div class="v-bottom">
+      <img src="../Assets/asset%20set%202%20/Emblem_seal_for_motorcycle_fundr%E2%80%A6_202608071746%201.png" alt="India's Largest Motorcycle Fundraiser" style="width:78px;height:78px;margin-bottom:14px;filter:drop-shadow(0 3px 10px rgba(0,0,0,.3));">
+      <h2>No martyr's family<br>fights alone.</h2>
+      <p>Every rupee reaches the Veer Naari Shakti Resettlement Foundation</p>
+    </div>
+  </aside>
+
+  <main class="split-form">
+  <a class="back" href="../ajr-homepage.html">← Back to home</a>
+  <div class="page-head" style="padding:22px 0 8px;">
+    <p class="kicker">No account needed</p>
+    <h1>Donate for the families of the brave</h1>
+  </div>
+
+  <div class="steps"><div class="step-dot on" data-d="1">Amount</div><div class="step-dot" data-d="2">Your details</div><div class="step-dot" data-d="3">Done</div></div>
+
+  <div class="card">
+    <div class="step on" id="s1">
+      <h3>Amount</h3>
+      <div class="grid g3" style="margin-top:14px;">
+        <button class="chip" onclick="amt(this,500)">₹500<small>A salute</small></button>
+        <button class="chip sel" onclick="amt(this,2100)">₹2,100<small>Most chosen</small></button>
+        <button class="chip" onclick="amt(this,5100)">₹5,100<small>A family's month</small></button>
+      </div>
+      <label>Or enter amount</label><input id="custom" type="number" placeholder="₹" value="2100">
+      <label>Dedicate to <span class="opt">(optional)</span></label>
+      <select><option>AJR general fund</option><option>Rider: Arjun Nair (Kochi)</option><option>Club: Spice Coast Riders</option><option>City: Kochi</option></select>
+      <p class="hint">Donations made from a rider, club, or city page auto-credit that page and its leaderboards.</p>
+      <button class="btn btn-sindoor" style="margin-top:20px;" onclick="go(2)">Continue</button>
+    </div>
+
+    <div class="step" id="s2">
+      <h3>Your details</h3>
+      <label>Full name</label><input placeholder="Priya Menon">
+      <div class="grid g2">
+        <div><label>Email</label><input type="email" placeholder="priya@email.com"></div>
+        <div><label>Phone</label><input type="tel" placeholder="+91 98950 00000"></div>
+      </div>
+      <div class="toggle">
+        <input type="checkbox" id="anon">
+        <label for="anon" style="margin:0;font-weight:500;color:var(--umber);">Keep me anonymous — show "Anonymous" on all public pages and leaderboards</label>
+      </div>
+      <p class="hint">Your details are always stored privately for the receipt — never displayed if anonymous.</p>
+      <button class="btn btn-sindoor" style="margin-top:20px;width:100%;" onclick="go(3)">Pay ₹2,100 with Razorpay</button>
+      <div class="trust-row">
+        <span><b>Razorpay</b> secured</span>
+        <span>UPI · Cards · Netbanking</span>
+        <span>100% to <b>Veer Naari Shakti Foundation</b></span>
+      </div>
+    </div>
+
+    <div class="step" id="s3">
+      <div class="success">
+        <div class="big">Salute, Priya.</div>
+        <p style="margin:12px 0;">₹2,100 received for the families of our martyrs.</p>
+        <p class="hint">Confirmation email sent · Razorpay receipt sent · Kochi total updated.</p>
+        <div style="margin:20px auto;max-width:380px;" class="card">
+          <div style="display:flex;justify-content:space-between;font-size:14px;"><span>Kochi city target</span><b>₹3.4L / ₹5L</b></div>
+          <div class="progress" style="margin-top:8px;"><span style="width:68%;"></span></div>
+        </div>
+        <a class="btn btn-peacock" href="leaderboard.html">See leaderboard</a>
+        <button class="btn btn-sindoor" onclick="restart()">Donate more</button>
+        <p class="hint" style="margin-top:14px;"><a href="../ajr-homepage.html" style="color:#8a7f6c;">Back to home</a></p>
+      </div>
+    </div>
+  </div>
+  </main>
+</div>
+
+<script>
+function go(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+n).classList.add('on');
+  document.querySelectorAll('.step-dot').forEach(d=>d.classList.toggle('on',+d.dataset.d<=n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function restart(){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('custom').value='';
+  document.querySelector('#s2 .btn-sindoor').textContent='Pay with Razorpay';
+  go(1);
+}
+function amt(b,v){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  b.classList.add('sel');
+  document.getElementById('custom').value=v;
+  document.querySelector('#s2 .btn-sindoor').textContent='Pay ₹'+v.toLocaleString('en-IN')+' with Razorpay';
+}
+document.getElementById('custom').addEventListener('input',e=>{
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  const v=+e.target.value||0;
+  document.querySelector('#s2 .btn-sindoor').textContent='Pay ₹'+v.toLocaleString('en-IN')+' with Razorpay';
+});
+</script>
+</body>
+</html>

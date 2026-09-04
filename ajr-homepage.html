@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amar Jawan Ride — We Ride. They Live Forever.</title>
+<meta name="description" content="Join thousands of riders across India raising funds for the families of our martyred heroes. India's largest motorcycle fundraiser — Republic Day 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&family=Mukta:wght@400;500&family=Tiro+Devanagari+Hindi&family=Manjari:wght@700&family=Catamaran:wght@700&family=Ramabhadra&family=Baloo+Paaji+2:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+  :root{
+    --sand:#F7EEE2;
+    --kesari:#C13B1B; /* warm vermillion accent — flame, glows, highlights (NOT party saffron) */
+    --sindoor:#B33114; /* primary: buttons & text-bearing surfaces */
+    --peacock:#124D52;
+    --gold:#B38B4B;
+    --midnight:#0C2B2E;
+    --umber:#241F1A;
+    --sand-deep:#EFE3D0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Work Sans',sans-serif;background:var(--sand);color:var(--umber);position:relative;}
+  h1,h2{font-family:'Special Gothic Condensed One',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:-.01em;line-height:.96;}
+  h3,.display{font-family:'Special Gothic Condensed One',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;}
+  .hindi{font-family:'Mukta',sans-serif;}
+  .display-hindi{font-family:'Tiro Devanagari Hindi',serif;}
+  section{position:relative;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .kicker{display:flex;justify-content:center;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+  .kicker::before{content:"";width:32px;height:1px;background:var(--gold);}
+  .btn{display:inline-block;padding:13px 30px;border-radius:4px;font-size:15px;font-weight:600;text-decoration:none;letter-spacing:.03em;transition:transform .15s ease, background .15s ease, color .15s ease;}
+  .btn:active{transform:scale(.98);}
+  .btn-sindoor{background:var(--sindoor);color:var(--sand);}
+  .btn-sindoor:hover{background:#9A2A10;}
+  .btn-peacock-outline{border:2px solid var(--peacock);color:var(--peacock);background:transparent;}
+  .btn-peacock-outline:hover{background:var(--peacock);color:var(--sand);}
+  .btn-sand-outline{border:2px solid var(--sand);color:var(--sand);background:transparent;}
+  .btn-sand-outline:hover{background:var(--sand);color:var(--midnight);}
+  .btn-sm{padding:9px 20px;font-size:14px;}
+
+  nav{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;}
+  .nav-logo{display:flex;align-items:center;text-decoration:none;}
+  .nav-logo img{height:52px;display:block;filter:drop-shadow(0 1px 6px rgba(12,43,46,.45));}
+  .nav-links{display:flex;gap:32px;align-items:center;}
+  .nav-links a{color:var(--sand);text-decoration:none;font-size:15px;font-weight:500;text-shadow:0 1px 8px rgba(12,43,46,.5);}
+  .nav-links a:hover{color:var(--gold);}
+  .nav-cta{display:flex;gap:12px;align-items:center;}
+
+  .hero{position:relative;height:100vh;min-height:700px;overflow:hidden;background:var(--midnight);}
+  .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .8s ease;}
+  .hero-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,43,46,.78) 0%,rgba(12,43,46,.42) 42%,rgba(12,43,46,.5) 72%,rgba(12,43,46,.85) 100%);}
+  .hero-center{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px 60px;}
+  .hero-date{display:inline-flex;align-items:center;gap:12px;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;}
+  .hero-date::before,.hero-date::after{content:"";width:38px;height:1px;background:var(--gold);opacity:.7;}
+  .hero h1{font-size:clamp(44px,6.2vw,84px);line-height:1.05;color:var(--sand);}
+  .hero h1 .accent{color:var(--kesari);text-shadow:0 2px 24px rgba(193,59,27,.35);}
+  .hero-hindi{font-size:clamp(19px,2.1vw,27px);color:var(--gold);margin-top:16px;}
+  .hero-sub{font-size:clamp(15px,1.2vw,17px);line-height:1.6;color:rgba(247,238,226,.82);max-width:520px;margin:18px auto 34px;}
+  .hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .hero-bottom{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:0 44px 30px;}
+  .hero-seal{width:84px;height:84px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.4));}
+  .countdown{display:flex;gap:10px;}
+  .cd-cell{background:rgba(247,238,226,.08);border:1px solid rgba(179,139,75,.35);backdrop-filter:blur(3px);color:var(--sand);border-radius:6px;padding:10px 0;width:72px;text-align:center;}
+  .cd-num{font-family:'Special Gothic Condensed One',sans-serif;font-size:26px;line-height:1;}
+  .cd-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-top:4px;color:var(--gold);}
+  .hero-scrollhint{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(247,238,226,.55);writing-mode:vertical-rl;position:absolute;right:44px;top:50%;transform:translateY(-50%);z-index:6;}
+  @media (max-width:880px){
+    .hero-bottom{flex-direction:column;align-items:center;padding:0 20px 24px;}
+    .hero-seal{display:none;}
+    .hero-scrollhint{display:none;}
+    .countdown{flex-wrap:wrap;justify-content:center;}
+  }
+
+  .creed-text{max-width:900px;margin:0 auto;text-align:center;font-family:'Special Gothic Condensed One',sans-serif;text-transform:uppercase;font-size:clamp(34px,5.4vw,76px);line-height:.98;letter-spacing:-.01em;color:var(--sand);}
+  .creed-text .w{display:inline-block;}
+  .creed-text .acc{color:var(--kesari);}
+  .about{background:var(--midnight);padding:0 24px;position:relative;overflow:hidden;}
+  .about .wrap{max-width:820px;position:relative;z-index:1;text-align:center;padding-bottom:28px;}
+  .about-glow{position:absolute;top:2%;left:50%;transform:translateX(-50%);width:620px;height:620px;background:radial-gradient(circle,rgba(193,59,27,.2),transparent 62%);pointer-events:none;}
+  .about h2{font-size:clamp(40px,5.2vw,78px);color:var(--sand);}
+  .about h2 em{font-style:normal;color:var(--kesari);}
+  .about-copy{font-size:17px;line-height:1.75;color:rgba(247,238,226,.78);max-width:560px;margin:20px auto 0;}
+  .about-hint{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8FB0AC;margin-top:26px;}
+  /* Lanyard */
+  .lanyard-zone{position:relative;height:min(46vh,420px);margin-bottom:26px;touch-action:none;}
+  #bandCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;}
+  .ajr-badge{position:absolute;top:0;left:0;width:160px;cursor:grab;user-select:none;-webkit-user-drag:none;will-change:transform;filter:drop-shadow(0 22px 40px rgba(0,0,0,.55));}
+  .ajr-badge:active{cursor:grabbing;}
+  @media (max-width:880px){
+    .lanyard-zone{height:44vh;}
+  }
+  .stats{background:var(--midnight);padding:64px 24px;position:relative;overflow:hidden;}
+  .stats::before,.about::before,.gateway::before{content:"";position:absolute;inset:0;background:url("Assets/pattern_tile.png") repeat;background-size:420px;opacity:.055;pointer-events:none;}
+  .stats-inner{position:relative;z-index:1;}
+  .stats-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;text-align:center;}
+  .stat-num{font-family:'Special Gothic Condensed One',sans-serif;font-size:48px;color:var(--sand);}
+  .stat-num span{color:var(--gold);}
+  .stat-label{font-size:14px;letter-spacing:.06em;color:#8FB0AC;margin-top:6px;}
+
+  .motive{padding:112px 0;overflow:hidden;}
+  .motive .wrap{max-width:980px;text-align:center;}
+  .motive h2{font-size:clamp(48px,6.6vw,104px);line-height:1;margin-top:6px;}
+  .motive h2 em{font-style:normal;color:var(--sindoor);}
+  .arch-clip{display:inline-block;width:.85em;height:1.3em;border-radius:999px 999px 10px 10px;overflow:hidden;vertical-align:-.05em;margin:-.25em .08em;box-shadow:0 6px 22px rgba(12,43,46,.25);will-change:transform;}
+  .arch-clip video,.arch-clip img{width:100%;height:100%;object-fit:cover;display:block;}
+  .t-left,.t-right{display:inline-block;will-change:transform;}
+  .sec-body{margin-top:30px;}
+  .motive p{font-size:17px;line-height:1.7;color:#4A443C;max-width:640px;margin:0 auto 16px;}
+  .motive .btn{margin-top:12px;}
+  .link{color:var(--peacock);font-weight:600;text-decoration:none;border-bottom:2px solid var(--gold);padding-bottom:2px;}
+
+  .rides{background:var(--sand-deep);padding:104px 0 0;}
+  .rides .head{max-width:820px;margin:0 auto 20px;text-align:center;padding:0 24px;}
+  .rides h2{font-size:clamp(34px,4.4vw,54px);margin-bottom:10px;}
+  .rides-sub{font-size:17px;color:#4A443C;line-height:1.6;}
+  .ride-search{max-width:520px;margin:26px auto 34px;position:relative;padding:0 24px;}
+  .ride-search input{width:100%;padding:15px 20px 15px 46px;border:1.5px solid #D8C9AC;border-radius:99px;background:#FFFDF8;font-family:'Work Sans',sans-serif;font-size:16px;color:var(--umber);transition:border-color .15s,box-shadow .15s;}
+  .ride-search input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(179,139,75,.16);}
+  .ride-search .ic{position:absolute;left:42px;top:50%;transform:translateY(-50%);color:#9a8f7d;font-size:16px;pointer-events:none;}
+  .ride-sugg{position:absolute;left:24px;right:24px;top:calc(100% + 6px);background:#FFFDF8;border:1px solid #E2D4BC;border-radius:12px;box-shadow:0 16px 40px rgba(36,31,26,.14);z-index:900;overflow:hidden;display:none;}
+  .ride-sugg div{padding:12px 18px;font-size:14.5px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .ride-sugg div:hover{background:#FBF6EA;}
+  .map-wrap{position:relative;}
+  #rideMap{height:620px;width:100%;background:var(--sand-deep);z-index:1;}
+  .map-hint{position:absolute;top:20px;left:20px;z-index:800;background:rgba(12,43,46,.72);backdrop-filter:blur(8px);border:1px solid rgba(179,139,75,.4);color:var(--sand);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;border-radius:99px;}
+  .map-legend{position:absolute;bottom:24px;left:20px;z-index:800;background:rgba(12,43,46,.72);backdrop-filter:blur(8px);border:1px solid rgba(179,139,75,.4);color:var(--sand);font-size:12px;padding:12px 16px;border-radius:10px;display:flex;flex-direction:column;gap:7px;}
+  .map-legend span{display:flex;align-items:center;gap:8px;}
+  .map-legend i{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .ajr-pop .leaflet-popup-content-wrapper{background:var(--sand);color:var(--umber);border-radius:12px;box-shadow:0 14px 34px rgba(12,43,46,.3);font-family:'Work Sans',sans-serif;}
+  .ajr-pop .leaflet-popup-content{margin:16px 18px;min-width:210px;}
+  .ajr-pop .leaflet-popup-tip{background:var(--sand);}
+  .pop-city{font-family:'Special Gothic Condensed One',sans-serif;font-size:22px;text-transform:uppercase;letter-spacing:0;}
+  .pop-meta{font-size:12.5px;color:#8a7f6c;margin:3px 0 10px;}
+  .pop-btn{display:inline-block;background:var(--sindoor);color:var(--sand)!important;font-size:12.5px;font-weight:600;padding:8px 16px;border-radius:5px;text-decoration:none;}
+  .pop-btn.alt{background:transparent;border:1.5px solid var(--peacock);color:var(--peacock)!important;}
+  .city-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;}
+  .city{display:flex;align-items:center;justify-content:space-between;background:var(--sand);border:1px solid #E2D4BC;border-radius:6px;padding:12px 16px;font-weight:500;font-size:15px;}
+  .pill{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:99px;}
+  .pill-open{background:#E4EEE9;color:var(--peacock);}
+  .pill-almost{background:#F6E3D8;color:var(--sindoor);}
+  .pill-soon{background:#EFE6D3;color:#7A5A1E;}
+
+  .experience{padding:104px 0;background:var(--sand-deep);}
+  .experience h2{font-size:clamp(30px,3.6vw,42px);text-align:center;margin-bottom:10px;}
+  .experience .lead{text-align:center;font-size:17px;color:#4A443C;max-width:620px;margin:0 auto 52px;line-height:1.6;}
+  .exp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+  .exp-card{background:#FFFDF8;border:1px solid #E9DEC9;border-radius:10px;overflow:hidden;}
+  .exp-card img,.exp-card video{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;}
+  .exp-body{padding:24px;}
+  .exp-body h3{font-size:22px;margin-bottom:8px;color:var(--peacock);}
+  .exp-body p{font-size:15px;line-height:1.65;color:#4A443C;}
+
+
+  .help{padding:104px 0;}
+  .help .wrap{max-width:980px;text-align:center;}
+  .help .kicker{display:flex;justify-content:center;}
+  .help h2{font-size:clamp(32px,4.2vw,52px);margin-bottom:40px;}
+  .help-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;margin-bottom:8px;}
+  .help-item{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .help-num{font-family:'Special Gothic Condensed One',sans-serif;font-size:34px;color:var(--gold);line-height:1;}
+  .help-item h3{font-size:20px;margin-bottom:2px;color:var(--peacock);}
+  .help-item p{font-size:15px;line-height:1.6;color:#4A443C;max-width:300px;}
+
+  .final{background:var(--sindoor);padding:96px 24px;text-align:center;color:var(--sand);}
+  .final h2{font-size:clamp(30px,4vw,48px);margin-bottom:12px;color:var(--sand);}
+  .final p{font-size:17px;max-width:560px;margin:0 auto 32px;line-height:1.6;color:#F3D9CE;}
+  .final .btn-sand{background:var(--sand);color:var(--sindoor);}
+  .final .btn-sand:hover{background:#fff;}
+
+  footer{background:var(--midnight);color:#8FB0AC;padding:72px 24px 36px;}
+  .foot-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;}
+  .foot-brand img{height:132px;display:block;margin-bottom:16px;}
+  .foot-brand p{font-size:14px;line-height:1.6;max-width:280px;}
+  footer h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:600;}
+  footer ul{list-style:none;}
+  footer li{margin-bottom:10px;}
+  footer a{color:#B8CDC9;text-decoration:none;font-size:14px;}
+  footer a:hover{color:var(--sand);}
+  .foot-base{max-width:1120px;margin:56px auto 0;padding-top:24px;border-top:1px solid #1D4247;display:flex;justify-content:space-between;font-size:13px;flex-wrap:wrap;gap:8px;}
+
+
+  .intro{position:fixed;inset:0;z-index:300;background:var(--midnight);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;}
+  .intro-word{font-family:'Special Gothic Condensed One','Tiro Devanagari Hindi','Manjari','Catamaran','Ramabhadra','Baloo Paaji 2',serif;font-size:clamp(34px,5.5vw,72px);color:var(--sand);line-height:1.2;position:relative;text-align:center;}
+  .intro-word .seam{color:var(--kesari);}
+  .intro-sub{font-size:clamp(11px,1.1vw,14px);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:18px;opacity:0;position:relative;}
+  .intro-skip{position:absolute;bottom:26px;right:32px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,238,226,.45);}
+  .intro-load{position:absolute;bottom:0;left:0;height:2px;width:0;background:var(--kesari);}
+
+  .film{background:var(--midnight);padding:104px 0;position:relative;overflow:hidden;}
+  .film::before{content:"";position:absolute;inset:0;background:url("Assets/pattern_tile.png") repeat;background-size:420px;opacity:.055;pointer-events:none;}
+  .film .wrap{position:relative;z-index:1;max-width:980px;}
+  .film h2{font-size:clamp(30px,3.6vw,42px);color:var(--sand);text-align:center;margin-bottom:10px;}
+  .film .lead{text-align:center;color:#8FB0AC;font-size:16px;margin-bottom:36px;}
+  .film-frame{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid rgba(179,139,75,.35);background:#0A2225;display:flex;align-items:center;justify-content:center;}
+  .film-frame img.poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35;}
+  .film-play{position:relative;z-index:2;width:88px;height:88px;border-radius:50%;border:2px solid var(--gold);background:rgba(12,43,46,.6);color:var(--gold);font-size:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s ease;}
+  .film-play:hover{transform:scale(1.06);}
+  .film-note{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#8FB0AC;font-size:13px;letter-spacing:.08em;z-index:2;}
+
+  .gateway{position:relative;height:280vh;background:var(--midnight);}
+  .gateway-sticky{position:sticky;top:0;height:100vh;overflow:hidden;}
+  .gateway-scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:1;}
+  .gateway-scene .flame-sm{width:min(150px,26vw);border-radius:999px 999px 10px 10px;margin-bottom:26px;box-shadow:0 8px 28px rgba(0,0,0,.35);}
+  .gateway-scene .creed-text{margin-bottom:14px;}
+  .gateway-scene .gw-hindi{font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(18px,2.4vw,26px);color:var(--gold);margin-bottom:26px;}
+  .gateway-door{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;will-change:transform;}
+
+  .journey{position:fixed;top:96px;bottom:28px;right:26px;width:64px;z-index:9;pointer-events:none;opacity:0;transition:opacity .5s ease;}
+  .journey.on{opacity:1;}
+  .journey::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:0;border-left:2px dashed rgba(179,139,75,.55);}
+  .journey img{position:relative;width:54px;display:block;margin:0 auto;will-change:transform;filter:drop-shadow(0 0 1px rgba(247,238,226,.8));}
+  @media (max-width:1100px){.journey{display:none;}}
+  .exp-card img{transition:transform .5s ease;}
+  .exp-card:hover img{transform:scale(1.04);}
+  .city{transition:border-color .2s ease, transform .2s ease;}
+  .city:hover{border-color:var(--gold);transform:translateX(4px);}
+
+  @media (max-width:880px){
+    nav{padding:14px 16px;}
+    .nav-links{display:none;}
+    .nav-logo img{height:38px;}
+    .nav-cta{gap:8px;}
+    .nav-cta .btn{padding:8px 13px;font-size:13px;white-space:nowrap;}
+    .motive,.rides,.experience,.help{padding:64px 0;}
+    .cd-cell{width:72px;}
+    .foot-inner{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-word" id="introWord">A<span class="seam">.</span>J<span class="seam">.</span>R</div>
+  <div class="intro-sub" id="introSub">One day &middot; Every language &middot; One promise</div>
+  <div class="intro-skip">Click to skip</div>
+  <div class="intro-load" id="introLoad"></div>
+</div>
+<div class="journey" id="journey" aria-hidden="true">
+  <img id="journeyBike" src="Assets/Motorcycle_rider_silhouette_on_w%E2%80%A6_202607141529%201.png" alt="">
+</div>
+
+<nav>
+  <a class="nav-logo" href="#"><img src="Assets/logo_v3_h.svg" alt="Amar Jawan Ride"></a>
+  <div class="nav-links">
+    <a href="#motive">About</a>
+    <a href="#rides">Rides</a>
+    <a href="#experience">Experience</a>
+    <a href="#motive">Our cause</a>
+    <a href="prototype/leaderboard.html">Leaderboard</a>
+  </div>
+  <div class="nav-cta">
+    <a class="btn btn-sindoor btn-sm" href="prototype/register.html">Register</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <video id="heroIntro" autoplay muted playsinline poster="Assets/hero/hero_poster.jpg">
+    <source src="Assets/hero/hero_intro.mp4?v=3" type="video/mp4">
+  </video>
+  <video id="heroLoop" muted playsinline preload="auto" style="opacity:0;">
+    <source src="Assets/hero/hero_loop.mp4?v=2" type="video/mp4">
+  </video>
+  <div class="hero-veil"></div>
+  <div class="hero-center">
+    <p class="hero-date">India's Largest Motorcycle Fundraiser</p>
+    <h1>We ride.<br><span class="accent">They live forever.</span></h1>
+    <p class="hero-hindi display-hindi">हर मील, एक सलामी</p>
+    <p class="hero-sub">Republic Day 2027 · thousands of riders, one promise to the families of our martyred heroes.</p>
+    <div class="hero-actions">
+      <a class="btn btn-sindoor" href="prototype/register.html">Register to ride</a>
+    </div>
+  </div>
+  <p class="hero-scrollhint">Scroll — the ride begins</p>
+  <div class="hero-bottom">
+    <div class="countdown">
+      <div class="cd-cell"><div class="cd-num" id="d">--</div><div class="cd-label">Days</div></div>
+      <div class="cd-cell"><div class="cd-num" id="h">--</div><div class="cd-label">Hours</div></div>
+      <div class="cd-cell"><div class="cd-num" id="m">--</div><div class="cd-label">Minutes</div></div>
+      <div class="cd-cell"><div class="cd-num" id="s">--</div><div class="cd-label">Seconds</div></div>
+    </div>
+    <img class="hero-seal" src="Assets/asset%20set%202/Emblem_seal_for_motorcycle_fundr%E2%80%A6_202608071746%201.png" alt="India's Largest Motorcycle Fundraiser">
+  </div>
+</header>
+
+<section class="about" id="about">
+  <div class="about-glow"></div>
+  <div class="wrap">
+    <div class="lanyard-zone" id="lanyardZone">
+      <canvas id="bandCanvas"></canvas>
+      <img class="ajr-badge" id="ajrCard" src="Assets/badge_metal.png" alt="AJR rider badge" draggable="false">
+    </div>
+    <div class="about-text">
+      <h2>India's largest<br><em>motorcycle fundraiser</em></h2>
+      <p class="about-copy">The Amar Jawan Ride brings thousands of riders onto the road every Republic Day — in their own cities, on their own machines — to honour India's martyred soldiers and stand behind the families they left in our care.</p>
+      <p class="about-copy">Register free, ride your city, and carry the salute with your own rider ID.</p>
+      <p class="about-hint">◦ &nbsp;Go on — grab the badge</p>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-inner">
+    <div><div class="stat-num"><span>₹</span><span class="count" data-target="1840000">0</span></div><div class="stat-label">Raised for martyr families</div></div>
+    <div><div class="stat-num"><span class="count" data-target="3000">0</span><span>+</span></div><div class="stat-label">Riders across India</div></div>
+    <div><div class="stat-num"><span class="count" data-target="25">0</span></div><div class="stat-label">Cities riding together</div></div>
+    <div><div class="stat-num">1</div><div class="stat-label">Cause. Our Amar Jawan</div></div>
+  </div>
+</section>
+
+
+
+<section class="rides" id="rides">
+  <div class="head">
+    <p class="kicker">Find your ride</p>
+    <h2>25 cities. One salute.</h2>
+    <p class="rides-sub">Guided group rides within city limits — pre-defined routes, ride marshals, thousands of riders. Search your city.</p>
+  </div>
+  <div class="ride-search">
+    <span class="ic">⌕</span>
+    <input id="rideSearch" type="text" placeholder="Search your city — Kochi, Mumbai, Jaipur…" autocomplete="off">
+    <div class="ride-sugg" id="rideSugg"></div>
+  </div>
+  <div class="map-wrap">
+    <div id="rideMap"></div>
+    <div class="map-hint">◎&nbsp; Click a city marker</div>
+    <div class="map-legend">
+      <span><i style="background:#B33114;"></i> Ride live — open</span>
+      <span><i style="background:#B38B4B;"></i> Almost full</span>
+      <span><i style="background:transparent;border:2px solid #8FB0AC;"></i> Coming soon</span>
+    </div>
+  </div>
+</section>
+
+<section class="motive" id="motive">
+  <div class="wrap">
+    <p class="kicker">Why we ride</p>
+    <h2><span class="t-left">For the families</span> <span class="arch-clip"><video autoplay muted loop playsinline poster="Assets/jyoti_arch.jpg" aria-label="The Amar Jawan Jyoti" onerror="this.replaceWith(Object.assign(document.createElement('img'),{src:'Assets/jyoti_arch.jpg',alt:'The Amar Jawan Jyoti'}))"><source src="Assets/jyoti_arch.mp4" type="video/mp4"></video></span> <span class="t-right">of <em>the brave</em></span></h2>
+    <div class="sec-body">
+      <p>Every rupee raised goes to the Veer Naari Shakti Resettlement Foundation, supporting the widows, children and dependents of India's martyred soldiers with a dignified, sustainable livelihood.</p>
+      <p>One day. One ride. A salute that never fades.</p>
+      <a class="btn btn-sindoor" href="#">Read our story</a>
+    </div>
+  </div>
+</section>
+
+<section class="experience" id="experience">
+  <div class="wrap">
+    <p class="kicker">The experience</p>
+    <h2>One day like no other</h2>
+    <p class="lead">Three experiences woven into every AJR ride — joy, brotherhood and national pride.</p>
+    <div class="exp-grid">
+      <div class="exp-card">
+        <img src="Assets/Gen%20Content/Motorcycle_convoy_riding_on_highway_202607141220_2.jpeg" alt="The ride">
+        <div class="exp-body">
+          <h3>The ride</h3>
+          <p>A guided convoy through your city — pre-defined route, trained marshals, and the roar of a thousand engines in tribute.</p>
+        </div>
+      </div>
+      <div class="exp-card">
+        <video autoplay muted loop playsinline poster="Assets/Gen%20Content/Riders_laughing_at_chai_stall_202607141220_4.jpeg" aria-label="The brotherhood">
+          <source src="Assets/Gen%20Content/Steam_rising_from_chai_kettle_202607141253.mp4" type="video/mp4">
+        </video>
+        <div class="exp-body">
+          <h3>The brotherhood</h3>
+          <p>Dress to the theme — Proudly Indian. Meet the nicest people on motorcycles, from vintage clubs to weekend riders.</p>
+        </div>
+      </div>
+      <div class="exp-card">
+        <video autoplay muted loop playsinline poster="Assets/Gen%20Content/Winged_medal_badge_on_ribbon_202607141220_3.jpeg" aria-label="The honour">
+          <source src="Assets/Gen%20Content/Light_sweep_on_gold_wings_202607141251.mp4" type="video/mp4">
+        </video>
+        <div class="exp-body">
+          <h3>The honour</h3>
+          <p>Every registered rider carries the AJR badge — a mark of the salute you rode, and the family your miles support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="film" id="film">
+  <div class="wrap">
+    <p class="kicker">The official film</p>
+    <h2>Watch the Amar Jawan Ride</h2>
+    <p class="lead">The story of the ride, told by the riders and the families it stands for.</p>
+    <div class="film-frame">
+      <img class="poster" src="Assets/asset%20set%202/Motorcycle_convoy_on_highway_2K_202608071746.jpeg" alt="">
+      <button class="film-play" onclick="alert('The official AJR film premieres soon — uploaded by the AJR team from the admin portal.')" aria-label="Play the AJR film">▶</button>
+      <p class="film-note">The official AJR film — coming soon</p>
+    </div>
+  </div>
+</section>
+
+<section class="help">
+  <div class="wrap">
+    <p class="kicker">How you can help</p>
+    <h2>Ride. Support. Share.</h2>
+    <div class="help-grid">
+      <div class="help-item">
+        <div class="help-num">01</div>
+        <h3>Register to ride</h3><p>Join your city's convoy this Republic Day. Every registration funds a family's tomorrow.</p>
+      </div>
+      <div class="help-item">
+        <div class="help-num">02</div>
+        <h3>Stand with the families</h3><p>Can't ride? You can still stand behind a rider — every rupee raised reaches the Veer Naari Shakti Foundation.</p>
+      </div>
+      <div class="help-item">
+        <div class="help-num">03</div>
+        <h3>Bring your club</h3><p>Register your riding club, train as a ride marshal, and help your city's ride roll safely.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;justify-content:center;">
+      <a class="btn btn-sindoor" href="prototype/register.html">Register</a>
+    </div>
+  </div>
+</section>
+
+<section class="gateway" id="gateway">
+  <div class="gateway-sticky">
+    <div class="gateway-scene">
+      <img class="flame-sm" src="Assets/jyoti_arch.jpg" alt="Amar Jawan Jyoti">
+      <p class="creed-text">
+        <span class="w">They</span> <span class="w">gave</span> <span class="w">their</span> <span class="w acc">tomorrow</span> <span class="w">for</span> <span class="w">our</span> <span class="w acc">today.</span>
+        <span class="w">We</span> <span class="w">ride</span> <span class="w">so</span> <span class="w">their</span> <span class="w">families</span> <span class="w acc">never</span> <span class="w acc">stand</span> <span class="w acc">alone.</span>
+      </p>
+      <p class="gw-hindi">अमर जवान, अमर रहें</p>
+      <a class="btn btn-sand-outline" href="prototype/register.html">Register for the ride</a>
+    </div>
+    <img class="gateway-door" src="Assets/mandir%20trasparent.png" alt="">
+  </div>
+</section>
+
+<section class="final">
+  <h2>Ready to ride for them?</h2>
+  <p>Whether you ride, donate, or spread the word — every action honours our Amar Jawan and strengthens the families they left in our care.</p>
+  <a class="btn btn-sand" href="prototype/register.html">Register for Republic Day 2027</a>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="Assets/logo_v3_v.svg" alt="Amar Jawan Ride">
+      <p>The Amar Jawan Ride — India's largest motorcycle fundraiser, riding for the families of our martyred heroes every Republic Day.</p>
+    </div>
+    <div>
+      <h4>The ride</h4>
+      <ul>
+        <li><a href="#motive">About AJR</a></li>
+        <li><a href="prototype/city.html">Find a ride</a></li>
+        <li><a href="prototype/host.html">Host a ride</a></li>
+        <li><a href="prototype/downloads.html">Downloads &amp; media kit</a></li>
+        <li><a href="#">Dress theme guide</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>The cause</h4>
+      <ul>
+        <li><a href="#gateway">Families we support</a></li>
+        <li><a href="#">Veer Naari Shakti Foundation</a></li>
+        <li><a href="#">Where funds go</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Community</h4>
+      <ul>
+        <li><a href="prototype/club.html">Riding clubs</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-base">
+    <span>© 2027 The Amar Jawan Ride</span>
+    <span>Privacy · Terms · Ride safety</span>
+  </div>
+</footer>
+
+<script>
+  const target = new Date("2027-01-26T07:00:00+05:30").getTime();
+  const pad = n => String(n).padStart(2,"0");
+  function tick(){
+    const diff = Math.max(0, target - Date.now());
+    document.getElementById("d").textContent = pad(Math.floor(diff/864e5));
+    document.getElementById("h").textContent = pad(Math.floor(diff/36e5)%24);
+    document.getElementById("m").textContent = pad(Math.floor(diff/6e4)%60);
+    document.getElementById("s").textContent = pad(Math.floor(diff/1e3)%60);
+  }
+  tick(); setInterval(tick,1000);
+
+  const hIntro=document.getElementById("heroIntro"), hLoop=document.getElementById("heroLoop");
+  function startHero(){ try{ hIntro.currentTime=0; hIntro.play(); }catch(e){} }
+  // Full cycle, nothing cut: intro film (14.5s) -> flag convoy (4s) -> back to intro, forever.
+  function toLoop(){ try{ hLoop.currentTime=0; hLoop.play(); }catch(e){} hLoop.style.opacity=1; hIntro.style.opacity=0; }
+  function toIntro(){ startHero(); hIntro.style.opacity=1; hLoop.style.opacity=0; }
+  hIntro.addEventListener("ended", toLoop);
+  hIntro.addEventListener("error", toLoop);
+  hLoop.addEventListener("ended", toIntro);
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){ hIntro.pause(); hLoop.setAttribute("loop",""); toLoop(); }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+(function(){
+  if(!window.L) return;
+  const CITIES=[
+    {name:"Kochi",state:"Kerala",lat:9.9312,lng:76.2673,status:"almost",date:"26 Jan 2027",riders:"186 / 220 riders",link:"prototype/city.html"},
+    {name:"Palakkad",state:"Kerala",lat:10.7867,lng:76.6548,status:"open",date:"26 Jan 2027",riders:"64 riders so far",link:"prototype/register.html"},
+    {name:"Mumbai",state:"Maharashtra",lat:19.0760,lng:72.8777,status:"open",date:"26 Jan 2027",riders:"241 riders so far",link:"prototype/register.html"},
+    {name:"Delhi NCR",state:"Delhi NCR",lat:28.6139,lng:77.2090,status:"almost",date:"26 Jan 2027",riders:"412 / 450 riders",link:"prototype/register.html"},
+    {name:"Chandigarh",state:"Punjab",lat:30.7333,lng:76.7794,status:"open",date:"26 Jan 2027",riders:"150 riders so far",link:"prototype/register.html"},
+    {name:"Jaipur",state:"Rajasthan",lat:26.9124,lng:75.7873,status:"open",date:"26 Jan 2027",riders:"98 riders so far",link:"prototype/register.html"},
+    {name:"Hyderabad",state:"Telangana",lat:17.3850,lng:78.4867,status:"soon"},
+    {name:"Bengaluru",state:"Karnataka",lat:12.9716,lng:77.5946,status:"soon"},
+    {name:"Pune",state:"Maharashtra",lat:18.5204,lng:73.8567,status:"soon"},
+    {name:"Kolkata",state:"West Bengal",lat:22.5726,lng:88.3639,status:"soon"},
+    {name:"Ahmedabad",state:"Gujarat",lat:23.0225,lng:72.5714,status:"soon"},
+    {name:"Lucknow",state:"Uttar Pradesh",lat:26.8467,lng:80.9462,status:"soon"},
+    {name:"Guwahati",state:"Assam",lat:26.1445,lng:91.7362,status:"soon"},
+    {name:"Thrissur",state:"Kerala",lat:10.5276,lng:76.2144,status:"soon"}
+  ];
+  const STY={
+    open:{radius:9,color:"#7A1F0C",weight:2,fillColor:"#B33114",fillOpacity:1},
+    almost:{radius:9,color:"#7A5A1E",weight:2,fillColor:"#B38B4B",fillOpacity:1},
+    soon:{radius:7,color:"#8FB0AC",weight:2,fillColor:"#0C2B2E",fillOpacity:.25}
+  };
+  const LBL={open:"Ride live · Open",almost:"Ride live · Almost full",soon:"Ride coming soon"};
+  function popHTML(c){
+    if(c.status==="soon"){
+      return '<div class="pop-city">'+c.name+'</div>'+
+        '<div class="pop-meta">'+c.state+' · no host yet — ride coming soon</div>'+
+        '<a class="pop-btn" href="prototype/register.html">Register anyway</a> '+
+        '<a class="pop-btn alt" href="prototype/host.html">Host this city</a>';
+    }
+    return '<div class="pop-city">'+c.name+'</div>'+
+      '<div class="pop-meta">'+c.state+' · '+c.date+' · '+c.riders+' · '+LBL[c.status]+'</div>'+
+      '<a class="pop-btn" href="'+(c.link||"prototype/register.html")+'">'+(c.status==="almost"?"Grab a seat":"Register for "+c.name)+'</a>'+
+      (c.name==="Kochi"?' <a class="pop-btn alt" href="prototype/city.html">Ride details</a>':'');
+  }
+  let map=null;
+  const markers={};
+  function initMap(){
+    if(map) return;
+    map=L.map("rideMap",{scrollWheelZoom:false});
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{attribution:"&copy; OpenStreetMap &copy; CARTO",maxZoom:18}).addTo(map);
+    CITIES.forEach(c=>{
+      markers[c.name]=L.circleMarker([c.lat,c.lng],STY[c.status]).addTo(map)
+        .bindPopup(popHTML(c),{className:"ajr-pop"});
+    });
+    map.fitBounds(CITIES.map(c=>[c.lat,c.lng]),{padding:[46,46]});
+  }
+  function fixMap(){
+    if(!map){ initMap(); return; }
+    map.invalidateSize();
+    map.fitBounds(CITIES.map(c=>[c.lat,c.lng]),{padding:[46,46]});
+  }
+  // Init only when the map is close to entering the viewport, so Leaflet
+  // measures the final page layout (intro overlay gone, fonts/media loaded).
+  new IntersectionObserver((entries,obs)=>{
+    if(entries[0].isIntersecting){ initMap(); fixMap(); obs.disconnect(); }
+  },{rootMargin:"600px 0px"}).observe(document.getElementById("rideMap"));
+  window.addEventListener("load",()=>setTimeout(fixMap,400));
+  window.addEventListener("resize",()=>{ if(map) map.invalidateSize(); });
+
+  const inp=document.getElementById("rideSearch"), sugg=document.getElementById("rideSugg");
+  function goCity(c){
+    sugg.style.display="none"; inp.value=c.name;
+    initMap();
+    map.flyTo([c.lat,c.lng], c.status==="soon"?7:9, {duration:1.1});
+    setTimeout(()=>markers[c.name].openPopup(),1200);
+  }
+  inp.addEventListener("input",()=>{
+    const q=inp.value.toLowerCase().trim();
+    if(!q){sugg.style.display="none";return;}
+    const hits=CITIES.filter(c=>(c.name+" "+c.state).toLowerCase().includes(q)).slice(0,6);
+    if(hits.length){
+      sugg.innerHTML=hits.map(c=>'<div data-c="'+c.name+'"><span><b>'+c.name+'</b> · '+c.state+'</span><span class="pill '+(c.status==="open"?"pill-open":c.status==="almost"?"pill-almost":"pill-soon")+'">'+(c.status==="soon"?"Coming soon":c.status==="almost"?"Almost full":"Open")+'</span></div>').join("");
+    } else {
+      sugg.innerHTML='<div data-none="1"><span>No ride in "'+inp.value+'" yet — <b>add your city</b> during registration or host it</span></div>';
+    }
+    sugg.style.display="block";
+  });
+  sugg.addEventListener("click",e=>{
+    const d=e.target.closest("div[data-c],div[data-none]"); if(!d)return;
+    if(d.dataset.none){ window.location.href="prototype/register.html"; return; }
+    goCity(CITIES.find(c=>c.name===d.dataset.c));
+  });
+  inp.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){
+      const q=inp.value.toLowerCase().trim();
+      const c=CITIES.find(x=>x.name.toLowerCase().startsWith(q))||CITIES.find(x=>(x.name+" "+x.state).toLowerCase().includes(q));
+      if(c) goCity(c);
+    }
+  });
+  document.addEventListener("click",e=>{ if(!e.target.closest(".ride-search")) sugg.style.display="none"; });
+})();
+</script>
+<script>
+(function(){
+  // AJR lanyard — verlet rope + hanging rider card
+  const zone=document.getElementById("lanyardZone"), card=document.getElementById("ajrCard"), cv=document.getElementById("bandCanvas");
+  if(!zone||!card||!cv) return;
+  const ctx=cv.getContext("2d");
+  const N=16; let pts=[], pin={x:0,y:0}, seg=0, W=0, H=0, DPR=1, active=false, dragging=null;
+  const GRAV=2400, ITER=5;
+
+  function size(){
+    W=zone.clientWidth; H=zone.clientHeight; DPR=Math.min(window.devicePixelRatio||1,2);
+    cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+    pin.x=W*.5; pin.y=-6;
+    seg=(H*.42)/(N-1);
+  }
+  function reset(){
+    pts=[]; for(let i=0;i<N;i++) pts.push({x:pin.x+i*2,y:pin.y+i*4,px:pin.x+i*2,py:pin.y+i*4});
+  }
+  size(); reset();
+  window.addEventListener("resize",()=>{size();});
+
+  card.addEventListener("pointerdown",e=>{
+    e.preventDefault(); card.setPointerCapture(e.pointerId);
+    const r=zone.getBoundingClientRect(), p=pts[N-1];
+    dragging={dx:(e.clientX-r.left)-p.x, dy:(e.clientY-r.top)-p.y};
+  });
+  card.addEventListener("pointermove",e=>{
+    if(!dragging) return;
+    const r=zone.getBoundingClientRect(), p=pts[N-1];
+    const nx=(e.clientX-r.left)-dragging.dx, ny=(e.clientY-r.top)-dragging.dy;
+    p.px=p.x-(nx-p.x)*.35; p.py=p.y-(ny-p.y)*.35; p.x=nx; p.y=ny;
+  });
+  const drop=e=>{ dragging=null; };
+  card.addEventListener("pointerup",drop); card.addEventListener("pointercancel",drop);
+
+  new IntersectionObserver(en=>{active=en[0].isIntersecting;},{rootMargin:"120px 0px"}).observe(zone);
+
+  let last=performance.now();
+  function step(now){
+    requestAnimationFrame(step);
+    const dt=Math.min((now-last)/1000,.033); last=now;
+    if(!active) return;
+    // integrate
+    for(let i=1;i<N;i++){
+      const p=pts[i];
+      if(dragging&&i===N-1) continue;
+      const vx=(p.x-p.px)*.985, vy=(p.y-p.py)*.985;
+      p.px=p.x; p.py=p.y;
+      p.x+=vx; p.y+=vy+GRAV*dt*dt*(i===N-1?1.6:1);
+    }
+    pts[0].x=pin.x; pts[0].y=pin.y;
+    // constraints
+    for(let k=0;k<ITER;k++){
+      pts[0].x=pin.x; pts[0].y=pin.y;
+      for(let i=0;i<N-1;i++){
+        const a=pts[i], b=pts[i+1];
+        let dx=b.x-a.x, dy=b.y-a.y;
+        const d=Math.sqrt(dx*dx+dy*dy)||.0001, diff=(d-seg)/d;
+        const w1=i===0?0:.5, w2=(dragging&&i+1===N-1)?0:(i===0?1:.5);
+        const tw=w1+w2||1;
+        a.x+=dx*diff*(w1/tw); a.y+=dy*diff*(w1/tw);
+        b.x-=dx*diff*(w2/tw); b.y-=dy*diff*(w2/tw);
+      }
+    }
+    // draw metal ball-chain
+    ctx.clearRect(0,0,W,H);
+    ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
+    for(let i=1;i<N-1;i++){ ctx.quadraticCurveTo(pts[i].x,pts[i].y,(pts[i].x+pts[i+1].x)/2,(pts[i].y+pts[i+1].y)/2); }
+    ctx.lineTo(pts[N-1].x,pts[N-1].y);
+    ctx.lineCap="round"; ctx.lineJoin="round";
+    ctx.strokeStyle="rgba(20,16,10,.55)"; ctx.lineWidth=2.4; ctx.stroke();
+    const spacing=11; let carry=0;
+    for(let i=0;i<N-1;i++){
+      const a=pts[i], b=pts[i+1];
+      const dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy)||.0001;
+      let t=carry;
+      while(t<d){
+        const bx=a.x+dx*t/d, by=a.y+dy*t/d;
+        ctx.fillStyle="#4a3e28"; ctx.beginPath(); ctx.arc(bx,by,4.6,0,7); ctx.fill();
+        ctx.fillStyle="#a08a5c"; ctx.beginPath(); ctx.arc(bx,by,3.9,0,7); ctx.fill();
+        ctx.fillStyle="#ead9ac"; ctx.beginPath(); ctx.arc(bx-1.2,by-1.3,1.5,0,7); ctx.fill();
+        t+=spacing;
+      }
+      carry=t-d;
+    }
+    // place badge
+    const e0=pts[N-2], e1=pts[N-1];
+    const ang=Math.atan2(e1.x-e0.x, e1.y-e0.y);
+    card.style.transformOrigin="50% 0";
+    card.style.transform="translate("+(e1.x-card.offsetWidth/2)+"px,"+(e1.y-8)+"px) rotate("+ang+"rad)";
+  }
+  requestAnimationFrame(step);
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const intro=document.getElementById("intro"), iWord=document.getElementById("introWord"), iSub=document.getElementById("introSub");
+  function killIntro(instant){
+    if(!intro || intro.dataset.done) return;
+    intro.dataset.done="1";
+    sessionStorage.setItem("ajrIntro","1");
+    if(instant){ intro.remove(); startHero(); return; }
+    gsap.to(intro,{yPercent:-100,duration:.55,ease:"power4.inOut",onComplete:()=>{intro.remove(); startHero();}});
+  }
+  function runIntro(){
+    const langs=[
+      'ए<span class="seam">.</span>जे<span class="seam">.</span>आर',
+      'എ<span class="seam">.</span>ജെ<span class="seam">.</span>ആർ',
+      'ஏ<span class="seam">.</span>ஜே<span class="seam">.</span>ஆர்',
+      'ఏ<span class="seam">.</span>జే<span class="seam">.</span>ఆర్',
+      'ਏ<span class="seam">.</span>ਜੇ<span class="seam">.</span>ਆਰ',
+      'A<span class="seam">.</span>J<span class="seam">.</span>R'
+    ];
+    const iLoad=document.getElementById("introLoad");
+    const tl=gsap.timeline({
+      onComplete:()=>killIntro(false),
+      onUpdate:function(){ if(iLoad) iLoad.style.width=(this.progress()*100)+"%"; }
+    });
+    tl.from(iWord,{opacity:0,scale:.94,duration:.3,ease:"power2.out"})
+      .to({},{duration:.1});
+    langs.forEach(w=>{
+      tl.to(iWord,{opacity:0,y:-8,duration:.09,ease:"power1.in",onComplete:function(){iWord.innerHTML=w;}})
+        .to(iWord,{opacity:1,y:0,duration:.12,ease:"power2.out"})
+        .to({},{duration:.06});
+    });
+    tl.to(iWord,{opacity:0,duration:.1,onComplete:function(){
+        iWord.innerHTML='AMAR JAWAN RIDE';
+        iWord.style.fontSize='clamp(24px,3.6vw,48px)';
+        iWord.style.letterSpacing='.08em';
+      }})
+      .to(iWord,{opacity:1,duration:.3,ease:"power2.out"})
+      .to(iSub,{opacity:1,duration:.25},"-=.15")
+      .to({},{duration:.35});
+  }
+  if(sessionStorage.getItem("ajrIntro") || reduce){ killIntro(true); }
+  else if(intro){ intro.addEventListener("click",()=>killIntro(false)); runIntro(); }
+
+  if(!reduce){
+
+  const heroTl = gsap.timeline({defaults:{ease:"power3.out"}});
+  heroTl.from(".hero-date", {y:24, opacity:0, duration:.7}, .3)
+        .from(".hero h1", {y:44, opacity:0, duration:1}, "-=.4")
+        .from(".hero-hindi", {y:20, opacity:0, duration:.7}, "-=.55")
+        .from(".hero-sub", {y:20, opacity:0, duration:.7}, "-=.5")
+        .from(".hero-actions .btn", {y:16, opacity:0, duration:.5, stagger:.12}, "-=.4")
+        .from(".cd-cell", {y:18, opacity:0, duration:.5, stagger:.08}, "-=.3")
+        .from(".hero-seal", {scale:.7, opacity:0, duration:.6, ease:"back.out(1.6)"}, "-=.3")
+        .from(".hero-scrollhint", {opacity:0, duration:.8}, "-=.2");
+
+  gsap.to(".hero video", {
+    scale: 1.08, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+  });
+  gsap.to(".hero-center", {
+    yPercent: -12, opacity: 0, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "75% top", scrub: true }
+  });
+
+  document.querySelectorAll(".count").forEach(el => {
+    const end = +el.dataset.target;
+    ScrollTrigger.create({
+      trigger: el, start: "top 85%", once: true,
+      onEnter: () => gsap.fromTo(el, {textContent: 0}, {
+        textContent: end, duration: 2, ease: "power2.out",
+        snap: {textContent: 1},
+        onUpdate: function(){ el.textContent = Math.round(this.targets()[0].textContent).toLocaleString("en-IN"); }
+      })
+    });
+  });
+
+  gsap.utils.toArray(".kicker, .rides h2, .experience h2, .help h2, .final h2").forEach(el => {
+    gsap.from(el, { y:30, opacity:0, duration:.8, ease:"power3.out",
+      scrollTrigger:{ trigger: el, start:"top 88%", once:true } });
+  });
+
+  gsap.timeline({
+    scrollTrigger:{ trigger:".about", start:"top 70%", end:"top 15%", scrub:.5 }
+  })
+  .from(".about-glow", { scale:.4, opacity:0, duration:.7, ease:"none" }, 0)
+  .from(".about h2", { y:44, opacity:0, duration:.5, ease:"none" }, .15)
+  .from(".about-copy", { y:30, opacity:0, duration:.4, stagger:.12, ease:"none" }, .35)
+  .from(".about-hint", { opacity:0, duration:.3, ease:"none" }, .7);
+
+  [".motive"].forEach(sec => {
+    gsap.timeline({
+      scrollTrigger:{ trigger:sec, start:"top 78%", end:"top 22%", scrub:.6 }
+    })
+    .from(sec+" .arch-clip", { scale:2.8, duration:1, ease:"none" }, 0)
+    .from(sec+" .t-left",  { xPercent:-38, opacity:0, duration:1, ease:"none" }, 0)
+    .from(sec+" .t-right", { xPercent:38,  opacity:0, duration:1, ease:"none" }, 0)
+    .from(sec+" .sec-body", { y:34, opacity:0, duration:.55, ease:"none" }, .45);
+  });
+
+  gsap.from(".city", { y:20, opacity:0, duration:.5, stagger:.07, ease:"power2.out",
+    scrollTrigger:{ trigger:".city-list", start:"top 85%", once:true } });
+
+  gsap.from(".exp-card", { y:50, opacity:0, duration:.8, stagger:.15, ease:"power3.out",
+    scrollTrigger:{ trigger:".exp-grid", start:"top 82%", once:true } });
+
+  gsap.from(".help-item", { y:28, opacity:0, duration:.6, stagger:.15, ease:"power2.out",
+    scrollTrigger:{ trigger:".help", start:"top 75%", once:true } });
+
+  gsap.utils.toArray(".rides img, .rides video").forEach(img => {
+    gsap.fromTo(img, {y:40}, { y:-40, ease:"none",
+      scrollTrigger:{ trigger: img, start:"top bottom", end:"bottom top", scrub:true } });
+  });
+
+  gsap.timeline({
+    scrollTrigger:{ trigger:".gateway", start:"top top", end:"bottom bottom", scrub:.4 }
+  })
+  .fromTo(".gateway-scene", {scale:.85, opacity:.25}, {scale:1, opacity:1, ease:"none", duration:1}, 0)
+  .fromTo(".gateway-door", {scale:1}, {scale:3.4, transformOrigin:"50% 58%", ease:"power1.in", duration:1}, 0)
+  .to(".gateway-door", {opacity:0, ease:"none", duration:.25}, .78)
+  .fromTo(".gateway .creed-text .w",
+    { color:"rgba(247,238,226,.12)" },
+    { color:(i,el)=>el.classList.contains("acc") ? "#C13B1B" : "#F7EEE2",
+      stagger:.028, duration:.18, ease:"none" }, .5);
+
+  const journey = document.getElementById("journey");
+  const bike = document.getElementById("journeyBike");
+  if(journey && getComputedStyle(journey).display !== "none"){
+    gsap.set(bike, {rotation:180});
+    gsap.to(bike, {
+      y: () => journey.offsetHeight - 70, ease: "none",
+      scrollTrigger:{ trigger: document.body, start:"top top", end:"bottom bottom", scrub:.6, invalidateOnRefresh:true }
+    });
+    gsap.to(bike, {x:8, rotation:174, duration:1.8, yoyo:true, repeat:-1, ease:"sine.inOut"});
+    ScrollTrigger.create({
+      start: () => window.innerHeight * 0.6, end: "max",
+      onToggle: self => journey.classList.toggle("on", self.isActive)
+    });
+  }
+
+  }
+</script>
+</body>
+</html>

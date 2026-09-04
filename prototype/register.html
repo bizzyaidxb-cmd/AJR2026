@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Register to ride</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<style>
+.tc-overlay{position:fixed;inset:0;background:rgba(12,43,46,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
+.tc-overlay.on{display:flex;}
+.tc-modal{background:var(--sand);border-radius:12px;max-width:640px;width:100%;max-height:86vh;display:flex;flex-direction:column;overflow:hidden;}
+.tc-head{padding:20px 26px 14px;border-bottom:1px solid var(--line);}
+.tc-head h3{font-size:22px;}
+.tc-head p{font-size:13px;color:#8a7f6c;margin-top:4px;}
+.tc-body{overflow-y:auto;padding:20px 26px;font-size:14px;line-height:1.7;color:#4A443C;}
+.tc-body h4{font-family:'Work Sans',sans-serif;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--peacock);margin:18px 0 6px;}
+.tc-body h4:first-child{margin-top:0;}
+.tc-foot{padding:16px 26px 20px;border-top:1px solid var(--line);background:#FFFDF8;}
+.tc-scroll-note{font-size:12px;color:var(--sindoor);font-weight:600;margin-bottom:10px;}
+.tc-scroll-note.ok{color:var(--peacock);}
+.city-pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+.city-opt{display:flex;justify-content:space-between;align-items:center;background:#FFFDF8;border:1.5px solid var(--line);border-radius:8px;padding:13px 15px;cursor:pointer;font-weight:500;font-size:15px;transition:all .15s;}
+.city-opt:hover{border-color:var(--gold);}
+.city-opt.sel{border-color:var(--sindoor);background:#FBF1EC;}
+</style>
+</head>
+<body>
+<div class="proto-tag">Prototype v2</div>
+
+<div class="split">
+  <aside class="split-visual">
+    <video autoplay muted loop playsinline poster="../Assets/asset%20set%202%20/Motorcycle_convoy_on_highway_2K_202608071746.jpeg">
+      <source src="../Assets/asset%20set%202%20/Motorcycle_convoy_riding_at_dawn_202608071746.mp4" type="video/mp4">
+    </video>
+    <div class="veil"></div>
+    <div class="v-top"><a href="../ajr-homepage.html"><img src="../Assets/logo_v2_mono.png" alt="AJR"></a></div>
+    <div class="v-bottom">
+      <h2>We ride.<br>They live forever.</h2>
+      <p>Republic Day 2027 · free to ride · every rupee to the families</p>
+    </div>
+  </aside>
+
+  <main class="split-form">
+  <a class="back" href="../ajr-homepage.html">← Back to home</a>
+  <div class="page-head" style="padding:22px 0 8px;">
+    <p class="kicker">Free registration · 2 minutes</p>
+    <h1>Register to ride</h1>
+  </div>
+
+  <div class="steps">
+    <div class="step-dot on" data-d="1">City</div><div class="step-dot" data-d="2">Basic info</div><div class="step-dot" data-d="3">Verify</div><div class="step-dot" data-d="4">Password</div><div class="step-dot" data-d="5">Done</div>
+  </div>
+
+  <div class="card">
+    <div class="step on" id="s1">
+      <h3>Where will you ride?</h3>
+      <p class="hint" style="margin:6px 0 12px;">Every city in a state rides on the same date.</p>
+      <div class="city-pick" id="cityPickList">
+        <div class="city-opt sel" onclick="pickCity(this, 'Kochi', 'Kerala')">Kochi <span class="pill pill-almost">Almost full</span></div>
+        <div class="city-opt" onclick="pickCity(this, 'Palakkad', 'Kerala')">Palakkad <span class="pill pill-open">Open</span></div>
+        <div class="city-opt" onclick="pickCity(this, 'Mumbai', 'Maharashtra')">Mumbai <span class="pill pill-open">Open</span></div>
+        <div class="city-opt" onclick="pickCity(this, 'Delhi NCR', 'Delhi NCR')">Delhi NCR <span class="pill pill-almost">Almost full</span></div>
+        <div class="city-opt" onclick="pickCity(this, 'Chandigarh', 'Punjab')">Chandigarh <span class="pill pill-open">Open</span></div>
+        <div class="city-opt" onclick="pickCity(this, 'Jaipur', 'Rajasthan')">Jaipur <span class="pill pill-open">Open</span></div>
+      </div>
+
+      <div class="city-opt-add" id="addCityTrigger" onclick="enableAddCityForm()" style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;background:#FFFDF8;border:1.5px dashed var(--gold);border-radius:8px;padding:13px 15px;cursor:pointer;font-weight:500;font-size:15px;transition:all .15s;">
+        <span>➕ <b>Can't find your city? Add your city</b></span>
+        <span class="pill pill-open">Select State &amp; City</span>
+      </div>
+
+      <div id="addCityForm" style="display:none;margin-top:14px;padding:16px;background:#FFF9EE;border:1.5px solid var(--gold);border-radius:8px;">
+        <div style="font-weight:600;color:var(--peacock);margin-bottom:8px;font-size:14px;">Add your city</div>
+        <div class="grid g2">
+          <div>
+            <label style="margin-top:0;">Select State</label>
+            <select id="customStateSelect" onchange="validateCustomCityInput()">
+              <option value="" disabled selected>-- Select State --</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Delhi NCR">Delhi NCR</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="West Bengal">West Bengal</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Goa">Goa</option>
+            </select>
+          </div>
+          <div>
+            <label style="margin-top:0;">Enter City Name</label>
+            <input type="text" id="customCityInput" placeholder="e.g. Thrissur, Pune, Mysuru" oninput="validateCustomCityInput()">
+          </div>
+        </div>
+        <p class="hint" style="margin-top:10px;color:var(--sindoor);font-weight:500;">
+          Notice: Rides for added cities show "Ride coming soon" on your profile until host &amp; route setup completes.
+        </p>
+      </div>
+
+      <p class="hint" id="cityRideHint" style="margin-top:12px;">Kerala ride day: <b>26 January 2027</b> · you can change city until your ride completes (60-day window after).</p>
+      <button class="btn btn-sindoor" style="margin-top:20px;" onclick="goFromStep1()">Continue</button>
+    </div>
+
+    <div class="step" id="s2">
+      <h3>Basic info</h3>
+      <div class="grid g2">
+        <div><label>First name</label><input placeholder="Arjun"></div>
+        <div><label>Second name</label><input placeholder="Nair"></div>
+      </div>
+      <label>Email</label><input type="email" placeholder="arjun@email.com">
+      <label>Phone</label><input type="tel" placeholder="+91 98950 00000">
+      <p class="hint" style="margin-top:8px;">That's all we need for now — bike and safety details come later, closer to ride day.</p>
+      <button class="btn btn-sindoor" style="margin-top:20px;" onclick="go(3)">Continue</button>
+    </div>
+
+    <div class="step" id="s3">
+      <h3>Verify your phone</h3>
+      <p style="font-size:14px;color:#4A443C;margin:8px 0 4px;">We sent a 6-digit code to <b>+91 98950 00000</b>.</p>
+      <label>OTP</label>
+      <div class="otp-row">
+        <input class="otp-cell" maxlength="1" inputmode="numeric"><input class="otp-cell" maxlength="1" inputmode="numeric"><input class="otp-cell" maxlength="1" inputmode="numeric"><input class="otp-cell" maxlength="1" inputmode="numeric"><input class="otp-cell" maxlength="1" inputmode="numeric"><input class="otp-cell" maxlength="1" inputmode="numeric">
+      </div>
+      <p class="hint"><a href="#" onclick="return false;">Resend in 0:24</a> · wrong number? <a href="#" onclick="go(2);return false;">edit</a></p>
+      <button class="btn btn-sindoor" style="margin-top:20px;" onclick="go(4)">Verify</button>
+    </div>
+
+    <div class="step" id="s4">
+      <h3>Create your password</h3>
+      <label>Password</label><input type="password" placeholder="Minimum 8 characters">
+      <label>Confirm password</label><input type="password" placeholder="Repeat it">
+      <p class="hint" style="margin-top:10px;">Last step: read and accept the Terms &amp; Conditions and rider indemnity — applies to all riders.</p>
+      <button class="btn btn-sindoor" style="margin-top:16px;" onclick="tcOpen()">Read T&amp;C &amp; create account</button>
+    </div>
+
+    <div class="step" id="s5">
+      <div class="success">
+        <img src="../Assets/Gen%20Content/Winged_medal_badge_on_ribbon_202607141220_3.jpeg" alt="AJR rider badge" style="width:130px;height:130px;object-fit:cover;border-radius:50%;border:3px solid var(--gold);margin-bottom:14px;">
+        <div class="big">You're in, rider.</div>
+        <p style="margin:12px 0 6px;" id="s5CityMsg">Kochi rides with all of Kerala — 26 January 2027.</p>
+        <p class="hint">T&amp;C + indemnity accepted. Your profile page is live — we'll nudge you to complete it as ride day approaches.</p>
+        <a class="btn btn-sindoor" id="goToProfileBtn" style="margin-top:18px;" href="rider-solo.html?new=1">Go to my profile</a>
+      </div>
+    </div>
+  </div>
+  <p class="hint" style="margin:16px 0 0;">Sign-in later: phone or email + password. Clubs, bike details and safety info are managed from your profile.</p>
+  </main>
+</div>
+
+<div class="tc-overlay" id="tcOverlay">
+  <div class="tc-modal">
+    <div class="tc-head">
+      <h3>Terms, conditions &amp; rider indemnity</h3>
+      <p>Applies to every rider. Please read to the end.</p>
+    </div>
+    <div class="tc-body" id="tcBody">
+      <h4>1. The event</h4>
+      <p>The Amar Jawan Ride ("the Ride") is a charitable, non-competitive, guided group motorcycle ride organised by Amar Jawan Riders ("AJR") to raise funds for the families of martyred personnel of the Indian Armed Forces and Paramilitary Forces, routed to the Veer Naari Shakti Resettlement Foundation. Participation is voluntary and free of charge.</p>
+      <h4>2. Eligibility</h4>
+      <p>You must hold a valid two-wheeler driving licence, ride a roadworthy and registered motorcycle with valid insurance and PUC, and be medically fit to ride. Pillion riders participate under the same terms. AJR may refuse participation to any rider at its discretion, including on ride day.</p>
+      <h4>3. Assumption of risk</h4>
+      <p>Motorcycling on public roads involves inherent risk, including serious injury or death. You participate entirely at your own risk. You are solely responsible for your own safety, your motorcycle, your riding conduct, and compliance with the Motor Vehicles Act, 1988 and all local traffic laws at all times, including within the convoy.</p>
+      <h4>4. Indemnity and release</h4>
+      <p>To the fullest extent permitted by law, you release and hold harmless AJR, its organisers, city hosts, ride marshals, event management team members, volunteers, sponsors, and the Veer Naari Shakti Resettlement Foundation from any claim, liability, loss, damage, or expense arising from your participation, including accidents, property damage, theft, or personal injury, except where caused by proven gross negligence of the organisers.</p>
+      <h4>5. Ride conduct</h4>
+      <p>Helmets are mandatory for rider and pillion. No alcohol or intoxicants before or during the Ride. Follow marshal instructions at all times. No stunts, racing, or lane-splitting within the convoy. The dress theme is encouraged but must never compromise safety gear. Violation may result in immediate removal from the Ride and the platform.</p>
+      <h4>6. Fundraising and donations</h4>
+      <p>All donations are voluntary, non-refundable, and routed to the Foundation as published on the Transparency page. Fundraising totals shown on leaderboards are gross amounts. AJR does not charge riders to participate; leaderboard placement reflects funds raised, not payment to AJR.</p>
+      <h4>7. Data and privacy</h4>
+      <p>Your registration data is used for event operations, safety, and communications (WhatsApp, email, SMS) in accordance with the Digital Personal Data Protection Act, 2023. Emergency contact details, collected before ride day, are used only in emergencies. Donor identities marked anonymous are never published.</p>
+      <h4>8. Media</h4>
+      <p>The Ride is photographed and filmed. By participating you consent to the reasonable use of imagery featuring you for AJR's non-commercial tribute and awareness purposes. Contact AJR to have a specific image removed.</p>
+      <h4>9. Changes and cancellation</h4>
+      <p>Ride dates, routes, and venues may change due to weather, permissions, or safety directives. AJR may cancel a city ride; registrations then roll to the next edition. These terms may be updated; material changes are notified before ride day.</p>
+      <h4>10. Governing law</h4>
+      <p>These terms are governed by the laws of India. Disputes are subject to the exclusive jurisdiction of the courts of the city of AJR's registered office.</p>
+      <p style="margin-top:14px;"><em>End of terms — you may now confirm below.</em></p>
+    </div>
+    <div class="tc-foot">
+      <p class="tc-scroll-note" id="tcNote">Scroll to the end of the terms to continue.</p>
+      <div class="toggle" style="margin:0 0 12px;">
+        <input type="checkbox" id="tcAgree" disabled onchange="tcState()">
+        <label for="tcAgree" style="margin:0;font-weight:500;color:var(--umber);">I have read and agree to the Terms &amp; Conditions and the rider indemnity, on my own behalf and my pillion's.</label>
+      </div>
+      <button class="btn btn-sindoor" id="tcContinue" disabled onclick="tcDone()">Create account</button>
+      <button class="btn btn-peacock" onclick="tcClose()">Back</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedCity = 'Kochi';
+let selectedState = 'Kerala';
+let isCustomCity = false;
+
+function go(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+n).classList.add('on');
+  document.querySelectorAll('.step-dot').forEach(d=>d.classList.toggle('on',+d.dataset.d<=n));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function pickCity(el, city, state){
+  document.querySelectorAll('.city-opt').forEach(c=>c.classList.remove('sel'));
+  const trigger = document.getElementById('addCityTrigger');
+  if(trigger){
+    trigger.style.borderColor = 'var(--gold)';
+    trigger.style.background = '#FFFDF8';
+  }
+  const addForm = document.getElementById('addCityForm');
+  if(addForm) addForm.style.display = 'none';
+  el.classList.add('sel');
+  isCustomCity = false;
+  if(city) selectedCity = city;
+  if(state) selectedState = state;
+  const hint = document.getElementById('cityRideHint');
+  if(hint){
+    hint.innerHTML = selectedState + ' ride day: <b>26 January 2027</b> · you can change city until your ride completes (60-day window after).';
+  }
+}
+
+function enableAddCityForm(){
+  document.querySelectorAll('.city-opt').forEach(c=>c.classList.remove('sel'));
+  const trigger = document.getElementById('addCityTrigger');
+  if(trigger){
+    trigger.style.borderColor = 'var(--sindoor)';
+    trigger.style.background = '#FBF1EC';
+  }
+  const addForm = document.getElementById('addCityForm');
+  if(addForm) addForm.style.display = 'block';
+  isCustomCity = true;
+  validateCustomCityInput();
+}
+
+function validateCustomCityInput(){
+  const stateSelect = document.getElementById('customStateSelect');
+  const cityInput = document.getElementById('customCityInput');
+  const state = stateSelect ? stateSelect.value : '';
+  const city = cityInput ? cityInput.value.trim() : '';
+  if(state) selectedState = state;
+  if(city) selectedCity = city;
+  const hint = document.getElementById('cityRideHint');
+  if(hint){
+    if(state){
+      hint.innerHTML = state + ' ride day: <b>26 January 2027</b> · (Added city — ride coming soon).';
+    } else {
+      hint.innerHTML = 'Select your state and type your city name to register.';
+    }
+  }
+}
+
+function goFromStep1(){
+  if(isCustomCity){
+    const stateSelect = document.getElementById('customStateSelect');
+    const cityInput = document.getElementById('customCityInput');
+    const state = stateSelect ? stateSelect.value : '';
+    const city = cityInput ? cityInput.value.trim() : '';
+    if(!state){
+      alert('Please select your state.');
+      return;
+    }
+    if(!city){
+      alert('Please enter your city name.');
+      return;
+    }
+    selectedState = state;
+    selectedCity = city;
+  }
+  go(2);
+}
+
+document.querySelectorAll('.otp-cell').forEach((c,i,all)=>{
+  c.addEventListener('input',()=>{ if(c.value && i<all.length-1) all[i+1].focus(); });
+  c.addEventListener('keydown',e=>{ if(e.key==='Backspace' && !c.value && i>0) all[i-1].focus(); });
+});
+
+const tcOverlay=document.getElementById('tcOverlay'), tcBody=document.getElementById('tcBody'),
+      tcAgree=document.getElementById('tcAgree'), tcContinue=document.getElementById('tcContinue'),
+      tcNote=document.getElementById('tcNote');
+let tcScrolled=false;
+tcBody.addEventListener('scroll',()=>{
+  if(!tcScrolled && tcBody.scrollTop + tcBody.clientHeight >= tcBody.scrollHeight - 12){
+    tcScrolled=true; tcAgree.disabled=false;
+    tcNote.textContent='Terms read in full — tick the box to enable Create account.';
+    tcNote.classList.add('ok');
+  }
+});
+function tcOpen(){ tcOverlay.classList.add('on'); }
+function tcClose(){ tcOverlay.classList.remove('on'); }
+function tcState(){ tcContinue.disabled = !(tcScrolled && tcAgree.checked); }
+function tcDone(){
+  tcClose();
+  const s5Msg = document.getElementById('s5CityMsg');
+  const profileBtn = document.getElementById('goToProfileBtn');
+  if(isCustomCity){
+    if(s5Msg) s5Msg.innerHTML = '<b>' + selectedCity + '</b> (' + selectedState + ') — ride coming soon!';
+    if(profileBtn) profileBtn.href = 'rider-solo.html?new=1&custom=1&city=' + encodeURIComponent(selectedCity) + '&state=' + encodeURIComponent(selectedState);
+  } else {
+    if(s5Msg) s5Msg.innerHTML = selectedCity + ' rides with all of ' + selectedState + ' — 26 January 2027.';
+    if(profileBtn) profileBtn.href = 'rider-solo.html?new=1&city=' + encodeURIComponent(selectedCity) + '&state=' + encodeURIComponent(selectedState);
+  }
+  go(5);
+}
+</script>
+</body>
+</html>

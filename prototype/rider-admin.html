@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Rider Dashboard (Club Admin)</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<style>
+.dash{max-width:1180px;margin:0 auto;padding:24px;display:grid;grid-template-columns:250px 1fr;gap:24px;align-items:start;}
+.side-card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:sticky;top:80px;}
+.side-head{padding:20px;text-align:center;border-bottom:1px solid var(--line);background:#FBF6EA;}
+.side-head .avatar{width:64px;height:64px;font-size:22px;margin:0 auto 10px;}
+.side-head b{display:block;font-size:16px;}
+.side-head .hint{font-size:12px;}
+.side-nav{padding:8px 0;}
+.side-nav a{display:block;padding:11px 20px;font-size:14px;font-weight:500;color:var(--umber);text-decoration:none;cursor:pointer;}
+.side-nav a.on{color:var(--sindoor);border-left:3px solid var(--sindoor);background:#FBF1EC;font-weight:600;}
+.side-nav a:hover{background:#FBF6EA;}
+.side-nav .sep{border-top:1px solid var(--line);margin:8px 0;}
+.pane{display:none;}
+.pane.on{display:block;animation:stepIn .3s ease;}
+.pf-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+.pf-cover{position:relative;height:170px;background:var(--midnight);}
+.pf-cover img{width:100%;height:100%;object-fit:cover;object-position:center 65%;display:block;}
+.pf-cover .cam{position:absolute;right:14px;bottom:12px;background:rgba(12,43,46,.75);color:var(--sand);border:1px solid rgba(247,238,226,.35);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;}
+.pf-cover .cam:hover{background:var(--midnight);}
+.pf-head{background:var(--midnight);padding:0 28px 22px;color:var(--sand);display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap;position:relative;}
+.pf-head::before{content:"";position:absolute;inset:0;background:url("../Assets/pattern_tile.png") repeat;background-size:380px;opacity:.06;}
+.pf-head>*{position:relative;}
+.pf-ava{position:relative;margin-top:-42px;}
+.pf-ava .avatar{width:96px;height:96px;font-size:30px;background:var(--sindoor);border:4px solid var(--midnight);overflow:hidden;}
+.pf-ava .avatar img{width:100%;height:100%;object-fit:cover;}
+.pf-ava .cam{position:absolute;right:-2px;bottom:2px;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--midnight);border:2px solid var(--midnight);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.pf-head h1{font-size:26px;color:var(--sand);}
+.pf-head .url{font-size:13px;color:var(--gold);}
+.pf-head .meta{font-size:13px;color:#8FB0AC;margin-top:4px;}
+.goal-num{font-family:'Special Gothic Condensed One',sans-serif;font-size:38px;}
+.ach{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px;}
+.ach-item{border:1px solid var(--line);border-radius:8px;padding:12px;text-align:center;background:#FFFDF8;font-size:12px;font-weight:600;}
+.ach-item .ico{width:38px;height:38px;border-radius:50%;background:var(--sand-deep);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#B5A98F;}
+.ach-item.done{border-color:var(--gold);background:#FFF9EE;}
+.ach-item.done .ico{background:var(--gold);color:var(--sand);}
+.ach-item .st{display:block;font-weight:400;color:#9a8f7d;font-size:11px;margin-top:3px;}
+.sched td{padding:8px 10px;font-size:14px;}
+.sched .t{font-family:'Special Gothic Condensed One',sans-serif;color:var(--sindoor);width:64px;}
+.check{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;}
+.check .tick{width:22px;height:22px;border-radius:50%;border:2px solid #D8C9AC;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.check.done .tick{background:var(--peacock);border-color:var(--peacock);color:var(--sand);}
+.check.done span{text-decoration:line-through;color:#9a8f7d;}
+
+.update-card{background:#FFFDF8;border:1px solid var(--line);border-radius:10px;padding:18px;margin-top:12px;}
+.update-card h4{font-size:16px;color:var(--peacock);margin-bottom:4px;}
+.update-card p{font-size:13px;color:#4A443C;line-height:1.5;}
+.member-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.member-row:last-child{border-bottom:0;}
+.modal-box{background:var(--sand);border-radius:12px;max-width:540px;width:100%;padding:24px;border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.35);}
+@media(max-width:880px){.dash{grid-template-columns:1fr;}.side-card{position:static;}}
+</style>
+</head>
+<body>
+<div class="proto-tag">Prototype v2 — Rider Dashboard (Club Admin)</div>
+
+<nav class="top">
+  <a class="logo" href="../ajr-homepage.html"><img src="../Assets/logo_v2.png" alt="AJR"></a>
+  <div class="links"><a href="../ajr-homepage.html">Home</a><a href="city.html">Rides</a><a href="leaderboard.html">Leaderboard</a><a href="donate.html" class="btn btn-peacock btn-sm">Donate</a><span class="avatar" style="width:36px;height:36px;font-size:13px;background:var(--sindoor);">RM</span></div>
+</nav>
+
+<div class="dash">
+  <aside class="side-card">
+    <div class="side-head">
+      <span class="avatar" style="background:var(--sindoor);">RM</span>
+      <b>Rahul Menon</b>
+      <p class="hint">rahul@email.com</p>
+      <span class="pill pill-gold" style="font-size:10px;margin-top:6px;display:inline-block;">Spice Coast Riders Captain</span>
+    </div>
+    <div class="side-nav">
+      <a class="on" onclick="pane('dash',this)">Dashboard</a>
+      <a onclick="pane('ride',this)">My ride</a>
+      <a onclick="pane('downloads',this)">Downloads</a>
+      <a onclick="pane('donations',this)">My donations</a>
+      <a onclick="pane('club',this)">My club <span class="nav-badge" id="navReqCount">2</span></a>
+      <a onclick="pane('settings',this)">Settings</a>
+      <div class="sep"></div>
+      <a href="../ajr-homepage.html" style="color:#9a8f7d;">Sign out</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="pf-wrap" id="tourHead">
+      <div class="pf-cover">
+        <img id="coverImg" src="../Assets/asset%20set%202%20/Motorcycle_convoy_on_highway_2K_202608071746.jpeg" alt="Cover">
+        <button class="cam" onclick="document.getElementById('coverIn').click()">Change cover</button>
+        <input type="file" id="coverIn" accept="image/*" hidden onchange="preview(this,'coverImg')">
+      </div>
+      <div class="pf-head">
+        <div class="pf-ava">
+          <span class="avatar" id="avaBox" style="background:var(--sindoor);">RM</span>
+          <button class="cam" title="Update profile photo" onclick="document.getElementById('avaIn').click()">📷</button>
+          <input type="file" id="avaIn" accept="image/*" hidden onchange="previewAva(this)">
+        </div>
+        <div style="flex:1;padding-top:14px;">
+          <h1>Rahul Menon</h1>
+          <div class="url">Captain &amp; Primary Admin of Spice Coast Riders · ajr.in/rahul-menon <a href="#" style="color:#8FB0AC;font-size:12px;" onclick="alert('Link copied')">copy</a></div>
+          <div class="meta">Kochi, Kerala · Royal Enfield Continental GT 650 · Riding AJR since 2026</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;padding-top:14px;">
+          <a class="btn btn-sindoor btn-sm" href="donate.html">Donate</a>
+          <button class="btn btn-peacock btn-sm" style="color:var(--sand);border-color:var(--gold);" onclick="alert('Share link copied!')">Share</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 1: Personal Dashboard -->
+    <div class="pane on" id="p-dash">
+      <div class="card" style="margin-top:20px;" id="tourGoal">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;">
+          <div>
+            <h3>Welcome back, Captain Rahul</h3>
+            <p class="hint">Your personal raised total counts for <b>Spice Coast Riders</b>.</p>
+          </div>
+          <button class="btn btn-peacock btn-sm" onclick="openGoalModal()">Edit goal</button>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;margin-top:14px;flex-wrap:wrap;">
+          <span class="goal-num" id="raisedAmtDisplay">₹38,000</span>
+          <span style="color:#9a8f7d;">raised of <b id="maxGoalAmt">₹50,000</b> target goal</span>
+          <span class="pill pill-gold" style="margin-left:auto;" id="goalLeft">₹12,000 to go</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);color:var(--peacock);font-weight:500;">
+          <span>Min Goal: <b id="minGoalAmt">₹500</b></span>
+          <span id="minGoalStatus" class="pill pill-open" style="font-size:11px;">Min Goal Met ✓</span>
+          <span>Target Goal: <b id="targetGoalSub">₹50,000</b></span>
+        </div>
+        <div class="progress" style="margin-top:10px;height:12px;"><span id="goalBar" style="width:76%;"></span></div>
+      </div>
+
+      <div class="card" style="margin-top:20px;background:#FFFDF8;border:1.5px solid var(--gold);" id="tourGettingStarted">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+          <div>
+            <h3 style="font-size:18px;color:var(--peacock);">Getting started</h3>
+            <p class="hint" style="margin-top:2px;">Complete these onboarding steps to get ride-day ready (4 of 4 complete)</p>
+          </div>
+          <span class="pill pill-gold" style="font-size:12px;">100% Complete</span>
+        </div>
+        <div class="grid g2" style="gap:10px;">
+          <div class="check done"><div class="tick">✓</div><span>Make a personal donation</span></div>
+          <div class="check done"><div class="tick">✓</div><span>Share your page</span></div>
+          <div class="check done"><div class="tick">✓</div><span>Created &amp; Captain of Spice Coast Riders</span></div>
+          <div class="check done"><div class="tick">✓</div><span>Complete your rider card</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;" id="tourAch">
+        <div style="display:flex;justify-content:space-between;align-items:center;"><h3>Your achievements</h3><span class="pill pill-gold">5 / 7</span></div>
+        <div class="ach">
+          <div class="ach-item done"><div class="ico">✓</div>First Salute<span class="st">Personal donation made</span></div>
+          <div class="ach-item done"><div class="ico">✓</div>Shared Your Page<span class="st">Done</span></div>
+          <div class="ach-item done"><div class="ico">✓</div>Club Founder<span class="st">Spice Coast Riders</span></div>
+          <div class="ach-item done"><div class="ico">✓</div>Complete Rider Card<span class="st">Done</span></div>
+          <div class="ach-item done"><div class="ico">✓</div>Raise ₹10,000<span class="st">₹38,000 raised</span></div>
+          <div class="ach-item"><div class="ico">•</div>Bring 5 Riders<span class="st">42 members</span></div>
+          <div class="ach-item"><div class="ico">•</div>One Lakh Club<span class="st">The legend tier</span></div>
+        </div>
+      </div>
+
+      <div class="grid g3" style="margin-top:20px;">
+        <div class="card" style="text-align:center;"><div class="amount">₹38,000</div><p class="hint">raised so far</p></div>
+        <div class="card" style="text-align:center;"><div class="amount">24</div><p class="hint">personal donors</p></div>
+        <div class="card" style="text-align:center;"><div class="amount">#1</div><p class="hint">rank in Spice Coast Riders</p></div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;"><h3>Recent supporters</h3><a href="#" style="font-size:13px;color:var(--sindoor);font-weight:600;" onclick="pane('donations');return false;">View all 24 →</a></div>
+        <table style="margin-top:10px;">
+          <tr><th>Supporter</th><th>Date</th><th style="text-align:right;">Amount</th></tr>
+          <tr><td>Vikram S</td><td class="hint">10 Aug 2026</td><td style="text-align:right;"><b>₹10,000</b></td></tr>
+          <tr><td>Kochi Biker Club</td><td class="hint">9 Aug 2026</td><td style="text-align:right;"><b>₹5,000</b></td></tr>
+          <tr><td>Anand V</td><td class="hint">8 Aug 2026</td><td style="text-align:right;"><b>₹2,500</b></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pane 2: My Ride -->
+    <div class="pane" id="p-ride">
+      <div class="card" style="margin-top:20px;">
+        <h3>Kochi ride details</h3>
+        <p class="hint" style="margin:6px 0 12px;">Kerala ride day · 26 January 2027 · dress theme: Proudly Indian</p>
+        <table class="sched">
+          <tr><td class="t">06:00</td><td><b>Assembly</b> — Marine Drive parking, Kochi</td></tr>
+          <tr><td class="t">06:45</td><td><b>Tribute</b> — flag hoist + eternal flame salute</td></tr>
+          <tr><td class="t">07:15</td><td><b>Flag-off</b> — convoy departs (32 km route)</td></tr>
+          <tr><td class="t">09:30</td><td><b>Finish</b> — breakfast + family felicitation</td></tr>
+        </table>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Your bike</h3>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:10px;">
+          <span class="avatar" style="width:48px;height:48px;font-size:18px;background:var(--sindoor);">RE</span>
+          <div><b>Royal Enfield Continental GT 650</b><p class="hint">British Racing Green · 2023 model</p></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3>Pillion invite</h3>
+        <div class="invite-box" style="display:flex;gap:8px;">
+          <input type="email" placeholder="pillion@email.com" style="flex:1;">
+          <button class="btn btn-peacock btn-sm" onclick="this.textContent='Invited ✓'">Invite</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 3: Downloads (All 9 Template Cards) -->
+    <div class="pane" id="p-downloads">
+      <div class="card" style="margin-top:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h2 style="font-size:24px;color:var(--peacock);">Media &amp; Downloads</h2>
+            <p class="hint" style="margin-top:4px;">Download official AJR graphics, social stories, posters, and QR codes to share on Instagram, WhatsApp, and email.</p>
+          </div>
+          <span class="pill pill-gold" style="font-size:12px;">9 Templates</span>
+        </div>
+
+        <div class="dl-filters" style="display:flex;gap:8px;margin:20px 0 16px;flex-wrap:wrap;">
+          <button class="chip sel" onclick="filterDl('all', this)" style="padding:8px 16px;font-size:13px;">All</button>
+          <button class="chip" onclick="filterDl('story', this)" style="padding:8px 16px;font-size:13px;">Story</button>
+          <button class="chip" onclick="filterDl('ig45', this)" style="padding:8px 16px;font-size:13px;">Instagram 4:5</button>
+          <button class="chip" onclick="filterDl('square', this)" style="padding:8px 16px;font-size:13px;">Square</button>
+          <button class="chip" onclick="filterDl('email', this)" style="padding:8px 16px;font-size:13px;">Email Signature</button>
+          <button class="chip" onclick="filterDl('a4', this)" style="padding:8px 16px;font-size:13px;">A4 Poster</button>
+        </div>
+
+        <div class="grid g3" id="dlGrid" style="margin-top:16px;">
+          <!-- 1. Support Me (Story) -->
+          <div class="dl-card card" data-cat="story" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:9/16;background:linear-gradient(180deg, #0C2B2E 0%, #174246 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--gold);font-size:13px;letter-spacing:.1em;">SUPPORT ME</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--midnight);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--midnight);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:11px;font-weight:600;color:var(--gold);">RAHUL MENON</div>
+                  <div style="font-size:9px;opacity:.85;">Spice Coast Riders</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>STORY</span><span>1080 × 1920</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Support Me (Story)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Support Me (Story)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Support Me (Story)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Support Me (Instagram 4x5) -->
+          <div class="dl-card card" data-cat="ig45" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:4/5;background:linear-gradient(180deg, #0C2B2E 0%, #174246 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--gold);font-size:13px;letter-spacing:.1em;">SUPPORT ME</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--midnight);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--midnight);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:11px;font-weight:600;color:var(--gold);">RAHUL MENON</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>INSTAGRAM 4:5</span><span>1080 × 1350</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Support Me (Instagram 4x5)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Support Me (Instagram 4x5)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Support Me (Instagram 4x5)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Support Me (Square) -->
+          <div class="dl-card card" data-cat="square" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:290px;aspect-ratio:1/1;background:linear-gradient(180deg, #0C2B2E 0%, #174246 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--gold);font-size:13px;letter-spacing:.1em;">SUPPORT ME</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--midnight);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--midnight);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:11px;font-weight:600;color:var(--gold);">RAHUL MENON</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>SQUARE</span><span>1080 × 1080</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Support Me (Square)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Support Me (Square)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Support Me (Square)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Email Signature -->
+          <div class="dl-card card" data-cat="email" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="width:90%;height:110px;background:linear-gradient(90deg, #0C2B2E 0%, #174246 100%);border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);">
+                <div style="color:var(--sand);">
+                  <div style="font-size:14px;font-weight:700;color:var(--gold);">RAHUL MENON</div>
+                  <div style="font-size:11px;opacity:.9;">Captain · Spice Coast Riders</div>
+                  <div style="font-size:10px;color:#8FB0AC;margin-top:4px;">ajr.in/rahul-menon</div>
+                </div>
+                <div style="width:52px;height:52px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;">
+                  <div style="border:1.5px dashed var(--midnight);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--midnight);">QR</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>EMAIL SIGNATURE</span><span>650 × 140</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Email Signature</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Email Signature')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Email Signature')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. DGR 2026 Story (Full) -->
+          <div class="dl-card card" data-cat="story" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:9/16;background:linear-gradient(180deg, #B33114 0%, #0C2B2E 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--sand);font-size:13px;letter-spacing:.08em;">DGR 2026 STORY</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--sindoor);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--sindoor);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:10px;font-weight:600;color:var(--gold);">WE RIDE. THEY LIVE FOREVER.</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>STORY</span><span>1080 × 1920</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">DGR 2026 Story (Full)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('DGR 2026 Story (Full)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('DGR 2026 Story (Full)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Square QR Code (Full) -->
+          <div class="dl-card card" data-cat="square" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:290px;aspect-ratio:1/1;background:#FFFDF8;border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:2px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--peacock);font-size:12px;letter-spacing:.08em;">SCAN TO DONATE</div>
+                <div style="width:64px;height:64px;background:var(--midnight);border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;">
+                  <div style="border:1.5px dashed var(--gold);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--gold);">QR</div>
+                </div>
+                <div style="font-size:11px;font-weight:600;color:var(--sindoor);">AMAR JAWAN RIDERS</div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>SQUARE</span><span>1080 × 1080</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Square QR Code (Full)</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Square QR Code (Full)')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Square QR Code (Full)')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Square QR Code -->
+          <div class="dl-card card" data-cat="square" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:290px;aspect-ratio:1/1;background:var(--sand-deep);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1px solid var(--line);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-size:11px;font-weight:600;color:var(--peacock);">RIDER QR CODE</div>
+                <div style="width:60px;height:60px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,.15);">
+                  <div style="border:1.5px dashed var(--peacock);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--peacock);">QR</div>
+                </div>
+                <div style="font-size:10px;color:var(--umber);">ajr.in/rahul-menon</div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>SQUARE</span><span>1080 × 1080</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">Square QR Code</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('Square QR Code')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('Square QR Code')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. QR Code Poster -->
+          <div class="dl-card card" data-cat="a4" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:1/1.41;background:#FFFDF8;border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:2px solid var(--sindoor);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--sindoor);font-size:12px;">OFFICIAL RIDER POSTER</div>
+                <div style="width:64px;height:64px;background:var(--midnight);border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;">
+                  <div style="border:1.5px dashed var(--gold);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--gold);">QR</div>
+                </div>
+                <div style="font-size:9px;color:#4A443C;">PRINTABLE A4 POSTER</div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>A4</span><span>1240 × 1754</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">QR Code Poster</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('QR Code Poster')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('QR Code Poster')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9. DGR 2026 Story -->
+          <div class="dl-card card" data-cat="story" style="padding:16px;display:flex;flex-direction:column;justify-content:space-between;background:#FFFDF8;height:550px;">
+            <div style="height:350px;background:#0C2B2E;border-radius:8px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:12px;overflow:hidden;border:1px solid var(--line);">
+              <div style="height:310px;aspect-ratio:9/16;background:linear-gradient(180deg, #174246 0%, #0C2B2E 100%);border-radius:6px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;border:1.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,.45);text-align:center;">
+                <div style="font-family:'Special Gothic Condensed One',sans-serif;color:var(--gold);font-size:13px;letter-spacing:.08em;">DGR 2026</div>
+                <div style="width:56px;height:56px;background:#FFFDF8;border-radius:6px;display:flex;align-items:center;justify-content:center;padding:4px;box-shadow:0 4px 10px rgba(0,0,0,.3);">
+                  <div style="border:1.5px dashed var(--peacock);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--peacock);">QR</div>
+                </div>
+                <div style="color:var(--sand);">
+                  <div style="font-size:10px;font-weight:600;color:var(--gold);">SUPPORT MY RIDE</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#9a8f7d;text-transform:uppercase;font-weight:600;">
+                <span>STORY</span><span>1080 × 1920</span>
+              </div>
+              <h4 style="font-size:15px;margin:4px 0 2px;color:var(--umber);">DGR 2026 Story</h4>
+              <div style="font-size:11px;color:#8a7f6c;margin-bottom:10px;">PNG · OVERLAY</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <button class="btn btn-sindoor btn-sm" style="width:100%;text-align:center;" onclick="triggerDownload('DGR 2026 Story')">⬇ Download</button>
+                <button class="btn btn-peacock btn-sm" style="width:100%;text-align:center;" onclick="triggerShare('DGR 2026 Story')">🔗 Share</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 4: My Donations -->
+    <div class="pane" id="p-donations">
+      <div class="card" style="margin-top:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;"><h3>My donations &amp; supporters</h3><span class="pill pill-gold">₹38,000 total</span></div>
+        <table style="margin-top:10px;">
+          <tr><th>Supporter</th><th>Date</th><th style="text-align:right;">Amount</th></tr>
+          <tr><td>Vikram S</td><td class="hint">10 Aug 2026</td><td style="text-align:right;"><b>₹10,000</b></td></tr>
+          <tr><td>Kochi Biker Club</td><td class="hint">9 Aug 2026</td><td style="text-align:right;"><b>₹5,000</b></td></tr>
+          <tr><td>Anand V</td><td class="hint">8 Aug 2026</td><td style="text-align:right;"><b>₹2,500</b></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pane 5: My Club — CLUB ADMIN MANAGEMENT CENTER -->
+    <div class="pane" id="p-club">
+      <div style="background:#FFF6E8;border:1.5px solid var(--gold);border-radius:10px;padding:16px;margin-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div>
+          <b style="font-size:16px;color:var(--peacock);">👑 Spice Coast Riders — Club Admin Center</b>
+          <p style="font-size:13px;color:#4A443C;margin-top:2px;">Manage team fundraising campaign, review pending rider requests, and post broadcast updates.</p>
+        </div>
+        <a href="club.html" class="btn btn-sindoor btn-sm">View Public Club Page</a>
+      </div>
+
+      <!-- Header Banner Box inside My Club -->
+      <div class="card" style="margin-top:16px;padding:0;overflow:hidden;">
+        <div style="height:180px;position:relative;background:var(--midnight);">
+          <img id="clubBannerImg" src="../Assets/Gen%20Content/Riders_laughing_at_chai_stall_202607141220_3.jpeg" alt="Club banner" style="width:100%;height:100%;object-fit:cover;">
+          <button class="btn btn-peacock btn-sm" style="position:absolute;right:14px;bottom:12px;background:rgba(12,43,46,.85);color:var(--sand);border-color:var(--gold);" onclick="document.getElementById('bannerIn').click()">📷 Change banner</button>
+          <input type="file" id="bannerIn" accept="image/*" hidden onchange="previewBanner(this)">
+        </div>
+      </div>
+
+      <!-- Team Goal & Campaign Box -->
+      <div class="card" style="margin-top:16px;background:#FFFDF8;border:1.5px solid var(--gold);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+          <div>
+            <span class="pill pill-gold" style="font-size:11px;">Team Campaign Goal</span>
+            <h2 style="font-size:30px;color:var(--peacock);margin-top:4px;" id="teamRaisedDisplay">₹1,20,400 <small style="font-size:15px;color:#8a7f6c;font-family:'Work Sans',sans-serif;">raised</small></h2>
+            <p class="hint" style="margin-top:2px;">Team Target Goal: <b id="teamGoalDisplay">₹1,50,000</b> · Donors: <b>38</b> · Members: <b>42</b></p>
+          </div>
+          <button class="btn btn-peacock btn-sm" onclick="openTeamGoalModal()">⚙ Edit Team Goal</button>
+        </div>
+        <div class="progress" style="margin-top:12px;height:12px;"><span id="teamGoalBar" style="width:80%;"></span></div>
+      </div>
+
+      <!-- Pending Approval Requests Section -->
+      <div class="card" style="margin-top:16px;background:#FFF6E8;border-color:var(--sindoor);" id="approvalCard">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+          <div>
+            <h3 style="font-size:18px;color:var(--sindoor);display:flex;align-items:center;gap:8px;">
+              <span>🔔 Pending Approval Requests</span>
+              <span class="nav-badge" id="reqBadgeTitle" style="font-size:11px;padding:2px 8px;">2</span>
+            </h3>
+            <p class="hint" style="margin-top:2px;">Approve member join requests and co-admin promotion requests.</p>
+          </div>
+        </div>
+
+        <div id="requestsList">
+          <div class="member-row" id="req-1" style="background:#FFFDF8;border-radius:8px;padding:12px;border:1px solid var(--line);margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span class="avatar" style="background:var(--peacock);width:40px;height:40px;font-size:14px;">RV</span>
+              <div>
+                <b>Rahul Varma</b> <span class="pill pill-open">Member Request</span>
+                <div style="font-size:12px;color:#8a7f6c;">rahul.v@email.com · Royal Enfield Himalayan</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn btn-sindoor btn-sm" onclick="approveReq(1, 'Rahul Varma', 'Member')">✓ Approve</button>
+              <button class="btn btn-peacock btn-sm" onclick="declineReq(1)">✕ Decline</button>
+            </div>
+          </div>
+
+          <div class="member-row" id="req-2" style="background:#FFFDF8;border-radius:8px;padding:12px;border:1px solid var(--line);">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span class="avatar" style="background:var(--gold);width:40px;height:40px;font-size:14px;">DS</span>
+              <div>
+                <b>Divya Suresh</b> <span class="pill pill-gold">Co-Admin Request</span>
+                <div style="font-size:12px;color:#8a7f6c;">divya@email.com · Raised ₹24,500</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn btn-sindoor btn-sm" onclick="approveReq(2, 'Divya Suresh', 'Co-Admin')">✓ Approve</button>
+              <button class="btn btn-peacock btn-sm" onclick="declineReq(2)">✕ Decline</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Members Section -->
+      <div class="card" style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+          <div>
+            <h3 style="font-size:18px;">Team Members (<span id="memberCountText">42</span>)</h3>
+            <p class="hint">Active riders and admins registered in Spice Coast Riders.</p>
+          </div>
+          <button class="btn btn-peacock btn-sm" onclick="alert('Invite link copied!')">📋 Copy Invite Link</button>
+        </div>
+        <div id="membersList">
+          <div class="member-row">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span class="avatar" style="background:var(--sindoor);width:38px;height:38px;">RM</span>
+              <div><b>Rahul Menon</b> <span class="pill pill-gold">Captain</span></div>
+            </div>
+            <b>₹38,000</b>
+          </div>
+          <div class="member-row">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span class="avatar" style="background:var(--gold);width:38px;height:38px;">DS</span>
+              <div><b>Divya Suresh</b> <span class="pill pill-open">Co-Admin</span></div>
+            </div>
+            <b>₹24,500</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manage Team Updates Section -->
+      <div class="card" style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+          <div>
+            <h3 style="font-size:18px;color:var(--peacock);">Manage Team Updates</h3>
+            <p class="hint">Broadcast updates to all 42 team members via WhatsApp and Email.</p>
+          </div>
+          <button class="btn btn-sindoor btn-sm" onclick="openAddUpdateModal()">+ Add Update</button>
+        </div>
+
+        <div id="teamUpdatesFeed">
+          <div class="update-card" id="upd-1">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <h4>Flag-off Assembly Venue Confirmed</h4>
+                <span class="pill pill-open" style="font-size:10px;">Logistics</span>
+              </div>
+              <button class="btn btn-sindoor btn-sm" style="padding:4px 8px;font-size:11px;" onclick="this.closest('.update-card').remove()">🗑 Delete</button>
+            </div>
+            <p>Riders, please assemble at Marine Drive parking lot by 06:00 AM on 26 January 2027.</p>
+            <div style="font-size:11px;color:#8a7f6c;margin-top:6px;">Posted by <b>Rahul Menon (Captain)</b> · 11 Aug 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pane 6: Settings -->
+    <div class="pane" id="p-settings">
+      <div class="card" style="margin-top:20px;">
+        <h3>Settings</h3>
+        <div class="grid g2">
+          <div><label>First name</label><input value="Rahul"></div>
+          <div><label>Second name</label><input value="Menon"></div>
+        </div>
+        <div class="grid g2">
+          <div><label>Email</label><input value="rahul@email.com"></div>
+          <div><label>Phone (verified)</label><input value="+91 98470 12345" disabled></div>
+        </div>
+        <label>Notifications</label>
+        <div class="toggle"><input type="checkbox" checked id="nw"><label for="nw" style="margin:0;font-weight:500;color:var(--umber);">WhatsApp</label></div>
+        <div class="toggle"><input type="checkbox" checked id="ne"><label for="ne" style="margin:0;font-weight:500;color:var(--umber);">Email</label></div>
+        <div class="toggle"><input type="checkbox" checked id="ns"><label for="ns" style="margin:0;font-weight:500;color:var(--umber);">SMS (ride-day alerts)</label></div>
+        <label>Change password</label><input type="password" placeholder="New password">
+        <button class="btn btn-sindoor" style="margin-top:16px;" onclick="alert('Saved (prototype)')">Save settings</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal 1: Edit Goal Modal -->
+<div class="tc-overlay" id="goalModal" style="position:fixed;inset:0;background:rgba(12,43,46,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;">
+  <div style="background:var(--sand);border-radius:12px;max-width:480px;width:100%;padding:24px;border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.3);">
+    <h3 style="font-size:22px;color:var(--peacock);margin-bottom:4px;">Set your fundraising goals</h3>
+    <label style="margin-top:12px;">Minimum Goal (₹) <span style="color:var(--sindoor);">* (Min ₹500)</span></label>
+    <input type="number" id="minGoalInput" value="500" min="500">
+    <label>Maximum Target Goal (₹)</label>
+    <input type="number" id="maxGoalInput" value="50000" min="500">
+    <div id="goalError" style="color:var(--sindoor);font-size:13px;margin-top:10px;display:none;background:#FBF1EC;padding:8px;border-radius:6px;"></div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px;">
+      <button class="btn btn-peacock btn-sm" onclick="closeGoalModal()">Cancel</button>
+      <button class="btn btn-sindoor btn-sm" onclick="saveGoalModal()">Save goals</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Edit Team Goal Modal -->
+<div class="tc-overlay" id="teamGoalModal" style="position:fixed;inset:0;background:rgba(12,43,46,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;">
+  <div class="modal-box">
+    <h3 style="font-size:22px;color:var(--peacock);margin-bottom:4px;">Team Event &amp; Goal Settings</h3>
+    <p style="font-size:13px;color:#8a7f6c;margin-bottom:16px;">Set your team fundraising target goal. Minimum limit is ₹1,000 INR.</p>
+    <label style="margin-top:0;">Team Target Goal (₹) <span style="color:var(--sindoor);">* (Min ₹1,000)</span></label>
+    <input type="number" id="teamGoalModalInput" value="150000" min="1000" placeholder="150000">
+    <div id="teamGoalModalError" style="color:var(--sindoor);font-size:13px;font-weight:600;margin-top:12px;display:none;background:#FBF1EC;padding:8px 12px;border-radius:6px;border:1px solid var(--sindoor);"></div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+      <button class="btn btn-peacock btn-sm" onclick="closeTeamGoalModal()">Cancel</button>
+      <button class="btn btn-sindoor btn-sm" onclick="saveTeamGoalModal()">Save Goal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3: Add Update Broadcast Modal -->
+<div class="tc-overlay" id="addUpdateModal" style="position:fixed;inset:0;background:rgba(12,43,46,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;">
+  <div class="modal-box" style="max-width:540px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3 style="font-size:20px;color:var(--peacock);">Add Team Update</h3>
+      <button style="border:0;background:none;font-size:20px;cursor:pointer;color:#8a7f6c;" onclick="closeAddUpdateModal()">✕</button>
+    </div>
+    <label style="margin-top:0;">Update Title</label>
+    <input id="updTitleInput" placeholder="e.g. Flag-off venue instructions">
+    <label>Update Type</label>
+    <select id="updTypeSelect">
+      <option value="Broadcast Message">Broadcast Message</option>
+      <option value="Ride Day Logistics">Ride Day Logistics</option>
+      <option value="Announcement">Announcement</option>
+    </select>
+    <label>Update Content</label>
+    <textarea id="updContentInput" rows="4" placeholder="Write broadcast message..."></textarea>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px;">
+      <button class="btn btn-peacock btn-sm" onclick="closeAddUpdateModal()">Cancel</button>
+      <button class="btn btn-sindoor btn-sm" onclick="saveAddUpdateModal()">Create &amp; Broadcast</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentMinGoal = 500;
+let currentMaxGoal = 50000;
+let teamRaised = 120400;
+let teamGoal = 150000;
+let pendingReqCount = 2;
+
+function filterDl(cat, btn){
+  document.querySelectorAll('.dl-filters .chip').forEach(c=>c.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.querySelectorAll('.dl-card').forEach(card=>{
+    if(cat === 'all' || card.dataset.cat === cat){
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+function triggerDownload(title){ alert(`Downloading ${title} asset template...`); }
+function triggerShare(title){ alert(`Share link for ${title} copied!`); }
+
+function preview(input,imgId){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById(imgId).src=e.target.result; };
+  r.readAsDataURL(f);
+}
+function previewAva(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById('avaBox').innerHTML='<img src="'+e.target.result+'">'; };
+  r.readAsDataURL(f);
+}
+function previewBanner(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById('clubBannerImg').src=e.target.result; };
+  r.readAsDataURL(f);
+}
+function pane(id,link){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  document.querySelectorAll('.side-nav a').forEach(a=>a.classList.remove('on'));
+  if(link) link.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function openGoalModal(){ document.getElementById('goalModal').style.display = 'flex'; }
+function closeGoalModal(){ document.getElementById('goalModal').style.display = 'none'; }
+function saveGoalModal(){ closeGoalModal(); }
+
+function openTeamGoalModal(){
+  document.getElementById('teamGoalModalInput').value = teamGoal;
+  document.getElementById('teamGoalModalError').style.display = 'none';
+  document.getElementById('teamGoalModal').style.display = 'flex';
+}
+function closeTeamGoalModal(){ document.getElementById('teamGoalModal').style.display = 'none'; }
+function saveTeamGoalModal(){
+  const val = parseInt(document.getElementById('teamGoalModalInput').value, 10);
+  const errBox = document.getElementById('teamGoalModalError');
+  if(isNaN(val) || val < 1000){
+    errBox.textContent = 'Minimum team fundraising goal cannot be less than ₹1,000 INR.';
+    errBox.style.display = 'block';
+    return;
+  }
+  teamGoal = val;
+  document.getElementById('teamGoalDisplay').textContent = '₹' + teamGoal.toLocaleString('en-IN');
+  closeTeamGoalModal();
+  alert('✓ Team goal updated to ₹' + teamGoal.toLocaleString('en-IN'));
+}
+
+function approveReq(id, name, role){
+  const el = document.getElementById('req-' + id);
+  if(el) el.remove();
+  pendingReqCount--;
+  document.getElementById('navReqCount').textContent = pendingReqCount;
+  alert(`✓ Approved ${name} as ${role}!`);
+}
+function declineReq(id){
+  const el = document.getElementById('req-' + id);
+  if(el) el.remove();
+  pendingReqCount--;
+  document.getElementById('navReqCount').textContent = pendingReqCount;
+}
+
+function openAddUpdateModal(){ document.getElementById('addUpdateModal').style.display = 'flex'; }
+function closeAddUpdateModal(){ document.getElementById('addUpdateModal').style.display = 'none'; }
+function saveAddUpdateModal(){
+  const title = document.getElementById('updTitleInput').value.trim();
+  const content = document.getElementById('updContentInput').value.trim();
+  if(!title || !content){ alert('Please enter title and content.'); return; }
+  closeAddUpdateModal();
+  alert(`📢 Update broadcast published! Members notified on WhatsApp and Email.`);
+}
+</script>
+<div class="role-switch"><b>View</b><a href="rider-solo.html">Solo</a><a href="rider-nocity.html">Solo · no city</a><a href="rider-member.html">Club member</a><a href="rider-admin.html" class="on">Club admin</a><a href="rider-public.html">Public rider</a><a href="rider-public-club.html">Public rider (club)</a><a href="club.html">Public club</a><a href="club-admin.html">Club captain</a><a href="city.html">City page</a><a href="downloads.html">Downloads</a></div>
+</body>
+</html>

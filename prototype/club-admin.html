@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AJR — Club Admin Dashboard (Captain View)</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="ajr.css">
+<style>
+.sub-nav{display:flex;gap:10px;background:var(--midnight);padding:10px 16px;border-radius:10px;margin-top:16px;overflow-x:auto;flex-wrap:wrap;}
+.sub-nav a{color:#8FB0AC;text-decoration:none;font-size:13px;font-weight:500;padding:8px 14px;border-radius:6px;transition:all .15s;display:inline-flex;align-items:center;}
+.sub-nav a:hover{background:rgba(247,238,226,.1);color:var(--sand);}
+.sub-nav a.on{background:var(--gold);color:var(--midnight);font-weight:600;}
+
+.update-card{background:#FFFDF8;border:1px solid var(--line);border-radius:10px;padding:18px;margin-top:12px;}
+.update-card h4{font-size:16px;color:var(--peacock);margin-bottom:4px;}
+.update-card p{font-size:13px;color:#4A443C;line-height:1.5;}
+
+.member-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.member-row:last-child{border-bottom:0;}
+
+.modal-box{background:var(--sand);border-radius:12px;max-width:540px;width:100%;padding:24px;border:1px solid var(--line);box-shadow:0 12px 40px rgba(0,0,0,.35);}
+</style>
+</head>
+<body>
+<div class="proto-tag">Prototype v2 — Scenario 3: Club Admin / Captain</div>
+
+<!-- Demo Scenario Switcher Bar -->
+<div style="background:#0C2B2E;color:#FFFDF8;padding:8px 24px;font-size:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:1px solid var(--gold);">
+  <span><b>PROTOTYPE SCENARIO SWITCHER:</b> Viewing <b>Scenario 3 (Club Admin / Captain)</b></span>
+  <div style="display:flex;gap:8px;">
+    <a href="rider-solo.html" class="pill" style="background:#FFFDF8;color:#0C2B2E;text-decoration:none;">1. Solo Rider (No Club)</a>
+    <a href="rider-member.html" class="pill" style="background:#E4EEE9;color:#124D52;text-decoration:none;">2. Club Member</a>
+    <a href="club-admin.html" class="pill pill-gold" style="text-decoration:none;">3. Club Admin / Captain ✓</a>
+  </div>
+</div>
+
+<nav class="top">
+  <a class="logo" href="../ajr-homepage.html"><img src="../Assets/logo_v2.png" alt="AJR"></a>
+  <div class="links">
+    <a href="../ajr-homepage.html">Home</a>
+    <a href="city.html">Rides</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="donate.html" class="btn btn-peacock btn-sm">Donate</a>
+    <a href="rider-solo.html" class="avatar" style="width:36px;height:36px;font-size:13px;text-decoration:none;">AN</a>
+  </div>
+</nav>
+
+<!-- Header Banner -->
+<div style="height:240px;overflow:hidden;position:relative;background:var(--midnight);">
+  <img id="clubBannerImg" src="../Assets/Gen%20Content/Riders_laughing_at_chai_stall_202607141220_3.jpeg" alt="Club banner" style="width:100%;height:100%;object-fit:cover;">
+  <button class="btn btn-peacock btn-sm" style="position:absolute;right:16px;bottom:14px;background:rgba(12,43,46,.85);color:var(--sand);border-color:var(--gold);" onclick="document.getElementById('bannerIn').click()">📷 Change banner</button>
+  <input type="file" id="bannerIn" accept="image/*" hidden onchange="previewBanner(this)">
+</div>
+
+<div class="wrap" style="margin-bottom:60px;">
+  <!-- Profile Head Area -->
+  <div class="page-head" style="display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap;margin-top:-44px;position:relative;z-index:2;">
+    <span class="avatar" style="width:88px;height:88px;font-size:26px;background:var(--sindoor);border:4px solid var(--sand);box-shadow:0 4px 12px rgba(0,0,0,.2);">SCR</span>
+    <div style="flex:1;min-width:240px;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <h1 style="font-size:32px;">Spice Coast Riders</h1>
+        <span class="pill pill-gold" style="font-size:12px;">Captain / Primary Admin</span>
+      </div>
+      <p style="margin-top:4px;">Kochi, Kerala · est. 2019 · 42 members · <span class="pill pill-open">AJR Approved</span></p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-peacock btn-sm" onclick="alert('Edit club info dialog (prototype)')">Edit Club</button>
+      <a class="btn btn-sindoor btn-sm" href="donate.html">Donate to Club</a>
+      <button class="btn btn-peacock btn-sm" onclick="alert('Club invite link copied!')">Share</button>
+    </div>
+  </div>
+
+  <!-- Sub Navigation Bar -->
+  <div class="sub-nav">
+    <a href="#" class="on">📊 Dashboard</a>
+    <a href="#">📅 Events</a>
+    <a href="#">💖 Donations</a>
+    <a href="#">🛒 Orders</a>
+    <a href="downloads.html">⬇ Downloads</a>
+    <a href="#" class="on" style="background:var(--sindoor);color:var(--sand);">👥 My Team <span class="nav-badge" id="navReqCount">2</span></a>
+    <a href="#">⚙ Settings</a>
+  </div>
+
+  <!-- Team Goal & Fundraising Progress Box -->
+  <div class="card" style="margin-top:20px;background:#FFFDF8;border:1.5px solid var(--gold);">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+      <div>
+        <span class="pill pill-gold" style="font-size:11px;">Team Fundraising Campaign</span>
+        <h2 style="font-size:32px;color:var(--peacock);margin-top:6px;" id="teamRaisedDisplay">₹1,20,400 <small style="font-size:16px;color:#8a7f6c;font-family:'Work Sans',sans-serif;">raised</small></h2>
+        <p class="hint" style="margin-top:2px;">Team Target Goal: <b id="teamGoalDisplay">₹1,50,000</b> · Donors: <b>38</b> · Members: <b>42</b></p>
+      </div>
+      <button class="btn btn-peacock btn-sm" onclick="openTeamGoalModal()">⚙ Event Settings / Edit Goal</button>
+    </div>
+    <div class="progress" style="margin-top:14px;height:12px;"><span id="teamGoalBar" style="width:80%;"></span></div>
+  </div>
+
+  <!-- Pending Approval Requests Section -->
+  <div class="card" style="margin-top:20px;background:#FFF6E8;border-color:var(--sindoor);" id="approvalCard">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+      <div>
+        <h3 style="font-size:20px;color:var(--sindoor);display:flex;align-items:center;gap:8px;">
+          <span>🔔 Pending Approval Requests</span>
+          <span class="nav-badge" id="reqBadgeTitle" style="font-size:12px;padding:3px 9px;">2</span>
+        </h3>
+        <p class="hint" style="margin-top:2px;">Review and approve member join requests and co-admin promotion requests for Spice Coast Riders.</p>
+      </div>
+    </div>
+
+    <div id="requestsList">
+      <!-- Request 1: Member Request -->
+      <div class="member-row" id="req-1" style="background:#FFFDF8;border-radius:8px;padding:14px;border:1px solid var(--line);margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="avatar" style="background:var(--peacock);width:44px;height:44px;font-size:15px;">RV</span>
+          <div>
+            <b style="font-size:15px;color:var(--umber);">Rahul Varma</b> <span class="pill pill-open">Member Request</span>
+            <div style="font-size:12px;color:#8a7f6c;margin-top:2px;">rahul.v@email.com · Royal Enfield Himalayan · Kochi</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sindoor btn-sm" onclick="approveReq(1, 'Rahul Varma', 'Member')">✓ Approve Member</button>
+          <button class="btn btn-peacock btn-sm" onclick="declineReq(1)">✕ Decline</button>
+        </div>
+      </div>
+
+      <!-- Request 2: Co-Admin Promotion Request -->
+      <div class="member-row" id="req-2" style="background:#FFFDF8;border-radius:8px;padding:14px;border:1px solid var(--line);">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="avatar" style="background:var(--gold);width:44px;height:44px;font-size:15px;">DS</span>
+          <div>
+            <b style="font-size:15px;color:var(--umber);">Divya Suresh</b> <span class="pill pill-gold">Co-Admin Request</span>
+            <div style="font-size:12px;color:#8a7f6c;margin-top:2px;">divya@email.com · Raised ₹24,500 · Active Member</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sindoor btn-sm" onclick="approveReq(2, 'Divya Suresh', 'Co-Admin')">✓ Approve Co-Admin</button>
+          <button class="btn btn-peacock btn-sm" onclick="declineReq(2)">✕ Decline</button>
+        </div>
+      </div>
+    </div>
+    <div id="noReqsMsg" style="display:none;padding:16px;text-align:center;color:#8a7f6c;font-size:14px;">
+      ✓ All pending requests reviewed. No requests waiting!
+    </div>
+  </div>
+
+  <!-- Team Members Section -->
+  <div class="card" style="margin-top:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+      <div>
+        <h3 style="font-size:20px;">Team Members (<span id="memberCountText">42</span>)</h3>
+        <p class="hint">Active riders and admins registered in Spice Coast Riders.</p>
+      </div>
+      <button class="btn btn-peacock btn-sm" onclick="alert('Invitation link copied!')">📋 Copy Invite Link</button>
+    </div>
+
+    <div id="membersList">
+      <div class="member-row">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="avatar" style="background:var(--sindoor);">RM</span>
+          <div>
+            <b>Rahul Menon</b> <span class="pill pill-gold">Captain / Admin</span>
+            <div style="font-size:12px;color:#8a7f6c;margin-top:2px;">rahul@email.com · Riding AJR since 2026</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <b style="font-size:16px;color:var(--peacock);">₹38,000</b>
+          <div style="font-size:11px;color:#8a7f6c;">raised</div>
+        </div>
+      </div>
+
+      <div class="member-row" id="memberDivya">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="avatar" style="background:var(--gold);">DS</span>
+          <div>
+            <b>Divya Suresh</b> <span class="pill pill-open" id="role-divya">Co-Admin</span>
+            <div style="font-size:12px;color:#8a7f6c;margin-top:2px;">divya@email.com · Royal Enfield Interceptor 650</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <b style="font-size:16px;color:var(--peacock);">₹24,500</b>
+          <div style="font-size:11px;color:#8a7f6c;">raised</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manage Team Updates Section (Broadcasts) -->
+  <div class="card" style="margin-top:20px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
+      <div>
+        <h3 style="font-size:20px;color:var(--peacock);">Manage Team Updates</h3>
+        <p class="hint" style="margin-top:2px;">Broadcast updates, logistics, and announcements directly to all 42 team members via WhatsApp and Email.</p>
+      </div>
+      <button class="btn btn-sindoor btn-sm" onclick="openAddUpdateModal()">+ Add Update</button>
+    </div>
+
+    <div id="teamUpdatesFeed">
+      <div class="update-card" id="upd-1">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:6px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <h4>Welcome to our team</h4>
+            <span class="pill pill-gold" style="font-size:10px;">Default Broadcast</span>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-peacock btn-sm" style="padding:4px 10px;font-size:11px;" onclick="alert('Editing broadcast update')">✏ Edit</button>
+            <button class="btn btn-peacock btn-sm" style="padding:4px 10px;font-size:11px;" onclick="alert('Update link copied!')">📋 Copy Link</button>
+            <button class="btn btn-sindoor btn-sm" style="padding:4px 10px;font-size:11px;" onclick="deleteUpdate(1)">🗑 Delete</button>
+          </div>
+        </div>
+        <p>Thanks for supporting our ride! We will share our campaign progress, convoy route logistics, and team updates right here.</p>
+        <div style="font-size:11px;color:#8a7f6c;margin-top:8px;">Posted by <b>Rahul Menon (Captain)</b> · 10 Aug 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 1: Edit Team Goal Modal -->
+<div class="tc-overlay" id="teamGoalModal" style="position:fixed;inset:0;background:rgba(12,43,46,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;">
+  <div class="modal-box">
+    <h3 style="font-size:22px;color:var(--peacock);margin-bottom:4px;">Team Event &amp; Goal Settings</h3>
+    <p style="font-size:13px;color:#8a7f6c;margin-bottom:16px;">Set your team fundraising target goal. Minimum limit is ₹1,000 INR.</p>
+    
+    <label style="margin-top:0;">Team Target Goal (₹) <span style="color:var(--sindoor);">* (Min ₹1,000)</span></label>
+    <input type="number" id="teamGoalModalInput" value="150000" min="1000" placeholder="150000">
+    <p class="hint">Minimum commitment threshold for team fundraising is ₹1,000 INR.</p>
+    
+    <div id="teamGoalModalError" style="color:var(--sindoor);font-size:13px;font-weight:600;margin-top:12px;display:none;background:#FBF1EC;padding:8px 12px;border-radius:6px;border:1px solid var(--sindoor);"></div>
+    
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+      <button class="btn btn-peacock btn-sm" onclick="closeTeamGoalModal()">Cancel</button>
+      <button class="btn btn-sindoor btn-sm" onclick="saveTeamGoalModal()">Save Goal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Add Update Broadcast Modal -->
+<div class="tc-overlay" id="addUpdateModal" style="position:fixed;inset:0;background:rgba(12,43,46,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;">
+  <div class="modal-box" style="max-width:600px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <h3 style="font-size:22px;color:var(--peacock);">Add Team Update</h3>
+      <button style="border:0;background:none;font-size:20px;cursor:pointer;color:#8a7f6c;" onclick="closeAddUpdateModal()">✕</button>
+    </div>
+
+    <label style="margin-top:0;">Update Title</label>
+    <input id="updTitleInput" placeholder="e.g. Flag-off venue or convoy route instructions">
+
+    <label>Update Type</label>
+    <select id="updTypeSelect">
+      <option value="Broadcast Message">Broadcast Message</option>
+      <option value="Ride Day Logistics">Ride Day Logistics</option>
+      <option value="Announcement">Announcement</option>
+      <option value="Motivation">Motivation</option>
+      <option value="Blog">Blog</option>
+    </select>
+
+    <label>Update Content</label>
+    <textarea id="updContentInput" rows="4" placeholder="Write your broadcast message here. Will be displayed on team page and sent via WhatsApp/Email to members..."></textarea>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+      <button class="btn btn-peacock btn-sm" onclick="closeAddUpdateModal()">Cancel</button>
+      <button class="btn btn-sindoor btn-sm" onclick="saveAddUpdateModal()">Create Update &amp; Broadcast</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let teamRaised = 120400;
+let teamGoal = 150000;
+let pendingReqCount = 2;
+
+function previewBanner(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById('clubBannerImg').src=e.target.result; };
+  r.readAsDataURL(f);
+}
+
+function openTeamGoalModal(){
+  document.getElementById('teamGoalModalInput').value = teamGoal;
+  document.getElementById('teamGoalModalError').style.display = 'none';
+  document.getElementById('teamGoalModal').style.display = 'flex';
+}
+function closeTeamGoalModal(){ document.getElementById('teamGoalModal').style.display = 'none'; }
+function saveTeamGoalModal(){
+  const val = parseInt(document.getElementById('teamGoalModalInput').value, 10);
+  const errBox = document.getElementById('teamGoalModalError');
+  if(isNaN(val) || val < 1000){
+    errBox.textContent = 'Minimum team fundraising goal cannot be less than ₹1,000 INR.';
+    errBox.style.display = 'block';
+    return;
+  }
+  teamGoal = val;
+  document.getElementById('teamGoalDisplay').textContent = '₹' + teamGoal.toLocaleString('en-IN');
+  closeTeamGoalModal();
+  alert('✓ Team fundraising goal updated to ₹' + teamGoal.toLocaleString('en-IN'));
+}
+
+function approveReq(id, name, role){
+  const el = document.getElementById('req-' + id);
+  if(el) el.remove();
+  pendingReqCount--;
+  document.getElementById('reqBadgeTitle').textContent = pendingReqCount;
+  document.getElementById('navReqCount').textContent = pendingReqCount;
+  if(pendingReqCount <= 0){
+    document.getElementById('reqBadgeTitle').style.display = 'none';
+    document.getElementById('navReqCount').style.display = 'none';
+    document.getElementById('noReqsMsg').style.display = 'block';
+  }
+  alert(`✓ Approved ${name} as ${role}!`);
+}
+
+function declineReq(id){
+  const el = document.getElementById('req-' + id);
+  if(el) el.remove();
+  pendingReqCount--;
+  document.getElementById('navReqCount').textContent = pendingReqCount;
+}
+
+function openAddUpdateModal(){ document.getElementById('addUpdateModal').style.display = 'flex'; }
+function closeAddUpdateModal(){ document.getElementById('addUpdateModal').style.display = 'none'; }
+function saveAddUpdateModal(){
+  const title = document.getElementById('updTitleInput').value.trim();
+  const type = document.getElementById('updTypeSelect').value;
+  const content = document.getElementById('updContentInput').value.trim();
+  if(!title || !content){ alert('Please enter title and content.'); return; }
+  closeAddUpdateModal();
+  alert(`📢 Update broadcast published! Members notified on WhatsApp and Email.`);
+}
+function deleteUpdate(id){ const el=document.getElementById('upd-'+id); if(el) el.remove(); }
+</script>
+<div class="role-switch"><b>View</b><a href="rider-solo.html">Solo</a><a href="rider-nocity.html">Solo · no city</a><a href="rider-member.html">Club member</a><a href="rider-admin.html">Club admin</a><a href="rider-public.html">Public rider</a><a href="rider-public-club.html">Public rider (club)</a><a href="club.html">Public club</a><a href="club-admin.html" class="on">Club captain</a><a href="city.html">City page</a><a href="downloads.html">Downloads</a></div>
+</body>
+</html>
