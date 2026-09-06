@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ride Safety — The Amar Jawan Ride</title>
+<meta name="description" content="How the Amar Jawan Ride keeps riders safe — ride leaders, marshals, medical and breakdown support — and what every rider must bring. Helmets, documents, rules and a full safety FAQ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Work+Sans:wght@400;500;600&family=Mukta:wght@400;500&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand:#F7EEE2;--kesari:#C13B1B;--sindoor:#B33114;--peacock:#124D52;
+    --gold:#B38B4B;--midnight:#0C2B2E;--umber:#241F1A;--sand-deep:#EFE3D0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Work Sans',sans-serif;background:var(--sand);color:var(--umber);position:relative;}
+  h1,h2{font-family:'Special Gothic Condensed One',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:-.01em;line-height:.96;}
+  h3,.display{font-family:'Special Gothic Condensed One',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.02em;}
+  .display-hindi{font-family:'Tiro Devanagari Hindi',serif;}
+  section{position:relative;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .kicker{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+  .kicker::before{content:"";width:32px;height:1px;background:var(--gold);}
+  .kicker.center{justify-content:center;}
+  .btn{display:inline-block;padding:13px 30px;border-radius:4px;font-size:15px;font-weight:600;text-decoration:none;letter-spacing:.03em;transition:transform .15s ease, background .15s ease, color .15s ease;}
+  .btn:active{transform:scale(.98);}
+  .btn-sindoor{background:var(--sindoor);color:var(--sand);}
+  .btn-sindoor:hover{background:#9A2A10;}
+  .btn-sand{background:var(--sand);color:var(--sindoor);}
+  .btn-sand:hover{background:#fff;}
+
+  /* Nav */
+  nav{position:sticky;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(7,12,23,.86);backdrop-filter:blur(8px);border-bottom:1px solid rgba(179,139,75,.16);}
+  .nav-logo{display:flex;align-items:center;text-decoration:none;}
+  .nav-logo img{height:46px;display:block;filter:drop-shadow(0 1px 6px rgba(12,43,46,.45));}
+  .nav-links{display:flex;gap:32px;align-items:center;}
+  .nav-links a{color:var(--sand);text-decoration:none;font-size:15px;font-weight:500;}
+  .nav-links a:hover{color:var(--gold);}
+  .nav-links a[data-active="true"]{color:var(--gold);}
+  .nav-cta .btn{white-space:nowrap;}
+  /* Experience dropdown */
+  .has-drop{position:relative;display:flex;align-items:center;}
+  .has-drop>a{display:inline-flex;align-items:center;gap:6px;cursor:pointer;}
+  .has-drop>a::after{content:"▾";font-size:10px;opacity:.85;}
+  .has-drop::before{content:"";position:absolute;top:100%;left:0;right:0;height:16px;}
+  .nav-drop{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);min-width:238px;background:#0b1a1c;border:1px solid rgba(179,139,75,.25);border-radius:10px;padding:8px;opacity:0;visibility:hidden;transition:opacity .18s ease, transform .18s ease;box-shadow:0 18px 40px rgba(0,0,0,.45);z-index:40;}
+  .has-drop:hover .nav-drop,.has-drop:focus-within .nav-drop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(-4px);}
+  .nav-drop a{display:block;padding:10px 14px;border-radius:7px;color:var(--sand);font-size:14px;white-space:nowrap;}
+  .nav-drop a:hover{background:rgba(179,139,75,.14);color:var(--gold);}
+  .nav-drop a[data-active="true"]{color:var(--gold);}
+
+  /* Hero */
+  .safety-hero{background:var(--midnight);color:var(--sand);padding:96px 24px 100px;text-align:center;overflow:hidden;}
+  .safety-hero::before{content:"";position:absolute;inset:0;background:url("Assets/pattern_tile.png") repeat;background-size:420px;opacity:.05;pointer-events:none;}
+  .safety-hero-glow{position:absolute;top:-12%;left:50%;transform:translateX(-50%);width:680px;height:680px;background:radial-gradient(circle,rgba(18,77,82,.4),transparent 62%);pointer-events:none;}
+  .safety-hero .wrap{position:relative;z-index:1;max-width:900px;}
+  .safety-hero h1{font-size:clamp(40px,6vw,84px);color:var(--sand);}
+  .safety-hero h1 .accent{color:var(--kesari);}
+  .safety-hero-hindi{font-size:clamp(18px,2vw,24px);color:var(--gold);margin-top:16px;}
+  .safety-hero-sub{font-size:clamp(16px,1.3vw,18px);line-height:1.65;color:rgba(247,238,226,.82);max-width:600px;margin:20px auto 0;}
+
+  /* Generic sections */
+  .sec{padding:96px 0;}
+  .sec.sand{background:var(--sand);}
+  .sec.sand-deep{background:var(--sand-deep);}
+  .sec.dark{background:var(--midnight);color:var(--sand);}
+  .sec.dark::before{content:"";position:absolute;inset:0;background:url("Assets/pattern_tile.png") repeat;background-size:420px;opacity:.05;pointer-events:none;}
+  .sec .wrap{position:relative;z-index:1;}
+  .sec h2{font-size:clamp(30px,4vw,50px);margin-bottom:14px;}
+  .sec.dark h2{color:var(--sand);}
+  .sec .lead{font-size:17px;line-height:1.75;max-width:680px;}
+  .sec.sand .lead,.sec.sand-deep .lead{color:#4A443C;}
+  .sec.dark .lead{color:rgba(247,238,226,.82);}
+  .center-head{text-align:center;}
+  .center-head .kicker{justify-content:center;}
+  .center-head .lead{margin:0 auto;}
+  .contact-line{margin-top:18px;font-size:15px;color:#6a5f50;}
+  .contact-line strong{color:var(--sindoor);}
+  .contact-line a{color:var(--peacock);text-decoration:none;border-bottom:1px solid var(--gold);}
+
+  /* How it works — components */
+  .comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:34px;}
+  .comp{background:#FFFDF8;border:1px solid #E9DEC9;border-radius:12px;padding:22px;display:flex;gap:14px;align-items:flex-start;}
+  .card-ico{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .card-ico svg{width:24px;height:24px;}
+  .ico-sindoor{background:rgba(179,49,20,.10);color:var(--sindoor);}
+  .ico-peacock{background:rgba(18,77,82,.10);color:var(--peacock);}
+  .ico-gold{background:rgba(179,139,75,.16);color:#8a6a2f;}
+  .comp h3{font-size:16px;color:var(--peacock);margin-bottom:4px;}
+  .comp p{font-size:13.5px;line-height:1.5;color:#4A443C;}
+
+  /* Numbered key rules */
+  .rules-key{max-width:820px;margin:46px auto 0;display:grid;gap:14px;}
+  .rk{display:flex;gap:18px;align-items:flex-start;background:#FFFDF8;border:1px solid #E9DEC9;border-radius:10px;padding:18px 22px;}
+  .rk .n{font-family:'Special Gothic Condensed One',sans-serif;font-size:28px;color:var(--gold);line-height:1;width:30px;flex-shrink:0;}
+  .rk p{font-size:15px;color:#4A443C;line-height:1.5;}
+  .rk strong{color:var(--umber);}
+
+  /* Mandatory checklist (dark) */
+  .check-list{max-width:760px;margin:30px auto 0;display:grid;gap:16px;text-align:left;}
+  .chk{display:flex;gap:14px;align-items:flex-start;font-size:16px;color:rgba(247,238,226,.85);line-height:1.5;}
+  .chk svg{flex-shrink:0;width:24px;height:24px;color:#5FB0A6;margin-top:1px;}
+  .chk strong{color:var(--sand);}
+
+  /* Rule list (do/don't) */
+  .rlist{max-width:820px;margin:0 auto;display:grid;gap:18px;}
+  .ri{display:flex;gap:15px;align-items:flex-start;}
+  .ri .m{width:10px;height:10px;background:var(--sindoor);margin-top:7px;flex-shrink:0;transform:rotate(45deg);border-radius:2px;}
+  .ri p{font-size:16px;line-height:1.6;color:#4A443C;}
+  .ri strong{color:var(--umber);}
+
+  /* Callout (medical/insurance) */
+  .callout{max-width:820px;margin:0 auto;background:#FBEEE8;border:1px solid #E7C4B6;border-left:4px solid var(--sindoor);border-radius:10px;padding:26px 28px;display:flex;gap:18px;}
+  .callout svg{flex-shrink:0;width:30px;height:30px;color:var(--sindoor);margin-top:2px;}
+  .callout h3{font-size:20px;color:var(--sindoor);margin-bottom:8px;}
+  .callout p{font-size:15px;line-height:1.7;color:#5a4a42;}
+
+  /* Contact band (dark) */
+  .contact-grid{max-width:860px;margin:34px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .cc{background:rgba(247,238,226,.05);border:1px solid rgba(179,139,75,.3);border-radius:12px;padding:26px 20px;text-align:center;}
+  .cc .card-ico{margin:0 auto 14px;background:rgba(179,139,75,.16);color:var(--gold);}
+  .cc h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .cc a{color:var(--sand);font-size:15px;text-decoration:none;word-break:break-word;}
+  .cc a:hover{color:var(--gold);}
+  @media(max-width:640px){.contact-grid{grid-template-columns:1fr;}}
+
+  /* FAQ accordion */
+  .faq-wrap{max-width:820px;margin:34px auto 0;}
+  .faq-wrap details{border-bottom:1px solid #E2D4BC;}
+  .faq-wrap summary{list-style:none;cursor:pointer;padding:20px 4px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:'Special Gothic Condensed One',sans-serif;text-transform:uppercase;letter-spacing:.02em;font-size:18px;color:var(--umber);}
+  .faq-wrap summary::-webkit-details-marker{display:none;}
+  .faq-wrap summary::after{content:"+";font-size:26px;color:var(--gold);line-height:1;flex-shrink:0;}
+  .faq-wrap details[open] summary::after{content:"–";}
+  .faq-wrap details p{padding:0 4px 22px;font-size:15px;line-height:1.7;color:#4A443C;}
+
+  /* Final CTA */
+  .final{background:var(--sindoor);padding:96px 24px;text-align:center;color:var(--sand);}
+  .final h2{font-size:clamp(30px,4vw,48px);margin-bottom:12px;color:var(--sand);}
+  .final p{font-size:17px;max-width:560px;margin:0 auto 32px;line-height:1.6;color:#F3D9CE;}
+
+  /* Footer */
+  footer{background:var(--midnight);color:#8FB0AC;padding:72px 24px 36px;}
+  .foot-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;}
+  .foot-brand img{height:132px;display:block;margin-bottom:16px;}
+  .foot-brand p{font-size:14px;line-height:1.6;max-width:280px;}
+  footer h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:600;}
+  footer ul{list-style:none;}
+  footer li{margin-bottom:10px;}
+  footer a{color:#B8CDC9;text-decoration:none;font-size:14px;}
+  footer a:hover{color:var(--sand);}
+  .foot-base{max-width:1120px;margin:56px auto 0;padding-top:24px;border-top:1px solid #1D4247;display:flex;justify-content:space-between;font-size:13px;flex-wrap:wrap;gap:8px;}
+
+  /* Journey rail */
+  .journey{position:fixed;top:96px;bottom:28px;right:26px;width:64px;z-index:9;pointer-events:none;opacity:0;transition:opacity .5s ease;}
+  .journey.on{opacity:1;}
+  .journey::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:0;border-left:2px dashed rgba(179,139,75,.55);}
+  .journey img{position:relative;width:54px;display:block;margin:0 auto;will-change:transform;filter:drop-shadow(0 0 1px rgba(247,238,226,.8));}
+  @media (max-width:1100px){.journey{display:none;}}
+
+  @media (max-width:880px){
+    nav{padding:12px 16px;}
+    .nav-links{display:none;}
+    .nav-logo img{height:38px;}
+    .nav-cta .btn{padding:8px 13px;font-size:13px;}
+    .sec{padding:64px 0;}
+    .safety-hero{padding:64px 20px 72px;}
+    .foot-inner{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="journey" id="journey" aria-hidden="true">
+  <img id="journeyBike" src="Assets/Motorcycle_rider_silhouette_on_w%E2%80%A6_202607141529%201.png" alt="">
+</div>
+
+<nav>
+  <a class="nav-logo" href="ajr-homepage.html"><img src="Assets/logo_v3_h.svg" alt="Amar Jawan Ride"></a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="ajr-homepage.html#rides">Rides</a>
+    <div class="has-drop">
+      <a href="ajr-homepage.html#experience" data-active="true">Experience</a>
+      <div class="nav-drop">
+        <a href="ajr-homepage.html#experience">The ride-day experience</a>
+        <a href="dress-guide.html">Proudly Indian — Dress guide</a>
+        <a href="ride-safety.html" data-active="true">Ride safety</a>
+      </div>
+    </div>
+    <a href="about.html#how">Our cause</a>
+    <a href="prototype/leaderboard.html">Leaderboard</a>
+  </div>
+  <div class="nav-cta">
+    <a class="btn btn-sindoor btn-sm" href="prototype/register.html">Register</a>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────────────────── -->
+<header class="safety-hero">
+  <div class="safety-hero-glow"></div>
+  <div class="wrap">
+    <p class="kicker center">Ride Safety</p>
+    <h1>Safety <span class="accent">rides with us.</span></h1>
+    <p class="safety-hero-hindi display-hindi">सुरक्षित सवारी, गर्व की सवारी</p>
+    <p class="safety-hero-sub">Every Amar Jawan Ride is a planned, marshalled, low-speed ride through city streets. Here's how we keep it safe — and what we need from you.</p>
+  </div>
+</header>
+
+<!-- ── INTRO ───────────────────────────────────────────────── -->
+<section class="sec sand">
+  <div class="wrap center-head">
+    <p class="kicker center">Safety first, always</p>
+    <p class="lead">The Amar Jawan Ride is a fundraising ride, not a race. Every ride is organised with a ride leader, trained marshals and support on the road, and moves at a slow, steady pace through the heart of the city. Safety is a shared responsibility — we plan and marshal the ride; you ride prepared, sober and within the rules below.</p>
+    <p class="contact-line">Safety team: <a href="mailto:safety@amarjawanride.in">safety@amarjawanride.in</a> &nbsp;·&nbsp; Helpline: <strong>+91 00000 00000</strong> &nbsp;·&nbsp; <a href="#report">Report an incident</a></p>
+    <!-- PLACEHOLDERS: update the safety email, helpline number and incident-form link once finalised -->
+  </div>
+</section>
+
+<!-- ── HOW A RIDE WORKS ─────────────────────────────────────── -->
+<section class="sec sand-deep">
+  <div class="wrap">
+    <div class="center-head">
+      <p class="kicker center">How an AJR ride works</p>
+      <h2>You're never riding alone.</h2>
+      <p class="lead">Every ride is run by a team so the convoy stays safe, together and on route.</p>
+    </div>
+    <div class="comp-grid">
+      <div class="comp"><div class="card-ico ico-sindoor"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6 V42"/><path d="M15 8 H37 L31 15 L37 22 H15"/></svg></div><div><h3>Ride Leader</h3><p>Sets the pace at the front. Never ride ahead of the leader.</p></div></div>
+      <div class="comp"><div class="card-ico ico-peacock"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="12" r="5"/><path d="M14 41 V27 a10 10 0 0 1 20 0 V41"/><path d="M24 22 V41"/></svg></div><div><h3>Trained Marshals</h3><p>Positioned through the convoy to guide it and keep it together.</p></div></div>
+      <div class="comp"><div class="card-ico ico-gold"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 40 L24 10 L30 40 Z"/><path d="M12 40 H36"/><path d="M20.5 26 H27.5 M19 33 H29"/></svg></div><div><h3>Corner Markers</h3><p>Hold key junctions so the group stays safe and on route.</p></div></div>
+      <div class="comp"><div class="card-ico ico-sindoor"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="15"/><path d="M24 16 V32 M16 24 H32"/></svg></div><div><h3>First Aid / Ambulance</h3><p>Medical help on standby on ride day.</p></div></div>
+      <div class="comp"><div class="card-ico ico-peacock"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="17" width="21" height="14" rx="1.5"/><path d="M27 21 H34 L40 26 V31 H27 Z"/><circle cx="14" cy="33" r="3"/><circle cx="34" cy="33" r="3"/></svg></div><div><h3>Support Vehicle</h3><p>Sweeps the rear to recover any bike that breaks down.</p></div></div>
+      <div class="comp"><div class="card-ico ico-gold"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6 L38 11 V24 C38 33 24 42 24 42 C24 42 10 33 10 24 V11 Z"/><path d="M18 23 l4.5 4.5 8 -9"/></svg></div><div><h3>Police Coordination</h3><p>Arranged with local authorities in cities where it's required.</p></div></div>
+    </div>
+
+    <div class="rules-key">
+      <div class="rk"><div class="n">1</div><p><strong>Follow the ride leader and marshals</strong> — always. Their word is final on the road.</p></div>
+      <div class="rk"><div class="n">2</div><p><strong>Ride behind the leader</strong> — no overtaking the group.</p></div>
+      <div class="rk"><div class="n">3</div><p><strong>Hold your pace.</strong> It's a tribute, not a race. Keep a safe distance.</p></div>
+      <div class="rk"><div class="n">4</div><p><strong>Listen to the safety briefing.</strong> Every ride starts with one — arrive early.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MANDATORY (dark) ─────────────────────────────────────── -->
+<section class="sec dark">
+  <div class="wrap center-head">
+    <p class="kicker center">Before you ride</p>
+    <h2>What's mandatory.</h2>
+    <p class="lead">No documents, no ride. Bring these, every time.</p>
+    <div class="check-list">
+      <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 L9 17 L4 12"/></svg><p><strong>A helmet</strong> — for you <em>and</em> your pillion. No helmet, no ride.</p></div>
+      <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 L9 17 L4 12"/></svg><p><strong>A valid driving licence</strong> for the motorcycle you're riding.</p></div>
+      <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 L9 17 L4 12"/></svg><p><strong>A roadworthy bike</strong> with valid <strong>Registration (RC)</strong>, <strong>insurance</strong> and <strong>PUC (pollution) certificate</strong>.</p></div>
+      <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 L9 17 L4 12"/></svg><p><strong>Your own insurance in order</strong> — AJR does not provide rider or accident cover (see below).</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ON THE RIDE — RULES ──────────────────────────────────── -->
+<section class="sec sand">
+  <div class="wrap">
+    <div class="center-head">
+      <p class="kicker center">On the ride</p>
+      <h2>The rules.</h2>
+    </div>
+    <div class="rlist" style="margin-top:40px;">
+      <div class="ri"><span class="m"></span><p><strong>Helmet on, always.</strong> Non-negotiable, for rider and pillion.</p></div>
+      <div class="ri"><span class="m"></span><p><strong>Obey every traffic law</strong> — signals, lane discipline, no jumping red lights. The convoy stops for the city; the city doesn't stop for us.</p></div>
+      <div class="ri"><span class="m"></span><p><strong>No stunts.</strong> No burnouts, wheelies, bike-surfing or reckless riding. We ride to honour our soldiers — ride like it.</p></div>
+      <div class="ri"><span class="m"></span><p><strong>Never drink and ride.</strong> Zero tolerance. Anyone riding under the influence is removed from the ride and reported to the authorities.</p></div>
+      <div class="ri"><span class="m"></span><p><strong>One pillion per bike.</strong> No tripling — ever.</p></div>
+      <div class="ri"><span class="m"></span><p><strong>Stay with the group.</strong> If you're separated, don't speed to catch up — the ride has regroup points.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PILLION & FAMILY ─────────────────────────────────────── -->
+<section class="sec sand-deep">
+  <div class="wrap center-head">
+    <p class="kicker center">Pillion &amp; family</p>
+    <h2>Bring your people.</h2>
+    <p class="lead">One pillion is welcome on every bike (never more than one), and families are part of what we ride for — so we're glad to have them along. Your pillion must wear a helmet too, and for young children we ask you to ride extra cautiously and use your best judgment.</p>
+  </div>
+</section>
+
+<!-- ── SUPPORT ─────────────────────────────────────────────── -->
+<section class="sec sand">
+  <div class="wrap center-head">
+    <p class="kicker center">On ride day</p>
+    <h2>You're covered on the road.</h2>
+    <p class="lead">Marshals ride throughout the convoy, first-aid and ambulance support is on standby, and a support vehicle sweeps the rear to recover any bike that breaks down — dropping it somewhere safe or at the finish, where it's yours to collect. Make sure your bike is in good shape <em>before</em> the ride so you're not the one being swept up.</p>
+  </div>
+</section>
+
+<!-- ── MEDICAL & INSURANCE ──────────────────────────────────── -->
+<section class="sec sand-deep">
+  <div class="wrap">
+    <div class="callout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L21 20 H3 Z"/><line x1="12" y1="10" x2="12" y2="14"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></svg>
+      <div>
+        <h3>Medical &amp; insurance — please read</h3>
+        <p><strong>The Amar Jawan Ride does not provide any rider insurance or accident cover.</strong> Every rider takes part at their own risk and is responsible for arranging their own valid motorcycle and personal insurance. By registering, you accept the ride waiver and confirm your documents and cover are in order.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WEATHER ─────────────────────────────────────────────── -->
+<section class="sec sand">
+  <div class="wrap center-head">
+    <p class="kicker center">Weather &amp; changes</p>
+    <h2>Safety before schedule.</h2>
+    <p class="lead">If the weather turns unsafe — or local authorities require it — a city's ride may be postponed or changed at short notice. Any change is announced on your city's official <strong>WhatsApp group</strong>, so keep notifications on after you register.</p>
+  </div>
+</section>
+
+<!-- ── REPORT / CONTACT (dark) ──────────────────────────────── -->
+<section class="sec dark" id="report">
+  <div class="wrap center-head">
+    <p class="kicker center">Report an incident</p>
+    <h2>Reach the safety team.</h2>
+    <p class="lead">On ride day, tell your nearest <strong style="color:var(--sand)">marshal</strong> immediately. To report an incident or a safety concern:</p>
+    <div class="contact-grid">
+      <div class="cc">
+        <div class="card-ico"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="11" width="34" height="26" rx="3"/><path d="M8 13 L24 26 L40 13"/></svg></div>
+        <h4>Email</h4>
+        <a href="mailto:safety@amarjawanride.in">safety@amarjawanride.in</a>
+      </div>
+      <div class="cc">
+        <div class="card-ico"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8 h7 l3 8 -5 3 a18 18 0 0 0 10 10 l3 -5 8 3 v7 a3 3 0 0 1 -3 3 A30 30 0 0 1 11 11 a3 3 0 0 1 3 -3z"/></svg></div>
+        <h4>Helpline</h4>
+        <a href="tel:+910000000000">+91 00000 00000</a>
+      </div>
+      <div class="cc">
+        <div class="card-ico"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6 h16 l8 8 v28 H13 Z"/><path d="M29 6 v8 h8"/><path d="M18 26 h14 M18 32 h14"/></svg></div>
+        <h4>Incident form</h4>
+        <a href="#">Open the report form</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ─────────────────────────────────────────────────── -->
+<section class="sec sand">
+  <div class="wrap">
+    <div class="center-head">
+      <p class="kicker center">Safety FAQ</p>
+      <h2>Your questions, answered.</h2>
+    </div>
+    <div class="faq-wrap">
+      <details><summary>What does AJR do to prevent collisions?</summary><p>Every ride is slow, led and marshalled, with a mandatory safety briefing and regroup points along the route. We also remind all registered riders of the safety rules before ride day.</p></details>
+      <details><summary>What if my bike breaks down?</summary><p>A support vehicle sweeps the rear of the convoy and will recover your bike to a safe spot or the finish, where it's yours to collect. Please make sure your bike is roadworthy before you ride.</p></details>
+      <details><summary>What documents do I need to ride?</summary><p>A valid driving licence, plus your bike's Registration (RC), insurance and PUC (pollution) certificate. Carry them on the day.</p></details>
+      <details><summary>Can I bring a pillion or my family?</summary><p>Yes — one pillion per bike (no tripling). Families are welcome; your pillion must wear a helmet too, and for young children please ride extra cautiously.</p></details>
+      <details><summary>Is a helmet really mandatory?</summary><p>Yes — for the rider and the pillion, with no exceptions. No helmet, no ride.</p></details>
+      <details><summary>What if the weather is bad?</summary><p>The ride may be postponed for safety, or on the instruction of local authorities. Any change is announced on your city's WhatsApp group — keep notifications on.</p></details>
+      <details><summary>What if the ride is very large?</summary><p>Marshals manage the group, capacity is monitored per city, and the safety briefing uses a loud-hailer where needed so everyone hears the key points.</p></details>
+      <details><summary>How do I handle the heat?</summary><p>Indian ride days can be hot. Hydrate before and after, carry water, and dress for the weather under your gear. If you feel unwell, tell a marshal.</p></details>
+      <details><summary>What if I get separated from the group?</summary><p>Don't speed to catch up. Ride safely to the next regroup point or to the finish; marshals are there to help.</p></details>
+      <details><summary>How is speeding controlled?</summary><p>The pace is set by the ride leader and held by the marshals. By design, it's a slow, low-speed ride through busy city streets.</p></details>
+      <details><summary>What about riding under the influence?</summary><p>Zero tolerance. Anyone found intoxicated is removed from the ride and reported to the authorities.</p></details>
+      <details><summary>Am I insured on the ride?</summary><p>No. AJR provides no insurance or accident cover. You ride at your own risk and must arrange your own valid motorcycle and personal insurance.</p></details>
+      <details><summary>A car cut into the convoy or caused an incident — what do I do?</summary><p>Prioritise everyone's safety and don't confront the driver. Note the vehicle details (make, model, colour, number plate) and pass them to the marshals or police. If someone is hurt, attend to them first and call for medical help immediately.</p></details>
+      <details><summary>What if the police stop or cancel the ride?</summary><p>We comply, always. Rider safety and the law come first, and any change is communicated through your city's channels.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ───────────────────────────────────────────── -->
+<section class="final">
+  <h2>Ride prepared. Ride proud.</h2>
+  <p>Get your documents in order, gear up, and register for your city's ride.</p>
+  <a class="btn btn-sand" href="prototype/register.html">Register to ride</a>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="Assets/logo_v3_v.svg" alt="Amar Jawan Ride">
+      <p>The Amar Jawan Ride — a nationwide motorcycle fundraiser riding for the families of our martyred heroes.</p>
+    </div>
+    <div>
+      <h4>The ride</h4>
+      <ul>
+        <li><a href="about.html">About AJR</a></li>
+        <li><a href="prototype/city.html">Find a ride</a></li>
+        <li><a href="prototype/host.html">Host a ride</a></li>
+        <li><a href="dress-guide.html">Dress theme guide</a></li>
+        <li><a href="ride-safety.html">Ride safety</a></li>
+        <li><a href="prototype/downloads.html">Downloads &amp; media kit</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>The cause</h4>
+      <ul>
+        <li><a href="about.html#how">Where funds go</a></li>
+        <li><a href="about.html#story">Our story</a></li>
+        <li><a href="about.html#founders">The founders</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Community</h4>
+      <ul>
+        <li><a href="prototype/club.html">Riding clubs</a></li>
+        <li><a href="prototype/leaderboard.html">Leaderboard</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-base">
+    <span>© 2027 The Amar Jawan Ride</span>
+    <span>Privacy · Terms · Ride safety</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduce && window.gsap) {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from(".safety-hero .kicker, .safety-hero h1, .safety-hero-hindi, .safety-hero-sub", {
+      y: 30, opacity: 0, duration: .8, stagger: .12, ease: "power3.out"
+    });
+    gsap.utils.toArray(".sec .center-head, .comp, .rk, .chk, .ri, .callout, .cc").forEach(el => {
+      gsap.from(el, { y: 28, opacity: 0, duration: .6, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 88%", once: true } });
+    });
+    const journey = document.getElementById("journey");
+    const bike = document.getElementById("journeyBike");
+    if (journey && getComputedStyle(journey).display !== "none") {
+      gsap.set(bike, { rotation: 180 });
+      gsap.to(bike, { y: () => journey.offsetHeight - 70, ease: "none",
+        scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: .6, invalidateOnRefresh: true } });
+      gsap.to(bike, { x: 8, rotation: 174, duration: 1.8, yoyo: true, repeat: -1, ease: "sine.inOut" });
+      ScrollTrigger.create({ start: () => window.innerHeight * 0.6, end: "max",
+        onToggle: self => journey.classList.toggle("on", self.isActive) });
+    }
+  }
+</script>
+</body>
+</html>
