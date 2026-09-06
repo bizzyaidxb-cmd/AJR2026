@@ -50,6 +50,15 @@
   .nav-links a:hover{color:var(--gold);}
   .nav-links a[data-active="true"]{color:var(--gold);}
   .nav-cta{display:flex;gap:12px;align-items:center;}
+  /* Experience dropdown */
+  .has-drop{position:relative;display:flex;align-items:center;}
+  .has-drop>a{display:inline-flex;align-items:center;gap:6px;cursor:pointer;}
+  .has-drop>a::after{content:"▾";font-size:10px;opacity:.85;}
+  .has-drop::before{content:"";position:absolute;top:100%;left:0;right:0;height:16px;}
+  .nav-drop{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);min-width:238px;background:#0b1a1c;border:1px solid rgba(179,139,75,.25);border-radius:10px;padding:8px;opacity:0;visibility:hidden;transition:opacity .18s ease, transform .18s ease;box-shadow:0 18px 40px rgba(0,0,0,.45);z-index:40;}
+  .has-drop:hover .nav-drop,.has-drop:focus-within .nav-drop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(-4px);}
+  .nav-drop a{display:block;padding:10px 14px;border-radius:7px;color:var(--sand);font-size:14px;white-space:nowrap;}
+  .nav-drop a:hover{background:rgba(179,139,75,.14);color:var(--gold);}
 
   /* ── Hero ─────────────────────────────────────────────────── */
   .about-hero{background:var(--midnight);color:var(--sand);padding:96px 24px 104px;text-align:center;overflow:hidden;}
@@ -169,7 +178,13 @@
   <div class="nav-links">
     <a href="about.html" data-active="true">About</a>
     <a href="ajr-homepage.html#rides">Rides</a>
-    <a href="ajr-homepage.html#experience">Experience</a>
+    <div class="has-drop">
+      <a href="ajr-homepage.html#experience">Experience</a>
+      <div class="nav-drop">
+        <a href="ajr-homepage.html#experience">The ride-day experience</a>
+        <a href="dress-guide.html">Proudly Indian — Dress guide</a>
+      </div>
+    </div>
     <a href="about.html#how">Our cause</a>
     <a href="prototype/leaderboard.html">Leaderboard</a>
   </div>
@@ -297,6 +312,7 @@
         <li><a href="about.html">About AJR</a></li>
         <li><a href="prototype/city.html">Find a ride</a></li>
         <li><a href="prototype/host.html">Host a ride</a></li>
+        <li><a href="dress-guide.html">Dress theme guide</a></li>
         <li><a href="prototype/downloads.html">Downloads &amp; media kit</a></li>
       </ul>
     </div>
