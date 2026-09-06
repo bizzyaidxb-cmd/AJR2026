@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --sand: #f7eee2;
+  --kesari: #c13b1b;
+  --sindoor: #b33114;
+  --peacock: #124d52;
+  --gold: #b38b4b;
+  --midnight: #0c2b2e;
+  --umber: #241f1a;
+}
+
+@theme inline {
+  --color-sand: var(--sand);
+  --color-kesari: var(--kesari);
+  --color-sindoor: var(--sindoor);
+  --color-peacock: var(--peacock);
+  --color-gold: var(--gold);
+  --color-midnight: var(--midnight);
+  --color-umber: var(--umber);
+}
+
+body {
+  background: var(--sand);
+  color: var(--umber);
+  font-family: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+}

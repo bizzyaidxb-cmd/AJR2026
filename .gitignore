@@ -2,3 +2,14 @@
 Asset set 3/
 asset set 4/
 asset set 5/
+
+# Next.js / node
+/node_modules/
+/.next/
+/out/
+next-env.d.ts
+*.tsbuildinfo
+
+# env
+.env
+.env*.local
